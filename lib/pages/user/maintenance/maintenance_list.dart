@@ -26,6 +26,10 @@ class Task {
     required this.prioritas,
     this.selesai = false,
   });
+
+  get catatan => null;
+
+  get nomorHP => null;
 }
 
 
