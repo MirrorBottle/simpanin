@@ -20,13 +20,13 @@ class UserService {
 
   static Future<UserModel> getUser(String id) async {
     DocumentSnapshot snapshot = await _userCollection.doc(id).get();
-
-    return UserModel(
+    UserModel user = UserModel(
         id: id,
         email: snapshot['email'],
         name: snapshot['name'],
         address: snapshot['address'],
         role: snapshot['role'],
         phone: snapshot['phone']);
+    return user;
   }
 }

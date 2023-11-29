@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:simpanin/models/user.dart';
 import 'package:simpanin/pages/auth/log_in.dart';
+import 'package:simpanin/pages/staff/staff_main.dart';
+import 'package:simpanin/pages/user/user_main.dart';
 import 'package:simpanin/services/auth_service.dart';
 import 'package:simpanin/services/user_service.dart';
 import 'package:flutter/material.dart';
@@ -43,13 +45,21 @@ class _SplashScreenState extends State<SplashScreen> {
       if (isLogin) {
         String encodedAuth = prefs.getString('auth') ?? "{}";
         Map<String, dynamic> auth = json.decode(encodedAuth);
+        if(auth['id'] == '') {
+          prefs.setBool('isLogin', false);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const LogInScreen()),
+          );
+          return;
+        }
         UserModel user = await UserService.getUser(auth['id']);
         String authData = json.encode(user.toMap());
         prefs.setString('auth', authData);
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => const MainScreen()),
-        // );
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => user.role == 'user' ? const UserMainScreen() : StaffMainScreen()),
+        );
       } else {
         Navigator.push(
           context,

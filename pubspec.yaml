@@ -56,6 +56,7 @@ dependencies:
   unicons: ^2.1.1
   iconsax: ^0.0.8
   shared_preferences: ^2.2.2
+  dot_navigation_bar: ^1.0.2
 
 dev_dependencies:
   flutter_test:

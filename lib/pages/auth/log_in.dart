@@ -5,11 +5,15 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:simpanin/components/button_component.dart';
 import 'package:simpanin/components/input_password_component.dart';
+import 'package:simpanin/models/user.dart';
 import 'package:simpanin/pages/auth/sign_up.dart';
 // import 'package:simpanin/pages/auth/sign_in/sign_in_first.dart';
 import 'package:simpanin/pages/home/main.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:simpanin/pages/staff/staff_main.dart';
+import 'package:simpanin/pages/user/user_main.dart';
 import 'package:simpanin/services/auth_service.dart';
+import 'package:simpanin/services/user_service.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -47,19 +51,32 @@ class _LogInScreenState extends State<LogInScreen> {
       loading = true;
     });
     try {
-      await AuthService.signIn(_emailController.text, _passwordController.text);
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setBool('isLogin', true);
-      showTopSnackBar(
-        Overlay.of(context),
-        const CustomSnackBar.success(
-          message: "Selamat Datang, kawan Simpanin!",
-        ),
-      );
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const MainScreen()),
-      );
+      bool isSignin = await AuthService.signIn(_emailController.text, _passwordController.text);
+      if(isSignin) {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setBool('isLogin', true);
+        UserModel user = await AuthService.auth();
+        showTopSnackBar(
+          Overlay.of(context),
+          const CustomSnackBar.success(
+            message: "Selamat Datang, kawan Simpanin!",
+          ),
+        );
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => user.role == 'staff' ? const StaffMainScreen() :  const UserMainScreen()),
+        );
+      } else {
+        showTopSnackBar(
+          Overlay.of(context),
+          const CustomSnackBar.error(
+            message: "Terjadi kesalahan",
+          ),
+        );
+      }
+      setState(() {
+        loading = false;
+      });
     } catch (e) {
       print(e);
     }

@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:simpanin/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:simpanin/services/user_service.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class AuthService {
   // ignore: prefer_final_fields
@@ -15,23 +18,26 @@ class AuthService {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: data.email, password: data.password!);
+      data.id = result.user!.uid;
       String auth = json.encode(data.toMap());
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('auth', auth);
-      await UserService.updateUser(user);
+      await UserService.updateUser(data);
     } catch (e) {}
   }
 
-  static Future<void> signIn(String email, String password) async {
+  static Future<bool> signIn(String email, String password) async {
     try {
       UserCredential result = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
+        email: email, password: password);
       UserModel user = await UserService.getUser(result.user!.uid);
       String auth = json.encode(user.toMap());
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('auth', auth);
+      return true;
     } catch (e) {
       print(e);
+      return false;
     }
   }
 
