@@ -7,8 +7,6 @@ import 'package:simpanin/components/button_component.dart';
 import 'package:simpanin/components/input_password_component.dart';
 import 'package:simpanin/models/user.dart';
 import 'package:simpanin/pages/auth/sign_up.dart';
-// import 'package:simpanin/pages/auth/sign_in/sign_in_first.dart';
-import 'package:simpanin/pages/home/main.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:simpanin/pages/staff/staff_main.dart';
 import 'package:simpanin/pages/user/user_main.dart';
@@ -32,18 +30,6 @@ class _LogInScreenState extends State<LogInScreen> {
   @override
   void initState() {
     super.initState();
-    init();
-  }
-
-  void init() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isLogin = prefs.getBool('isLogin') ?? false;
-    if (isLogin) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const MainScreen()),
-      );
-    }
   }
 
   void _handleSubmit() async {

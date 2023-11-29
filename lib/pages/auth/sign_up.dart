@@ -5,7 +5,6 @@ import 'package:simpanin/components/button_component.dart';
 import 'package:simpanin/components/input_password_component.dart';
 import 'package:simpanin/models/user.dart';
 // import 'package:simpanin/pages/auth/sign_in/sign_in_first.dart';
-import 'package:simpanin/pages/home/main.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:simpanin/pages/user/user_main.dart';
 import 'package:simpanin/services/auth_service.dart';
