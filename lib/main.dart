@@ -12,6 +12,7 @@ import 'package:simpanin/pages/staff/mailbox/mailbox_create.dart';
 import 'package:simpanin/pages/staff/mailbox/mailbox_detail.dart';
 import 'package:simpanin/pages/staff/mailbox/mailbox_edit.dart';
 import 'package:simpanin/pages/staff/mailbox/mailbox_list.dart';
+import 'package:simpanin/pages/user/mailbox/mailbox_list.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -68,7 +69,7 @@ class MyApp extends StatelessWidget {
             inputDecorationTheme: InputDecorationTheme(
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30)))),
-        home: const StaffMailboxEditScreen(),
+        home: const UserMailboxListScreen(),
         builder: EasyLoading.init());
   }
 }

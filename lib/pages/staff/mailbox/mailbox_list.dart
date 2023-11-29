@@ -100,7 +100,7 @@ class _StaffMailboxListScreenState extends State<StaffMailboxListScreen> {
                                   ),
                             
                                   Text(
-                                    "Tgl. Pembelian : ${item.date}",
+                                    "Tgl. Pembayaran : ${item.date}",
                                     style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 10.5)
                                   )
                                 ],
