@@ -62,8 +62,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                 children: [
                   const SizedBox(height: 20,),
                   ListTile(
-                    leading: const Icon(Iconsax.wallet, color: Color(0xFFF16807), size: 32,),
-                    title: Text("My Wallet", style: Theme.of(context).textTheme.labelLarge),
+                    leading: const Icon(Iconsax.edit, color: Color(0xFFF16807), size: 32,),
+                    title: Text("Edit Profile", style: Theme.of(context).textTheme.labelLarge),
                     subtitle: Text("See your balance", style: Theme.of(context).textTheme.labelSmall),
                     trailing: const Icon(Iconsax.arrow_right, color: Color.fromARGB(255, 32, 23, 23), size: 22,),
                   ),
@@ -75,8 +75,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                     color: Color.fromARGB(96, 72, 72, 72),
                   ),
                   ListTile(
-                    leading: const Icon(Iconsax.translate, color: Color(0xFFF16807), size: 32,),
-                    title: Text("Change Languange", style: Theme.of(context).textTheme.labelLarge),
+                    leading: const Icon(Iconsax.money_change, color: Color(0xFFF16807), size: 32,),
+                    title: Text("Change Theme", style: Theme.of(context).textTheme.labelLarge),
                     subtitle: Text("Change current languange", style: Theme.of(context).textTheme.labelSmall),
                     trailing: const Icon(Iconsax.arrow_right, color: Color.fromARGB(255, 32, 23, 23), size: 22,),
                   ),
@@ -90,6 +90,19 @@ class _ProfileScreenState extends State<ProfileScreen>
                   ListTile(
                     leading: const Icon(Iconsax.message_question, color: Color(0xFFF16807), size: 32,),
                     title: Text("Help", style: Theme.of(context).textTheme.labelLarge),
+                    subtitle: Text("Find some help & support", style: Theme.of(context).textTheme.labelSmall),
+                    trailing: const Icon(Iconsax.arrow_right, color: Color.fromARGB(255, 32, 23, 23), size: 22,),
+                  ),
+                    const Divider(
+                    height: 10,
+                    thickness: 0.8,
+                    indent: 65,
+                    endIndent: 25,
+                    color: Color.fromARGB(96, 72, 72, 72),
+                  ),
+                  ListTile(
+                    leading: const Icon(Iconsax.money, color: Color(0xFFF16807), size: 32,),
+                    title: Text("About", style: Theme.of(context).textTheme.labelLarge),
                     subtitle: Text("Find some help & support", style: Theme.of(context).textTheme.labelSmall),
                     trailing: const Icon(Iconsax.arrow_right, color: Color.fromARGB(255, 32, 23, 23), size: 22,),
                   ),
