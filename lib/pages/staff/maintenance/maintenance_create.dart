@@ -181,44 +181,6 @@ class _StaffMaintenanceCreateScreenState
                   ),
                   SizedBox(height: 16),
 
-                  // Nama Pelanggan
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: Text(
-                      'Nama :',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: Color.fromARGB(255, 0, 0, 0),
-                            fontSize: 18,
-                          ),
-                    ),
-                    title: Expanded(
-                      child: TextField(
-                        controller: _namaPelangganController,
-                        decoration:
-                            InputDecoration(labelText: 'Nama Pelanggan'),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 16),
-
-                  // Nomor HP
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: Text(
-                      'No.HP  :',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: Color.fromARGB(255, 0, 0, 0),
-                            fontSize: 18,
-                          ),
-                    ),
-                    title: Expanded(
-                      child: TextField(
-                        controller: _nomorHPController,
-                        decoration: InputDecoration(labelText: 'Nomor HP'),
-                      ),
-                    ),
-                  ),
-
                   // Catatan
                   ListTile(
                     contentPadding: EdgeInsets.zero,
@@ -255,8 +217,7 @@ class _StaffMaintenanceCreateScreenState
                     buttontext: "Selesai",
                     onPressed: () {
                       // Mengecek apakah ada input yang kosong
-                      if (_namaPelangganController.text.isEmpty ||
-                          _nomorHPController.text.isEmpty ||
+                      if (
                           _catatanController.text.isEmpty) {
                         // Menampilkan pesan peringatan jika ada input yang kosong
                         showDialog(

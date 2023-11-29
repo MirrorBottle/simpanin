@@ -154,46 +154,7 @@ class _StaffMaintenanceEditScreenState extends State<StaffMaintenanceEditScreen>
                           DateFormat('dd-MM-yyyy').format(_tanggalSelesai)),
                     ),
                   ),
-                  SizedBox(height: 16),
-
-                  // Nama Pelanggan
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: Text(
-                      'Nama :',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: Color.fromARGB(255, 0, 0, 0),
-                            fontSize: 18,
-                          ),
-                    ),
-                    title: Expanded(
-                      child: TextField(
-                        controller: _namaController,
-                        decoration:
-                            InputDecoration(labelText: 'Nama Pelanggan'),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 16),
-
-                  // Nomor HP
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: Text(
-                      'No.HP  :',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: Color.fromARGB(255, 0, 0, 0),
-                            fontSize: 18,
-                          ),
-                    ),
-                    title: Expanded(
-                      child: TextField(
-                        controller: _nomorHPController,
-                        decoration: InputDecoration(labelText: 'Nomor HP'),
-                      ),
-                    ),
-                  ),
-
+                  
                   // Catatan
                   ListTile(
                     contentPadding: EdgeInsets.zero,
