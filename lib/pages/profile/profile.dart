@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:math';
 
 import 'package:iconsax/iconsax.dart';
+import 'package:simpanin/pages/profile/profile_edit.dart';
 
 
 class ProfileScreen extends StatefulWidget {
@@ -62,6 +63,12 @@ class _ProfileScreenState extends State<ProfileScreen>
                 children: [
                   const SizedBox(height: 20,),
                   ListTile(
+                    onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ProfileEditScreen()),
+                  );
+                },
                     leading: const Icon(Iconsax.edit, color: Color(0xFFF16807), size: 32,),
                     title: Text("Edit Profile", style: Theme.of(context).textTheme.labelLarge),
                     subtitle: Text("See your balance", style: Theme.of(context).textTheme.labelSmall),
