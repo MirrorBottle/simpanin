@@ -6,14 +6,10 @@ import 'package:simpanin/pages/auth/log_in.dart';
 import 'package:simpanin/pages/auth/sign_up.dart';
 import 'package:simpanin/pages/misc/onboarding.dart';
 import 'package:simpanin/pages/misc/splash.dart';
-import 'package:simpanin/firebase_options.dart';
-
-
+import 'package:simpanin/pages/profile/profile.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -65,7 +61,7 @@ class MyApp extends StatelessWidget {
             inputDecorationTheme: InputDecorationTheme(
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30)))),
-        home: const SplashScreen(),
+        home: const ProfileScreen(),
         builder: EasyLoading.init());
   }
 }
