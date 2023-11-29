@@ -6,10 +6,14 @@ import 'package:simpanin/pages/auth/log_in.dart';
 import 'package:simpanin/pages/auth/sign_up.dart';
 import 'package:simpanin/pages/misc/onboarding.dart';
 import 'package:simpanin/pages/misc/splash.dart';
+import 'package:simpanin/firebase_options.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
