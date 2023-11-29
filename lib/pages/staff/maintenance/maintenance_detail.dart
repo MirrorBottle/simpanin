@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:simpanin/components/button_component.dart';
+import 'package:simpanin/pages/staff/maintenance/maintenance_edit.dart';
 import 'package:simpanin/pages/staff/maintenance/maintenance_list.dart';
 
 class StaffMaintenanceDetailScreen extends StatefulWidget {
@@ -16,6 +18,7 @@ class StaffMaintenanceDetailScreen extends StatefulWidget {
 class _StaffMaintenanceDetailScreenState
     extends State<StaffMaintenanceDetailScreen> {
   final _scrollController = ScrollController();
+  bool loading = false;
 
   DateTime _tanggalMulai = DateTime.now();
   DateTime _tanggalSelesai = DateTime.now();
@@ -34,6 +37,22 @@ class _StaffMaintenanceDetailScreenState
       });
     }
   }
+
+  void _handleUbah() async {
+  setState(() {
+    loading = true;
+  });
+  try {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => StaffMaintenanceEditScreen(task: widget.task)),
+    );
+  } catch (e) {
+    print(e);
+  }
+}
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -158,7 +177,7 @@ class _StaffMaintenanceDetailScreenState
                       ),
                       Text(
                         '${_tanggalSelesai != null ? DateFormat('yyyy-MM-dd').format(_tanggalSelesai) : "Belum diisi"}',
-                      style:
+                        style:
                             Theme.of(context).textTheme.headlineSmall?.copyWith(
                                   color: Theme.of(context).colorScheme.primary,
                                   fontSize: 18,
@@ -210,6 +229,13 @@ class _StaffMaintenanceDetailScreenState
                       ),
                     ],
                   ),
+                  const SizedBox(height: 40),
+                  ButtonComponent(
+            loading: loading,
+            buttontext: "Ubah Data",
+            onPressed: _handleUbah,
+          ),
+                  const SizedBox(height: 15),
                 ],
               ),
             ),
