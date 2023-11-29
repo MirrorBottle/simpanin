@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
             inputDecorationTheme: InputDecorationTheme(
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30)))),
-        home: const StaffMailboxDetailScreen(),
+        home: const StaffMailboxCreateScreen(),
         builder: EasyLoading.init());
   }
 }

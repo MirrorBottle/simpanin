@@ -12,7 +12,6 @@ class _StaffMailboxDetailScreenState extends State<StaffMailboxDetailScreen> {
   bool loading = false;
   
   void _handleUbah() async {
-
   }
 
   @override
