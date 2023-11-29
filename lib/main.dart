@@ -7,6 +7,14 @@ import 'package:simpanin/pages/auth/sign_up.dart';
 import 'package:simpanin/pages/misc/onboarding.dart';
 import 'package:simpanin/pages/misc/splash.dart';
 import 'package:simpanin/pages/profile/profile.dart';
+import 'package:simpanin/firebase_options.dart';
+import 'package:simpanin/pages/staff/mailbox/mailbox_create.dart';
+import 'package:simpanin/pages/staff/mailbox/mailbox_detail.dart';
+import 'package:simpanin/pages/staff/mailbox/mailbox_edit.dart';
+import 'package:simpanin/pages/staff/mailbox/mailbox_list.dart';
+import 'package:simpanin/pages/user/mailbox/mailbox_detail.dart';
+import 'package:simpanin/pages/user/mailbox/mailbox_list.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -20,6 +28,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(
@@ -61,7 +70,7 @@ class MyApp extends StatelessWidget {
             inputDecorationTheme: InputDecorationTheme(
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30)))),
-        home: const ProfileScreen(),
+        home: const UserMailboxDetailScreen(),
         builder: EasyLoading.init());
   }
 }
