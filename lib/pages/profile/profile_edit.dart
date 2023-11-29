@@ -67,41 +67,23 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                 },
               ),
             ),
-            Stack(
-              children: [
-                const CircleAvatar(
-                  radius: 50,
-                  backgroundColor: Colors.white,
-                  child: Icon(
-                    Icons.person,
-                    size: 50,
-                    color: Color.fromARGB(255, 10, 10, 10),
-                  ),
-                ),
-                Positioned(
-                  bottom: 1,
-                  right: 1,
-                  child: Container(
-                    child: const Padding(
-                      padding: EdgeInsets.all(2.0),
-                      child: Icon(Icons.edit, color: Colors.black),
+            ListTile(
+              title: Text(
+                'Edit Profile',
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFFF16807),
+                      fontSize: 30,
                     ),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 3,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(
-                            50,
-                          ),
-                        ),
-                        color: Colors.white),
-                  ),
-                ),
-              ],
+              ),
+              subtitle: Text(
+                'Edit Your Profile Here',
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      color: Color.fromARGB(255, 0, 0, 0),
+                    ),
+              ),
             ),
-            const SizedBox(height: 30),
+            
             Container(
               constraints: BoxConstraints(
                   minHeight: MediaQuery.of(context).size.height - 347),
