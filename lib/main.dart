@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
             inputDecorationTheme: InputDecorationTheme(
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30)))),
-        home: const ProfileScreen(),
+        home: const SplashScreen(),
         builder: EasyLoading.init());
   }
 }

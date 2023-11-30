@@ -25,9 +25,9 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
           Chip(
             padding: const EdgeInsets.all(5),
             backgroundColor: Theme.of(context).colorScheme.primary,
-            shape: RoundedRectangleBorder(
+            shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(20))),
-            label: Text("Bayu Setiawan",
+            label: const Text("Hi, Bayu Setiawan",
                 style: TextStyle(color: Colors.white)), //Text
           ),
           const SizedBox(width: 10)

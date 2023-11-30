@@ -2,7 +2,9 @@ import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
+import 'package:simpanin/pages/profile/profile.dart';
 import 'package:simpanin/pages/user/home.dart';
+import 'package:simpanin/pages/user/mailbox/mailbox_list.dart';
 
 class UserMainScreen extends StatefulWidget {
   const UserMainScreen({Key? key}) : super(key: key);
@@ -15,9 +17,9 @@ class _UserMainScreenState extends State<UserMainScreen> {
 
   List<Widget> tabItems = [
     const UserHomeScreen(),
+    const UserMailboxListScreen(),
     const Center(child: Text("3")),
-    const Center(child: Text("2")),
-    const Center(child: Text("3")),
+    const ProfileScreen(),
   ];
 
   @override

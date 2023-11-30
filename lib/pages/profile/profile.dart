@@ -69,7 +69,6 @@ class _ProfileScreenState extends State<ProfileScreen>
       ),
       body: SingleChildScrollView(
         controller: _scrollController,
-        reverse: true,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
