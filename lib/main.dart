@@ -8,6 +8,8 @@ import 'package:simpanin/pages/misc/onboarding.dart';
 import 'package:simpanin/pages/misc/splash.dart';
 import 'package:simpanin/pages/profile/profile.dart';
 import 'package:simpanin/firebase_options.dart';
+import 'package:simpanin/pages/profile/profile_faq.dart';
+import 'package:simpanin/pages/profile/profile_faq_detail.dart';
 import 'package:simpanin/pages/staff/mailbox/mailbox_create.dart';
 import 'package:simpanin/pages/staff/mailbox/mailbox_detail.dart';
 import 'package:simpanin/pages/staff/mailbox/mailbox_edit.dart';

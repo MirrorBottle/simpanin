@@ -6,6 +6,8 @@ import 'package:iconsax/iconsax.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:simpanin/pages/profile/profile_edit.dart';
 
+import 'profile_faq.dart';
+
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
@@ -175,7 +177,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         color: Color(0xFFF16807),
                         size: 32,
                       ),
-                      title: Text("Bantuan",
+                      title: Text("FAQs",
                           style: Theme.of(context).textTheme.labelLarge),
                       subtitle: Text("Temukan bantuan & dukungan",
                           style: Theme.of(context).textTheme.labelSmall),
@@ -184,6 +186,13 @@ class _ProfileScreenState extends State<ProfileScreen>
                         color: Color.fromARGB(255, 32, 23, 23),
                         size: 22,
                       ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProfileFaqScreen()),
+                        );
+                      },
                     ),
                     const Divider(
                       height: 10,
