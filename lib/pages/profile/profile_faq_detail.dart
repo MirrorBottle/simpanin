@@ -3,7 +3,9 @@ import 'package:iconsax/iconsax.dart';
 import 'package:simpanin/components/button_component.dart';
 
 class ProfileFaqDetailScreen extends StatefulWidget {
-  const ProfileFaqDetailScreen({super.key});
+  final String title;
+  final String content;
+  const ProfileFaqDetailScreen({super.key, required this.title, required this.content});
 
   @override
   State<ProfileFaqDetailScreen> createState() => _ProfileFaqDetailScreenState();
@@ -39,8 +41,8 @@ class _ProfileFaqDetailScreenState extends State<ProfileFaqDetailScreen> {
                   height: 10.0,
                 ),
                 Text(
-                  'Kebijakan Privasi Simpanin',
-                  style: Theme.of(context).textTheme.displayLarge,
+                  widget.title,
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 24),
                 ),
                 const SizedBox(
                   height: 10.0,
@@ -62,8 +64,7 @@ class _ProfileFaqDetailScreenState extends State<ProfileFaqDetailScreen> {
                 children: [
                   Padding(
                     padding: EdgeInsets.all(15),
-                    child: Text(
-                      "Simpanin hanya akan mengumpulkan informasi pribadi Anda yang diperlukan untuk memberikan layanan kepada Anda. Simpanin akan menggunakan informasi pribadi Anda dengan cara yang aman dan bertanggung jawab. Anda dapat melihat Kebijakan Privasi Simpanin di aplikasi.",
+                    child: Text(widget.content,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   )

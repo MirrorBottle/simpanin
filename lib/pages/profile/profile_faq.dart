@@ -77,7 +77,7 @@ class _ProfileFaqScreenState extends State<ProfileFaqScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            const ProfileFaqDetailScreen()),
+                                            ProfileFaqDetailScreen(title: doc['title'], content: doc['content'])),
                                   );
                                 },
                                 title: Text(doc['title'],
