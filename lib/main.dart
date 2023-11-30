@@ -17,7 +17,9 @@ import 'package:simpanin/pages/user/mailbox/mailbox_list.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -70,7 +72,7 @@ class MyApp extends StatelessWidget {
             inputDecorationTheme: InputDecorationTheme(
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30)))),
-        home: const UserMailboxDetailScreen(),
+        home: const ProfileScreen(),
         builder: EasyLoading.init());
   }
 }
