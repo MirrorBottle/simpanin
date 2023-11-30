@@ -23,7 +23,7 @@ class _StaffMailboxCreateScreenState extends State<StaffMailboxCreateScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF16807),
+      backgroundColor: Theme.of(context).colorScheme.primary,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
