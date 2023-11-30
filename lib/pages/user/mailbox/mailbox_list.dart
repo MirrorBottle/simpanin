@@ -17,9 +17,9 @@ class _UserMailboxListScreenState extends State<UserMailboxListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF16807),
+      backgroundColor: Theme.of(context).colorScheme.primary,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xFFF16807),
+        backgroundColor: Theme.of(context).colorScheme.primary,
         shape: const CircleBorder(),
         child: const Icon(Icons.add, color: Colors.white),
         onPressed: () {},

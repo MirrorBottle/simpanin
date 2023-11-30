@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
               brightness: Brightness.light,
               primary: const Color(0xFFF16807),
               secondary: const Color(0xFF1A1A1A),
-              tertiary: const Color(0xFFF796AB),
+              tertiary: const Color(0xFFfef0e6),
               error: Colors.white,
               onBackground: Colors.white,
               onPrimary: Colors.white,
