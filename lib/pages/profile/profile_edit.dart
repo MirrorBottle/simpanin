@@ -161,7 +161,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   const SizedBox(height: 40),
                   ButtonComponent(
                     loading: loading,
-                    buttontext: "Edit Profile",
+                    buttontext: "Ubah Profil",
                     onPressed: _handleSubmit,
                   ),
                   const SizedBox(height: 15),

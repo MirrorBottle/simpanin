@@ -3,6 +3,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:simpanin/models/mailbox.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:simpanin/pages/user/mailbox/mailbox_detail.dart';
 
 class UserMailboxListScreen extends StatefulWidget {
   const UserMailboxListScreen({super.key});
@@ -20,12 +21,6 @@ class _UserMailboxListScreenState extends State<UserMailboxListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        shape: const CircleBorder(),
-        child: const Icon(Icons.add, color: Colors.white),
-        onPressed: () {},
-      ),
       body: StreamBuilder<QuerySnapshot>(
         stream: db
             .collection('mailboxes')
@@ -65,10 +60,23 @@ class _UserMailboxListScreenState extends State<UserMailboxListScreen> {
                   child: snapshot.hasData
                       ? ListView(
                           children: snapshot.data!.docs.map((doc) {
-                            MailboxModel mailbox = MailboxModel(id: doc.id, code: doc['code'], price: doc['price'], size: doc['size'], availability: doc['availability']);
+                            MailboxModel mailbox = MailboxModel(
+                                id: doc.id,
+                                code: doc['code'],
+                                price: doc['price'],
+                                size: doc['size'],
+                                availability: doc['availability']);
                             return Column(
                               children: [
                                 ListTile(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              UserMailboxDetailScreen(mailbox: mailbox)),
+                                    );
+                                  },
                                   leading: Container(
                                     width: 60,
                                     height: 60,
