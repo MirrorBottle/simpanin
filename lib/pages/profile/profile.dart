@@ -78,25 +78,20 @@ class _ProfileScreenState extends State<ProfileScreen>
               height: 70,
             ),
             ListTile(
-              leading: const Icon(
+              leading: Icon(
                 Iconsax.profile_circle,
-                color: Color.fromARGB(255, 15, 10, 10),
+                color: Theme.of(context).colorScheme.secondary,
                 size: 65,
               ),
               title: Text(
                 "Ananta Yusra",
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFFF16807),
+                      color: Theme.of(context).colorScheme.primary,
                     ),
               ),
               subtitle: Text("Anantayusra01@gmail.com",
                   style: Theme.of(context).textTheme.titleSmall),
-              trailing: const Icon(
-                Iconsax.arrow_right,
-                color: Color.fromARGB(255, 32, 23, 23),
-                size: 28,
-              ),
             ),
             const SizedBox(
               height: 10,

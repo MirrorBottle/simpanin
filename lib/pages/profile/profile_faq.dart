@@ -16,8 +16,6 @@ class _ProfileFaqScreenState extends State<ProfileFaqScreen> {
   bool loading = false;
   final db = FirebaseFirestore.instance;
 
-  void _handleUbah() async {}
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
