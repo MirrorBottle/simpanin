@@ -8,6 +8,8 @@ import 'package:simpanin/pages/misc/onboarding.dart';
 import 'package:simpanin/pages/misc/splash.dart';
 import 'package:simpanin/pages/profile/profile.dart';
 import 'package:simpanin/firebase_options.dart';
+import 'package:simpanin/pages/profile/profile_faq.dart';
+import 'package:simpanin/pages/profile/profile_faq_detail.dart';
 import 'package:simpanin/pages/staff/mailbox/mailbox_create.dart';
 import 'package:simpanin/pages/staff/mailbox/mailbox_detail.dart';
 import 'package:simpanin/pages/staff/mailbox/mailbox_edit.dart';
@@ -72,7 +74,7 @@ class MyApp extends StatelessWidget {
             inputDecorationTheme: InputDecorationTheme(
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30)))),
-        home: const ProfileScreen(),
+        home: const ProfileFaqDetailScreen(),
         builder: EasyLoading.init());
   }
 }
