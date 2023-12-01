@@ -36,7 +36,6 @@ class AuthService {
       prefs.setString('auth', auth);
       return true;
     } catch (e) {
-      print(e);
       return false;
     }
   }

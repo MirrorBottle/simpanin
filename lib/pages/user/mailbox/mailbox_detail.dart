@@ -96,7 +96,7 @@ class _UserMailboxDetailScreenState extends State<UserMailboxDetailScreen> {
           ),
           ButtonComponent(
             loading: loading,
-            buttontext: "Book Mailbox",
+            buttontext: "Booking Mailbox",
             onPressed: _handleUbah,
           ),
         ],

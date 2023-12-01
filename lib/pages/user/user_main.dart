@@ -1,4 +1,3 @@
-import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';

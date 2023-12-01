@@ -4,6 +4,8 @@ import 'dart:math';
 
 import 'package:iconsax/iconsax.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:quickalert/quickalert.dart';
+import 'package:simpanin/pages/auth/log_in.dart';
 import 'package:simpanin/pages/profile/profile_edit.dart';
 
 import 'profile_faq.dart';
@@ -19,39 +21,23 @@ class _ProfileScreenState extends State<ProfileScreen>
     with TickerProviderStateMixin {
   final _scrollController = ScrollController();
 
-  Future<dynamic> _handleAboutTap() {
-    return showDialog(
-        context: navigatorKey.currentContext!,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text("Tentang"),
-            content: const SizedBox(
-              height: 170,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Versi: 1.0.0",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                      "Asadah merupakan sebuah aplikasi untuk melakukan pengajuan akad secara online oleh Asadah Gadai Syariah.")
-                ],
-              ),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text("OK"),
-              ),
-            ],
-          );
+  void _handleLogout() {
+    QuickAlert.show(
+        context: context,
+        type: QuickAlertType.confirm,
+        text: 'Ingin logout akunmu?',
+        title: 'Yakin?',
+        confirmBtnText: 'Ya',
+        cancelBtnText: 'Nggak',
+        confirmBtnColor: Theme.of(context).colorScheme.primary,
+        onConfirmBtnTap: () async {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.remove('isLogin');
+          prefs.remove('auth');
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const LogInScreen()),
+              (Route<dynamic> route) => false);
         });
   }
 
@@ -59,7 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Color(0xFFeFeFeF),
+      backgroundColor: const Color(0xFFeFeFeF),
       appBar: AppBar(
         toolbarHeight: 0,
         backgroundColor: Colors.transparent,
@@ -118,7 +104,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ProfileEditScreen()),
+                              builder: (context) => const ProfileEditScreen()),
                         );
                       },
                       leading: const Icon(
@@ -143,21 +129,18 @@ class _ProfileScreenState extends State<ProfileScreen>
                       endIndent: 25,
                       color: Color.fromARGB(96, 72, 72, 72),
                     ),
-                    ListTile(
-                      leading: const Icon(
-                        Iconsax.money_change,
+                    SwitchListTile(
+                      value: false,
+                      onChanged: (val) {},
+                      secondary: const Icon(
+                        Iconsax.moon,
                         color: Color(0xFFF16807),
                         size: 32,
                       ),
-                      title: Text("Ganti Tema",
+                      title: Text("Tema Gelap",
                           style: Theme.of(context).textTheme.labelLarge),
                       subtitle: Text("Ubah tema sesuai selera anda",
                           style: Theme.of(context).textTheme.labelSmall),
-                      trailing: const Icon(
-                        Iconsax.arrow_right,
-                        color: Color.fromARGB(255, 32, 23, 23),
-                        size: 22,
-                      ),
                     ),
                     const Divider(
                       height: 10,
@@ -168,7 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                     ),
                     ListTile(
                       leading: const Icon(
-                        Iconsax.message_question,
+                        Iconsax.info_circle,
                         color: Color(0xFFF16807),
                         size: 32,
                       ),
@@ -185,7 +168,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ProfileFaqScreen()),
+                              builder: (context) => const ProfileFaqScreen()),
                         );
                       },
                     ),
@@ -198,7 +181,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                     ),
                     ListTile(
                       leading: const Icon(
-                        Iconsax.money,
+                        Iconsax.message_question,
                         color: Color(0xFFF16807),
                         size: 32,
                       ),
@@ -216,19 +199,28 @@ class _ProfileScreenState extends State<ProfileScreen>
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text("Tentang Kami"),
-                              
+                              title: const Text("Tentang Kami"),
                               content: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Text("Versi: 1.0",
-                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.black),),
-        
-                                  SizedBox(height: 8),
+                                  Text(
+                                    "Versi: 1.0",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(color: Colors.black),
+                                  ),
+                                  const SizedBox(height: 8),
                                   Text(
                                     "Simpanin merupakan sebuah aplikasi yang menyediakan jasa penyewaan loker secara online.",
-                                    style: Theme.of(context).textTheme.bodySmall!. copyWith(color: Theme.of(context).colorScheme.secondary ),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .secondary),
                                   ),
                                 ],
                               ),
@@ -237,7 +229,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
-                                  child: Text("Tutup"),
+                                  child: const Text("Tutup"),
                                 ),
                               ],
                             );
@@ -253,7 +245,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                       color: Color.fromARGB(96, 72, 72, 72),
                     ),
                     ListTile(
-                      leading: Icon(
+                      onTap: _handleLogout,
+                      leading: const Icon(
                         Iconsax.logout_1,
                         color: Color(0xFFF16807),
                         size: 32,
