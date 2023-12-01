@@ -18,12 +18,20 @@ class _StaffMailboxDetailScreenState extends State<StaffMailboxDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
+      appBar: AppBar(
+        toolbarHeight: 70,
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        titleSpacing: 0.0,
+        iconTheme: const IconThemeData(color: Colors.white),
+        scrolledUnderElevation: 0,
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            padding: const EdgeInsets.only(
-                top: 60.0, left: 30.0, right: 30.0, bottom: 40.0),
+            padding:
+                const EdgeInsets.only(left: 25.0, right: 30.0, bottom: 20.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -31,27 +39,12 @@ class _StaffMailboxDetailScreenState extends State<StaffMailboxDetailScreen> {
                   height: 10.0,
                 ),
                 Text(
-                  'A-1',
+                  'A1',
                   style: Theme.of(context).textTheme.displayLarge,
                 ),
                 const SizedBox(
                   height: 10.0,
                 ),
-                Container(
-                  width: 60,
-                  height: 20,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0), // Sesuaikan dengan radius sudut yang diinginkan
-                    color: Colors.white, // Sesuaikan dengan warna yang diinginkan
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Tersedia",
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 10),
-                    ),
-                  ),
-                )
-
               ],
             ),
           ),

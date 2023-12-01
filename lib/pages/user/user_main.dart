@@ -40,7 +40,7 @@ class _UserMainScreenState extends State<UserMainScreen> {
             /// Home
             SalomonBottomBarItem(
               icon: const Icon(Iconsax.home),
-              title: const Text("Home"),
+              title: const Text("Beranda"),
               selectedColor: Theme.of(context).colorScheme.primary,
             ),
 
@@ -54,14 +54,14 @@ class _UserMainScreenState extends State<UserMainScreen> {
             /// Search
             SalomonBottomBarItem(
               icon: const Icon(Iconsax.send),
-              title: const Text("Payment"),
+              title: const Text("Pembayaran"),
               selectedColor: Theme.of(context).colorScheme.primary,
             ),
 
             /// Profile
             SalomonBottomBarItem(
               icon: const Icon(Iconsax.user),
-              title: const Text("Profile"),
+              title: const Text("Profil"),
               selectedColor: Theme.of(context).colorScheme.primary,
             ),
           ],
