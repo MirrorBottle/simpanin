@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:simpanin/pages/misc/splash.dart';
 import 'package:simpanin/firebase_options.dart';
+import 'package:simpanin/providers/mailbox_book_provider.dart';
 import 'package:simpanin/providers/theme_mode_provider.dart';
 
 Future<void> main() async {
@@ -25,6 +26,8 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider(
             create: (BuildContext context) => ThemeModeProvider()),
+          ChangeNotifierProvider(
+            create: (BuildContext context) => MailboxBookProvider()),
         ],
         child: MaterialApp(
             debugShowCheckedModeBanner: false,

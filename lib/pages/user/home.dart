@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:simpanin/components/button_component.dart';
-import 'package:unicons/unicons.dart';
 
 class UserHomeScreen extends StatefulWidget {
   const UserHomeScreen({super.key});

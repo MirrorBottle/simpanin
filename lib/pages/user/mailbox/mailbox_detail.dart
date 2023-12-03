@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:simpanin/components/button_component.dart';
 import 'package:simpanin/models/mailbox.dart';
+import 'package:simpanin/pages/user/mailbox/mailbox_book.dart';
+import 'package:simpanin/providers/mailbox_book_provider.dart';
 
 class UserMailboxDetailScreen extends StatefulWidget {
   final MailboxModel mailbox;
@@ -14,7 +17,14 @@ class UserMailboxDetailScreen extends StatefulWidget {
 class _UserMailboxDetailScreenState extends State<UserMailboxDetailScreen> {
   bool loading = false;
 
-  void _handleUbah() async {}
+  void _handleMailboxBook() async {
+    Provider.of<MailboxBookProvider>(context, listen: false)
+        .changeMailbox(mailbox: widget.mailbox);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => UserMailboxBookScreen()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +73,8 @@ class _UserMailboxDetailScreenState extends State<UserMailboxDetailScreen> {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 15),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
@@ -78,17 +89,16 @@ class _UserMailboxDetailScreenState extends State<UserMailboxDetailScreen> {
                   ListTile(
                     dense: true,
                     leading: Text('Harga',
-                            style: Theme.of(context).textTheme.titleMedium),
+                        style: Theme.of(context).textTheme.titleMedium),
                     trailing: Text("${widget.mailbox.formattedPrice}/bln",
-                            style: Theme.of(context).textTheme.titleMedium),
+                        style: Theme.of(context).textTheme.titleMedium),
                   ),
                   ListTile(
                     dense: true,
-
                     leading: Text('Ukuran',
-                            style: Theme.of(context).textTheme.titleMedium),
+                        style: Theme.of(context).textTheme.titleMedium),
                     trailing: Text(widget.mailbox.size,
-                            style: Theme.of(context).textTheme.titleMedium),
+                        style: Theme.of(context).textTheme.titleMedium),
                   ),
                 ],
               ),
@@ -97,7 +107,7 @@ class _UserMailboxDetailScreenState extends State<UserMailboxDetailScreen> {
           ButtonComponent(
             loading: loading,
             buttontext: "Booking Mailbox",
-            onPressed: _handleUbah,
+            onPressed: _handleMailboxBook,
           ),
         ],
       ),

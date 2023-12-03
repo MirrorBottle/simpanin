@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:simpanin/components/button_component.dart';
-import 'package:unicons/unicons.dart';
 
 class StaffHomeScreen extends StatefulWidget {
   const StaffHomeScreen({super.key});
@@ -54,7 +53,6 @@ class _StaffHomeScreenState extends State<StaffHomeScreen> {
                 ],
               ),
             ),
-            
             const SizedBox(
               height: 10,
             ),
@@ -67,15 +65,19 @@ class _StaffHomeScreenState extends State<StaffHomeScreen> {
                   shape: BoxShape.circle,
                 ),
                 alignment: Alignment.center,
-                child: const Icon(
-                  Iconsax.like_1,
-                  color: Color(0xFFF16807),
-                  size: 32,
+                child: Center(
+                  child: Text("C2",
+                      style: Theme.of(context)
+                          .textTheme
+                          .displayMedium
+                          ?.copyWith(
+                              color: Theme.of(context).colorScheme.primary)),
                 ),
               ),
-              title: Text("B2", style: Theme.of(context).textTheme.titleLarge),
-              subtitle: Text("Done · 22 Nov",
-                  style: Theme.of(context).textTheme.bodyLarge),
+              title: Text("Bayu Setiawan",
+                  style: Theme.of(context).textTheme.titleLarge),
+              subtitle:
+                  Text("22 Nov", style: Theme.of(context).textTheme.bodyLarge),
               trailing: const Icon(
                 Iconsax.arrow_right,
                 color: Color.fromARGB(255, 32, 23, 23),
@@ -91,15 +93,19 @@ class _StaffHomeScreenState extends State<StaffHomeScreen> {
                   shape: BoxShape.circle,
                 ),
                 alignment: Alignment.center,
-                child: const Icon(
-                  Iconsax.clock,
-                  color: Color(0xFFF16807),
-                  size: 32,
+                child: Center(
+                  child: Text("C3",
+                      style: Theme.of(context)
+                          .textTheme
+                          .displayMedium
+                          ?.copyWith(
+                              color: Theme.of(context).colorScheme.primary)),
                 ),
               ),
-              title: Text("B1", style: Theme.of(context).textTheme.titleLarge),
-              subtitle: Text("Pending · 22 Nov",
-                  style: Theme.of(context).textTheme.bodyLarge),
+              title: Text("Ananta Yusra",
+                  style: Theme.of(context).textTheme.titleLarge),
+              subtitle:
+                  Text("22 Nov", style: Theme.of(context).textTheme.bodyLarge),
               trailing: const Icon(
                 Iconsax.arrow_right,
                 color: Color.fromARGB(255, 32, 23, 23),

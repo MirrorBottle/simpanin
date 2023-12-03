@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:simpanin/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:simpanin/services/user_service.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class AuthService {
   // ignore: prefer_final_fields

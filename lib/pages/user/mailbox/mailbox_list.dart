@@ -74,25 +74,27 @@ class _UserMailboxListScreenState extends State<UserMailboxListScreen> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              UserMailboxDetailScreen(mailbox: mailbox)),
+                                              UserMailboxDetailScreen(
+                                                  mailbox: mailbox)),
                                     );
                                   },
                                   leading: Container(
-                                    width: 60,
                                     height: 60,
-                                    decoration: const BoxDecoration(
+                                    width: 60,
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .tertiary,
                                       shape: BoxShape.circle,
-                                      color: Color(
-                                          0xFFF16807), // Sesuaikan dengan warna yang diinginkan
                                     ),
+                                    alignment: Alignment.center,
                                     child: Center(
                                       child: Text(mailbox.code,
                                           style: Theme.of(context)
                                               .textTheme
                                               .displayMedium
                                               ?.copyWith(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white)),
+                                                  color: Theme.of(context).colorScheme.primary)),
                                     ),
                                   ),
                                   title: Container(

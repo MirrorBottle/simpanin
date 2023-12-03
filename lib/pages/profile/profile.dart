@@ -3,10 +3,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:math';
 
 import 'package:iconsax/iconsax.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:simpanin/pages/auth/log_in.dart';
 import 'package:simpanin/pages/profile/profile_edit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+
 
 import 'profile_faq.dart';
 

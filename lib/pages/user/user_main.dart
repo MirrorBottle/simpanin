@@ -4,6 +4,7 @@ import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:simpanin/pages/profile/profile.dart';
 import 'package:simpanin/pages/user/home.dart';
 import 'package:simpanin/pages/user/mailbox/mailbox_list.dart';
+import 'package:simpanin/pages/user/payment/payment_list.dart';
 
 class UserMainScreen extends StatefulWidget {
   const UserMainScreen({Key? key}) : super(key: key);
@@ -17,7 +18,7 @@ class _UserMainScreenState extends State<UserMainScreen> {
   List<Widget> tabItems = [
     const UserHomeScreen(),
     const UserMailboxListScreen(),
-    const Center(child: Text("3")),
+    const UserPaymentListScreen(),
     const ProfileScreen(),
   ];
 
