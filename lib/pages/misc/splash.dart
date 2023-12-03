@@ -1,5 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 import 'package:simpanin/models/user.dart';
 import 'package:simpanin/pages/auth/log_in.dart';
 import 'package:simpanin/pages/staff/staff_main.dart';
@@ -9,6 +13,7 @@ import 'package:simpanin/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:simpanin/pages/misc/onboarding.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:simpanin/providers/user_provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -56,6 +61,7 @@ class _SplashScreenState extends State<SplashScreen> {
         UserModel user = await UserService.getUser(auth['id']);
         String authData = json.encode(user.toMap());
         prefs.setString('auth', authData);
+        Provider.of<UserProvider>(context, listen: false).setAuth(user);
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => user.role == 'user' ? const UserMainScreen() : StaffMainScreen()),

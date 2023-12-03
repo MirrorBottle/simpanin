@@ -25,6 +25,7 @@ class _UserMailboxListScreenState extends State<UserMailboxListScreen> {
         stream: db
             .collection('mailboxes')
             .where("availability", isEqualTo: true)
+            .orderBy("code")
             .snapshots(),
         builder: (context, snapshot) {
           return Column(
@@ -60,12 +61,7 @@ class _UserMailboxListScreenState extends State<UserMailboxListScreen> {
                   child: snapshot.hasData
                       ? ListView(
                           children: snapshot.data!.docs.map((doc) {
-                            MailboxModel mailbox = MailboxModel(
-                                id: doc.id,
-                                code: doc['code'],
-                                price: doc['price'],
-                                size: doc['size'],
-                                availability: doc['availability']);
+                            MailboxModel mailbox = MailboxModel.fromFirestore(doc);
                             return Column(
                               children: [
                                 ListTile(
