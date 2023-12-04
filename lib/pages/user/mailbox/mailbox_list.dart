@@ -14,9 +14,6 @@ class UserMailboxListScreen extends StatefulWidget {
 
 class _UserMailboxListScreenState extends State<UserMailboxListScreen> {
   final db = FirebaseFirestore.instance;
-
-  List<MailboxModel> mailboxItems = [];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

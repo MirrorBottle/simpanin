@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:simpanin/models/agreement.dart';
 import 'package:simpanin/models/maintenance.dart';
 import 'package:simpanin/models/user.dart';
+import 'package:simpanin/pages/user/maintenance/maintenance_list.dart';
 import 'package:simpanin/providers/user_provider.dart';
 
 class MailboxTile extends StatelessWidget {
@@ -309,7 +310,14 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                     Theme.of(context).textTheme.displayMedium,
                               ),
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const UserMaintenanceListScreen()),
+                                  );
+                                },
                                 child: Text(
                                   "Lihat Semua",
                                   style: Theme.of(context)
@@ -347,7 +355,8 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                               style: Theme.of(context).textTheme.titleLarge),
                           subtitle: Text(maintenance.note,
                               style: Theme.of(context).textTheme.bodyLarge),
-                          trailing: Text("${maintenance.formattedStartDate} ~ ${maintenance.formattedEndDate}",
+                          trailing: Text(
+                              "${maintenance.formattedStartDate} ~ ${maintenance.formattedEndDate}",
                               style: Theme.of(context).textTheme.bodyLarge),
                         ))
                   ],

@@ -36,14 +36,14 @@ class MailboxModel {
     };
   }
 
-  factory MailboxModel.fromFirestore(DocumentSnapshot doc){
+  factory MailboxModel.fromFirestore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     return MailboxModel(
       id: doc.id,
       code: data['code'],
       price: data['price'],
       size: data['size'],
-      availability: data['availability'],
+      availability: data['availability'] ?? false,
     );
   }
 

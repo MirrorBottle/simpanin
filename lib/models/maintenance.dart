@@ -29,11 +29,26 @@ class MaintenanceModel {
     );
   }
 
+  factory MaintenanceModel.fromFuture(QueryDocumentSnapshot doc, DocumentSnapshot mailbox) {
+    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    return MaintenanceModel(
+      id: doc.id,
+      startDate: data['start_date'],
+      endDate: data['end_date'],
+      note: data['note'],
+      mailbox: MailboxModel.fromFirestore(mailbox)
+    );
+  }
+
   String get formattedStartDate {
     return DateFormat('d MMM').format(startDate.toDate());
   }
 
   String get formattedEndDate {
     return DateFormat('d MMM').format(endDate.toDate());
+  }
+
+  bool get isDone {
+    return DateTime.now().isAfter(endDate.toDate());
   }
 }

@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:simpanin/pages/profile/profile.dart';
+import 'package:provider/provider.dart';
+import 'package:simpanin/models/mailbox.dart';
 import 'package:intl/intl.dart';
-import 'package:simpanin/pages/user/maintenance/maintenance_detail.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:simpanin/models/maintenance.dart';
+import 'package:simpanin/models/user.dart';
+import 'package:simpanin/pages/user/mailbox/mailbox_detail.dart';
+import 'package:simpanin/providers/user_provider.dart';
 
 class UserMaintenanceListScreen extends StatefulWidget {
   const UserMaintenanceListScreen({super.key});
@@ -12,197 +17,140 @@ class UserMaintenanceListScreen extends StatefulWidget {
       _UserMaintenanceListScreenState();
 }
 
-
-// class task
-class Task {
-  final String nama;
-  final DateTime deadline;
-  final int prioritas;
-  bool selesai;
-
-  Task({
-    required this.nama,
-    required this.deadline,
-    required this.prioritas,
-    this.selesai = false,
-  });
-
-  get catatan => null;
-
-  get nomorHP => null;
-}
-
-
 class _UserMaintenanceListScreenState extends State<UserMaintenanceListScreen> {
-  final _scrollController = ScrollController();
-  
+  final db = FirebaseFirestore.instance;
+  bool _loading = true;
+  final List<DocumentReference> _mailboxes = [];
 
-  final List<Task> tasks = [
-    Task(nama: 'A-1', deadline: DateTime(2023, 9, 30), prioritas: 1),
-    Task(nama: 'A-2', deadline: DateTime(2023, 10, 5), prioritas: 2),
-    Task(nama: 'A-3', deadline: DateTime(2023, 10, 10), prioritas: 3),
-    Task(nama: 'A-4', deadline: DateTime(2023, 10, 15), prioritas: 1),
-    Task(nama: 'A-5', deadline: DateTime(2023, 10, 20), prioritas: 3),
-    Task(nama: 'A-6', deadline: DateTime(2023, 10, 25), prioritas: 2),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _init();
+  }
+
+  void _init() async {
+    UserModel user = Provider.of<UserProvider>(context, listen: false).user;
+    try {
+      DocumentReference<Map<String, dynamic>> userRef =
+          db.collection('users').doc(user.id);
+      QuerySnapshot mailboxQuery = await db
+          .collection('agreements')
+          .where('user', isEqualTo: userRef)
+          .where('status', whereIn: ['active', 'pending']).get();
+      await Future.wait(mailboxQuery.docs.map((doc) async {
+        _mailboxes.add(doc['mailbox']);
+      }));
+      setState(() {
+        _loading = false;
+      });
+    } catch (e) {
+      print('Error fetching mailboxes: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    int totalTugas = tasks.length;
-    int totalPrioritas1 = tasks.where((task) => task.prioritas == 1).length;
-    int totalPrioritas2 = tasks.where((task) => task.prioritas == 2).length;
-    int totalPrioritas3 = tasks.where((task) => task.prioritas == 3).length;
-
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Color(0xFFeFeFeF),
-      appBar: AppBar(
-        toolbarHeight: 0,
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        titleSpacing: 0.0,
-        iconTheme: const IconThemeData(color: Colors.white),
-        automaticallyImplyLeading: false,
-        scrolledUnderElevation: 0,
-      ),
-      body: SingleChildScrollView(
-        controller: _scrollController,
-        reverse: true,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: BackButton(
-                color: Theme.of(context).colorScheme.primary,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ProfileScreen()),
-                  );
-                },
-              ),
-            ),
-            ListTile(
-              title: Text(
-                "Maintenance",
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFFF16807),
-                      fontSize: 30,
-                    ),
-              ),
-              subtitle: Text(
-                "User Maintenance List",
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      color: Color.fromARGB(255, 0, 0, 0),
-                    ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              constraints: BoxConstraints(
-                  minHeight: MediaQuery.of(context).size.height - 160),
-              width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.all(20.0),
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(32),
-                    topLeft: Radius.circular(32)),
-                color: Theme.of(context).colorScheme.background,
-              ),
-              child: ListView.builder(
-                // agar menangkap semua element di dalam singelchild untuk dapat di sroll menjadi satu
-                shrinkWrap: true,
-                // agar tidak perlu mengetuk container di atas listview terlebih dahulu ssebelum bisa di scroll,sehingga seluruh bagian pada halaman bisa di scroll
-                physics: const NeverScrollableScrollPhysics(),
-                // total jumlah / panjang list
-                itemCount: tasks.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Column(
-                    children: [
-                      ListTile(
-                        contentPadding: EdgeInsets.symmetric(vertical: 5),
-                        onTap: () {
-                          // Navigasi ke halaman detail dengan membawa data task
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => UserMaintenanceDetailScreen(
-                                  task: tasks[index]),
-                            ),
-                          );
-                        },
-                        leading: Container(
-                          height: 50,
-                          width: 50,
-                          margin: const EdgeInsets.only(right: 7),
-                          decoration: BoxDecoration(
-                            color: tasks[index].prioritas == 1
-                                ? Theme.of(context).colorScheme.primary
-                                : tasks[index].prioritas == 2
-                                    ? const Color.fromARGB(255, 29, 161, 101)
-                                    : Colors.blue,
-                            shape: BoxShape.circle,
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      body: _loading
+          ? const Center(child: Text("Loading...."))
+          : StreamBuilder<QuerySnapshot>(
+              stream: db
+                  .collection('maintenances')
+                  .where("mailbox", whereIn: _mailboxes)
+                  .orderBy("end_date")
+                  .snapshots(),
+              builder: (context, snapshot) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      padding: const EdgeInsets.only(
+                          top: 60.0, left: 30.0, right: 30.0, bottom: 60.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          const SizedBox(
+                            height: 10.0,
                           ),
-                          child: Center(
-                            child: Icon(
-                              tasks[index].prioritas == 1
-                                  ? Iconsax
-                                      .message_time // Ganti dengan ikon prioritas tertinggi
-                                  : tasks[index].prioritas == 2
-                                      ? Iconsax
-                                          .tick_circle // Ganti dengan ikon prioritas sedang
-                                      : Iconsax
-                                          .receipt_edit, // Ganti dengan ikon prioritas rendah
-                              color: Colors.white,
-                            ),
+                          Text(
+                            'Maintenance',
+                            style: Theme.of(context).textTheme.displayLarge,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 5, vertical: 30),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(32),
+                            topRight: Radius.circular(32),
                           ),
                         ),
-                        title: Text(
-                          tasks[index].nama,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
-                        ),
-                        subtitle: Text(
-                          DateFormat('yyyy-MM-dd')
-                              .format(tasks[index].deadline),
-                          style: const TextStyle(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15),
-                        ),
-                        trailing: const Icon(
-                          Iconsax.arrow_right,
-                          color: Color.fromARGB(255, 32, 23, 23),
-                          size: 22,
-                        ),
+                        child: snapshot.hasData
+                            ? ListView(
+                                children: snapshot.data!.docs.map((doc) {
+                                  return FutureBuilder(
+                                      future: doc['mailbox'].get(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<DocumentSnapshot>
+                                              mailbox) {
+                                        print(mailbox);
+                                        if (mailbox.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return Text('Loading...');
+                                        }
+                                        final maintenance =
+                                            MaintenanceModel.fromFuture(
+                                                doc, mailbox.data!);
+                                        return ListTile(
+                                          leading: Container(
+                                            height: 70,
+                                            width: 70,
+                                            decoration: BoxDecoration(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .tertiary,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            alignment: Alignment.center,
+                                            child: Icon(
+                                              maintenance.isDone ? Iconsax.like_1 : Iconsax.clock,
+                                              color: Color(0xFFF16807),
+                                              size: 32,
+                                            ),
+                                          ),
+                                          isThreeLine: true,
+                                          title: Text(maintenance.mailbox.code,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleLarge),
+                                          subtitle: Text(maintenance.note,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge),
+                                          trailing: Text(
+                                              "${maintenance.formattedStartDate} ~ ${maintenance.formattedEndDate}",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge),
+                                        );
+                                      });
+                                }).toList(),
+                              )
+                            : (const Center(
+                                child: CircularProgressIndicator(),
+                              )),
                       ),
-                      const Divider(
-                        height: 0,
-                        thickness: 0.8,
-                        indent: 65,
-                        endIndent: 0,
-                        color: Color.fromARGB(96, 72, 72, 72),
-                      ),
-                    ],
-                  );
-                },
-              ),
+                    ),
+                  ],
+                );
+              },
             ),
-          ],
-        ),
-      ),
-      // FloatingActionButton dengan label "Tambah"
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        tooltip: 'Tambah',
-        label: const Text("Tambah", style: TextStyle(color: Colors.white)),
-        icon: const Icon(Icons.add, color: Colors.white),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-      ),
     );
   }
 }
