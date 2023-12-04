@@ -52,46 +52,55 @@ class _UserMaintenanceListScreenState extends State<UserMaintenanceListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
-      body: _loading
-          ? const Center(child: Text("Loading...."))
-          : StreamBuilder<QuerySnapshot>(
-              stream: db
-                  .collection('maintenances')
-                  .where("mailbox", whereIn: _mailboxes)
-                  .orderBy("end_date")
-                  .snapshots(),
-              builder: (context, snapshot) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      padding: const EdgeInsets.only(
-                          top: 60.0, left: 30.0, right: 30.0, bottom: 60.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          const SizedBox(
-                            height: 10.0,
-                          ),
-                          Text(
-                            'Maintenance',
-                            style: Theme.of(context).textTheme.displayLarge,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 5, vertical: 30),
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(32),
-                            topRight: Radius.circular(32),
-                          ),
-                        ),
-                        child: snapshot.hasData
+      appBar: AppBar(
+          toolbarHeight: 70,
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          scrolledUnderElevation: 0,
+          leading: const BackButton(
+            color: Colors.white,
+          )),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            padding:
+                const EdgeInsets.only(left: 30.0, right: 30.0, bottom: 40.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const SizedBox(
+                  height: 10.0,
+                ),
+                Text(
+                  'Maintenance',
+                  style: Theme.of(context).textTheme.displayLarge,
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 30),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(32),
+                  topRight: Radius.circular(32),
+                ),
+              ),
+              child: _loading
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : StreamBuilder<QuerySnapshot>(
+                      stream: db
+                          .collection('maintenances')
+                          .where("mailbox", whereIn: _mailboxes)
+                          .orderBy("end_date")
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        return snapshot.hasData
                             ? ListView(
                                 children: snapshot.data!.docs.map((doc) {
                                   return FutureBuilder(
@@ -99,10 +108,9 @@ class _UserMaintenanceListScreenState extends State<UserMaintenanceListScreen> {
                                       builder: (BuildContext context,
                                           AsyncSnapshot<DocumentSnapshot>
                                               mailbox) {
-                                        print(mailbox);
                                         if (mailbox.connectionState ==
                                             ConnectionState.waiting) {
-                                          return Text('Loading...');
+                                          return const Text('');
                                         }
                                         final maintenance =
                                             MaintenanceModel.fromFuture(
@@ -119,8 +127,10 @@ class _UserMaintenanceListScreenState extends State<UserMaintenanceListScreen> {
                                             ),
                                             alignment: Alignment.center,
                                             child: Icon(
-                                              maintenance.isDone ? Iconsax.like_1 : Iconsax.clock,
-                                              color: Color(0xFFF16807),
+                                              maintenance.isDone
+                                                  ? Iconsax.like_1
+                                                  : Iconsax.clock,
+                                              color: const Color(0xFFF16807),
                                               size: 32,
                                             ),
                                           ),
@@ -144,13 +154,13 @@ class _UserMaintenanceListScreenState extends State<UserMaintenanceListScreen> {
                               )
                             : (const Center(
                                 child: CircularProgressIndicator(),
-                              )),
-                      ),
+                              ));
+                      },
                     ),
-                  ],
-                );
-              },
             ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -29,7 +29,7 @@ class MaintenanceModel {
     );
   }
 
-  factory MaintenanceModel.fromFuture(QueryDocumentSnapshot doc, DocumentSnapshot mailbox) {
+  factory MaintenanceModel.fromFuture(DocumentSnapshot doc, DocumentSnapshot mailbox) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     return MaintenanceModel(
       id: doc.id,

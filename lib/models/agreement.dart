@@ -38,6 +38,20 @@ class AgreementModel {
     );
   }
 
+  factory AgreementModel.fromFuture(DocumentSnapshot doc, DocumentSnapshot mailbox) {
+    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    return AgreementModel(
+      id: doc.id,
+      accessCode: data['access_code'],
+      startDate: data['start_date'],
+      endDate: data['end_date'],
+      note: data['note'],
+      status: data['status'],
+      monthlyCost: data['monthly_cost'],
+      mailbox: MailboxModel.fromFirestore(mailbox)
+    );
+  }
+
   String get formattedEndDate {
     return DateFormat('d MMM').format(endDate.toDate());
   }
