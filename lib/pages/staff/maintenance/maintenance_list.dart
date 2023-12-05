@@ -69,57 +69,59 @@ class _StaffMaintenanceListScreenState
                           .snapshots(),
                       builder: (context, snapshot) {
                         return snapshot.hasData
-                            ? ListView(
-                                children: snapshot.data!.docs.map((doc) {
-                                  return FutureBuilder(
-                                      future: doc['mailbox'].get(),
-                                      builder: (BuildContext context,
-                                          AsyncSnapshot<DocumentSnapshot>
-                                              mailbox) {
-                                        if (mailbox.connectionState ==
-                                            ConnectionState.waiting) {
-                                          return const Text('');
-                                        }
-                                        final maintenance =
-                                            MaintenanceModel.fromFuture(
-                                                doc, mailbox.data!);
-                                        return ListTile(
-                                          leading: Container(
-                                            height: 70,
-                                            width: 70,
-                                            decoration: BoxDecoration(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .tertiary,
-                                              shape: BoxShape.circle,
+                            ? SizedBox(height: 100,
+                              child: ListView(
+                                  children: snapshot.data!.docs.map((doc) {
+                                    return FutureBuilder(
+                                        future: doc['mailbox'].get(),
+                                        builder: (BuildContext context,
+                                            AsyncSnapshot<DocumentSnapshot>
+                                                mailbox) {
+                                          if (mailbox.connectionState ==
+                                              ConnectionState.waiting) {
+                                            return const Text('');
+                                          }
+                                          final maintenance =
+                                              MaintenanceModel.fromFuture(
+                                                  doc, mailbox.data!);
+                                          return ListTile(
+                                            leading: Container(
+                                              height: 70,
+                                              width: 70,
+                                              decoration: BoxDecoration(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .tertiary,
+                                                shape: BoxShape.circle,
+                                              ),
+                                              alignment: Alignment.center,
+                                              child: Icon(
+                                                maintenance.isDone
+                                                    ? Iconsax.like_1
+                                                    : Iconsax.clock,
+                                                color: const Color(0xFFF16807),
+                                                size: 32,
+                                              ),
                                             ),
-                                            alignment: Alignment.center,
-                                            child: Icon(
-                                              maintenance.isDone
-                                                  ? Iconsax.like_1
-                                                  : Iconsax.clock,
-                                              color: const Color(0xFFF16807),
-                                              size: 32,
-                                            ),
-                                          ),
-                                          isThreeLine: true,
-                                          title: Text(maintenance.mailbox.code,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleLarge),
-                                          subtitle: Text(maintenance.note,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyLarge),
-                                          trailing: Text(
-                                              "${maintenance.formattedStartDate} ~ ${maintenance.formattedEndDate}",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyLarge),
-                                        );
-                                      });
-                                }).toList(),
-                              )
+                                            isThreeLine: true,
+                                            title: Text(maintenance.mailbox.code,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleLarge),
+                                            subtitle: Text(maintenance.note,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge),
+                                            trailing: Text(
+                                                "${maintenance.formattedStartDate} ~ ${maintenance.formattedEndDate}",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge),
+                                          );
+                                        });
+                                  }).toList(),
+                                ),
+                            )
                             : (const Center(
                                 child: CircularProgressIndicator(),
                               ));

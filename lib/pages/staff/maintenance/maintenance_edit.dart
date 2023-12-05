@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:simpanin/components/button_component.dart';
-
 import 'package:simpanin/pages/staff/maintenance/maintenance_list.dart';
 
 class StaffMaintenanceEditScreen extends StatefulWidget {
-
+  const StaffMaintenanceEditScreen({super.key});
   @override
   State<StaffMaintenanceEditScreen> createState() => _StaffMaintenanceEditScreenState();
 }
@@ -24,19 +23,7 @@ class _StaffMaintenanceEditScreenState extends State<StaffMaintenanceEditScreen>
   @override
 
   
-  void _handleUbah() async {
-  setState(() {
-    loading = true;
-  });
-  try {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => StaffMaintenanceListScreen(),)
-    );
-  } catch (e) {
-    print(e);
-  }
-}
+
 
 
   @override
@@ -175,7 +162,7 @@ class _StaffMaintenanceEditScreenState extends State<StaffMaintenanceEditScreen>
                   ButtonComponent(
                     loading: loading,
                     buttontext: "Selesai",
-                    onPressed: _handleUbah,
+                    onPressed: {},
                   ),
                 ],
               ),
