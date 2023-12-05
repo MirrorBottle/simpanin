@@ -30,16 +30,16 @@ class _StaffMailboxCreateScreenState extends State<StaffMailboxCreateScreen> {
     });
 
     try {
-      db.collection("agreements").add({
-        'code': _kodeController,
-        'price': _hargaController,
+      db.collection("mailboxes").add({
+        'code': _kodeController.text,
+        'price': _hargaController.text,
         'size': _selectedUkuran,
         'availability': true,
-      }).then((agreementRef) async {
+      }).then((mailboxRef) async {
         showTopSnackBar(
           Overlay.of(context),
-          const CustomSnackBar.success(
-            message: "Mailbox Berhasil Ditambah!",
+          CustomSnackBar.success(
+            message: "Mailbox ${_kodeController.text} Berhasil Ditambah!",
           ),
         );
         Navigator.push(
