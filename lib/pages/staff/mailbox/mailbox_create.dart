@@ -1,5 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:simpanin/components/button_component.dart';
+import 'package:simpanin/pages/staff/mailbox/mailbox_list.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class StaffMailboxCreateScreen extends StatefulWidget {
   const StaffMailboxCreateScreen({super.key});
@@ -13,17 +17,52 @@ class _StaffMailboxCreateScreenState extends State<StaffMailboxCreateScreen> {
   final TextEditingController _kodeController = TextEditingController();
   final TextEditingController _hargaController = TextEditingController();
 
-  List<String> ukuran = ['1 x 1', '2 x 2', '1 x 3'];
+  List<String> ukuran = ['1x1', '2x2', '2x1', '4x4'];
   String? _selectedUkuran;
+
+  static final db = FirebaseFirestore.instance;
 
   bool loading = false;
 
-  void _handleTambah() async {}
+  void _handleTambah() async {
+    setState(() {
+      loading = true;
+    });
+
+    try {
+      db.collection("mailboxes").add({
+        'code': _kodeController.text,
+        'price': _hargaController.text,
+        'size': _selectedUkuran,
+        'availability': true,
+      }).then((mailboxRef) async {
+        showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.success(
+            message: "Mailbox ${_kodeController.text} Berhasil Ditambah!",
+          ),
+        );
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const StaffMailboxListScreen()),
+        );
+      });
+    } catch (e) {
+      print(e);
+      showTopSnackBar(
+        Overlay.of(context),
+        const CustomSnackBar.error(
+          message: "Terjadi Kesalahan!",
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Theme.of(context).colorScheme.tertiary,
       appBar: AppBar(
           toolbarHeight: 70,
           backgroundColor: Colors.transparent,
