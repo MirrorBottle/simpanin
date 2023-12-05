@@ -68,8 +68,8 @@ class _StaffMailboxCreateScreenState extends State<StaffMailboxCreateScreen> {
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           scrolledUnderElevation: 0,
-          leading: const BackButton(
-            color: Colors.white,
+          leading: BackButton(
+            color: Theme.of(context).colorScheme.primary,
           )),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

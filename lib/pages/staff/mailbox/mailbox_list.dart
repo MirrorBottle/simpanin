@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:simpanin/pages/staff/mailbox/mailbox_create.dart';
 import 'package:simpanin/pages/staff/mailbox/mailbox_detail.dart';
+import 'package:simpanin/pages/staff/mailbox/mailbox_edit.dart';
 import 'package:simpanin/pages/user/mailbox/mailbox_detail.dart';
 
 class StaffMailboxListScreen extends StatefulWidget {
@@ -19,7 +20,46 @@ class _StaffMailboxListScreenState extends State<StaffMailboxListScreen> {
 
   final _scrollController = ScrollController();
 
-  List<MailboxModel> mailboxItems = [];
+  void _clickBottomSheet(MailboxModel mailbox) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext c) {
+          return Container(
+            height: 200,
+            padding: const EdgeInsets.all(20),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25.0),
+                topRight: Radius.circular(25.0),
+              ),
+            ),
+            child: Column(children: [
+              ListTile(
+                contentPadding: EdgeInsets.all(10),
+                leading: const Icon(Iconsax.edit),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            StaffMailboxEditScreen(mailbox: mailbox)),
+                  );
+                },
+                title:
+                    Text("Ubah", style: Theme.of(context).textTheme.titleLarge),
+              ),
+              Divider(height: 2),
+              ListTile(
+                contentPadding: EdgeInsets.all(10),
+                leading: const Icon(Iconsax.trash),
+                title: Text("Hapus",
+                    style: Theme.of(context).textTheme.titleLarge),
+              ),
+            ]),
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +107,9 @@ class _StaffMailboxListScreenState extends State<StaffMailboxListScreen> {
                                 return Column(
                                   children: [
                                     ListTile(
-                                      onLongPress: () {},
+                                      onLongPress: () {
+                                        _clickBottomSheet(mailbox);
+                                      },
                                       onTap: () {
                                         Navigator.push(
                                           context,
