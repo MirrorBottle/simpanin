@@ -8,6 +8,7 @@ import 'package:simpanin/pages/staff/maintenance/maintenance_create.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:simpanin/models/maintenance.dart';
+import 'package:simpanin/pages/staff/maintenance/maintenance_mailbox_list.dart';
 import 'package:simpanin/providers/user_provider.dart';
 
 class StaffMaintenanceListScreen extends StatefulWidget {
@@ -95,78 +96,88 @@ class _StaffMaintenanceListScreenState
                 color: Theme.of(context).colorScheme.background,
               ),
               child: StreamBuilder<QuerySnapshot>(
-                stream: db
-                    .collection('maintenances')
-                    .orderBy("end_date")
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  return snapshot.hasData
-                      ? SizedBox(
-                          height: 100,
-                          child: ListView(
-                            children: snapshot.data!.docs.map((doc) {
-                              return FutureBuilder(
-                                  future: doc['mailbox'].get(),
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot<DocumentSnapshot> mailbox) {
-                                    if (mailbox.connectionState ==
-                                        ConnectionState.waiting) {
-                                      return const Text('');
-                                    }
-                                    final maintenance =
-                                        MaintenanceModel.fromFuture(
-                                            doc, mailbox.data!);
-                                    return ListTile(
-                                      onTap: _clickBottomSheet,
-                                      leading: Container(
-                                        height: 70,
-                                        width: 70,
-                                        decoration: BoxDecoration(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .tertiary,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        alignment: Alignment.center,
-                                        child: Icon(
-                                          maintenance.isDone
-                                              ? Iconsax.like_1
-                                              : Iconsax.clock,
-                                          color: const Color(0xFFF16807),
-                                          size: 32,
-                                        ),
-                                      ),
-                                      isThreeLine: true,
-                                      title: Text(maintenance.mailbox.code,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleLarge),
-                                      subtitle: Text(maintenance.note,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge),
-                                      trailing: Text(
-                                          "${maintenance.formattedStartDate} ~ ${maintenance.formattedEndDate}",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge),
-                                    );
-                                  });
-                            }).toList(),
-                          ),
-                        )
-                      : (const Center(
-                          child: CircularProgressIndicator(),
-                        ));
-                },
-              ),
+                      stream: db
+                          .collection('maintenances')
+                          .orderBy("end_date")
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        return snapshot.hasData
+                            ? SizedBox(height: 100,
+                              child: ListView(
+                                  children: snapshot.data!.docs.map((doc) {
+                                    return FutureBuilder(
+                                        future: doc['mailbox'].get(),
+                                        builder: (BuildContext context,
+                                            AsyncSnapshot<DocumentSnapshot>
+                                                mailbox) {
+                                          if (mailbox.connectionState ==
+                                              ConnectionState.waiting) {
+                                            return const Text('');
+                                          }
+                                          final maintenance =
+                                              MaintenanceModel.fromFuture(
+                                                  doc, mailbox.data!);
+                                          
+                                          return ListTile(
+                                            leading: Container(
+                                              height: 70,
+                                              width: 70,
+                                              decoration: BoxDecoration(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .tertiary,
+                                                shape: BoxShape.circle,
+                                              ),
+                                              alignment: Alignment.center,
+                                              child: Icon(
+                                                maintenance.isDone
+                                                    ? Iconsax.like_1
+                                                    : Iconsax.clock,
+                                                color: const Color(0xFFF16807),
+                                                size: 32,
+                                              ),
+                                            ),
+                                            
+                                            title: Text(maintenance.mailbox.code,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleLarge),
+                                            subtitle: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(maintenance.note,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyLarge),
+                                                Text(
+                                                "${maintenance.formattedStartDate} ~ ${maintenance.formattedEndDate}",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge),
+                                              ],
+                                            ),
+                                          );
+                                        });
+                                  }).toList(),
+                                ),
+                            )
+                            : (const Center(
+                                child: CircularProgressIndicator(),
+                              ));
+                      },
+                    ),
             ),
           ],
         ),
       ),
       // FloatingActionButton dengan label "Tambah"
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MaintenanceMailboxListScreen()),
+          );
+        },
         tooltip: 'Tambah',
         label: const Text("Tambah", style: TextStyle(color: Colors.white)),
         icon: const Icon(Icons.add, color: Colors.white),

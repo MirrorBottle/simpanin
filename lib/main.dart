@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:simpanin/pages/misc/splash.dart';
 import 'package:simpanin/firebase_options.dart';
+import 'package:simpanin/providers/maintenance_create_provider.dart';
 import 'package:simpanin/providers/user_provider.dart';
 import 'package:simpanin/providers/mailbox_book_provider.dart';
 import 'package:simpanin/providers/theme_mode_provider.dart';
@@ -31,6 +32,8 @@ class MyApp extends StatelessWidget {
             create: (BuildContext context) => MailboxBookProvider()),
           ChangeNotifierProvider(
             create: (BuildContext context) => UserProvider()),
+          ChangeNotifierProvider(
+            create: (BuildContext context) => MaintenanceCreateProvider()),
         ],
         child: MaterialApp(
             debugShowCheckedModeBanner: false,

@@ -57,7 +57,7 @@ class _StaffMaintenanceCreateScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Color(0xFFeFeFeF),
+      backgroundColor: Theme.of(context).colorScheme.tertiary,
       appBar: AppBar(
         toolbarHeight: 0,
         backgroundColor: Colors.transparent,
@@ -88,17 +88,11 @@ class _StaffMaintenanceCreateScreenState
             ),
             ListTile(
               title: Text(
-                "Create Maintenance",
+                "Tambah\nMaintenance",
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Color(0xFFF16807),
                       fontSize: 30,
-                    ),
-              ),
-              subtitle: Text(
-                "Creat Staff Maintenance",
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      color: Color.fromARGB(255, 0, 0, 0),
                     ),
               ),
             ),
@@ -107,7 +101,7 @@ class _StaffMaintenanceCreateScreenState
             ),
             Container(
               constraints: BoxConstraints(
-                minHeight: MediaQuery.of(context).size.height - 175,
+                minHeight: MediaQuery.of(context).size.height - 185,
               ),
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.all(20.0),
