@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:simpanin/models/user.dart';
 import 'package:simpanin/pages/profile/profile.dart';
 import 'package:simpanin/pages/staff/maintenance/maintenance_create.dart';
 import 'package:simpanin/pages/staff/maintenance/maintenance_detail.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:simpanin/models/maintenance.dart';
+import 'package:simpanin/providers/user_provider.dart';
+
 
 class StaffMaintenanceListScreen extends StatefulWidget {
   const StaffMaintenanceListScreen({super.key});
@@ -14,35 +20,15 @@ class StaffMaintenanceListScreen extends StatefulWidget {
 }
 
 // class task
-class Task {
-  final String nama;
-  final DateTime deadline;
-  final int prioritas;
-  final DateTime?
-      tanggalMulai; // Tambahkan tanda tanya (?) untuk mengizinkan nilai null
-  final DateTime?
-      tanggalSelesai; // Tambahkan tanda tanya (?) untuk mengizinkan nilai null
-  final String nomorHP;
-  final String catatan;
-  bool selesai;
-
-  Task({
-    required this.nama,
-    required this.deadline,
-    required this.prioritas,
-    required this.tanggalMulai,
-    required this.tanggalSelesai,
-    required this.nomorHP,
-    required this.catatan,
-    this.selesai = false,
-  });
-}
-
 class _StaffMaintenanceListScreenState
     extends State<StaffMaintenanceListScreen> {
   final _scrollController = ScrollController();
+  final db = FirebaseFirestore.instance;
 
-  final List<Task> tasks = [];
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,30 +62,76 @@ class _StaffMaintenanceListScreenState
                     topLeft: Radius.circular(32)),
                 color: Theme.of(context).colorScheme.background,
               ),
-              child: Text("test"),
+              child: StreamBuilder<QuerySnapshot>(
+                      stream: db
+                          .collection('maintenances')
+                          .orderBy("end_date")
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        return snapshot.hasData
+                            ? ListView(
+                                children: snapshot.data!.docs.map((doc) {
+                                  return FutureBuilder(
+                                      future: doc['mailbox'].get(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<DocumentSnapshot>
+                                              mailbox) {
+                                        if (mailbox.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return const Text('');
+                                        }
+                                        final maintenance =
+                                            MaintenanceModel.fromFuture(
+                                                doc, mailbox.data!);
+                                        return ListTile(
+                                          leading: Container(
+                                            height: 70,
+                                            width: 70,
+                                            decoration: BoxDecoration(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .tertiary,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            alignment: Alignment.center,
+                                            child: Icon(
+                                              maintenance.isDone
+                                                  ? Iconsax.like_1
+                                                  : Iconsax.clock,
+                                              color: const Color(0xFFF16807),
+                                              size: 32,
+                                            ),
+                                          ),
+                                          isThreeLine: true,
+                                          title: Text(maintenance.mailbox.code,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleLarge),
+                                          subtitle: Text(maintenance.note,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge),
+                                          trailing: Text(
+                                              "${maintenance.formattedStartDate} ~ ${maintenance.formattedEndDate}",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge),
+                                        );
+                                      });
+                                }).toList(),
+                              )
+                            : (const Center(
+                                child: CircularProgressIndicator(),
+                              ));
+                      },
+                    ),
             ),
           ],
         ),
       ),
       // FloatingActionButton dengan label "Tambah"
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          // Navigasi ke halaman StaffMaintenanceCreateScreen
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => StaffMaintenanceCreateScreen(),
-            ),
-          ).then((createdTask) {
-            // Callback yang dijalankan setelah kembali dari halaman StaffMaintenanceCreateScreen
-            if (createdTask != null) {
-              // Tambahkan task baru ke daftar tasks
-              setState(() {
-                tasks.add(createdTask);
-              });
-            }
-          });
-        },
+        onPressed: () {},
         tooltip: 'Tambah',
         label: const Text("Tambah", style: TextStyle(color: Colors.white)),
         icon: const Icon(Icons.add, color: Colors.white),
