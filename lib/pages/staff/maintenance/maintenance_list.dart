@@ -8,6 +8,7 @@ import 'package:simpanin/pages/staff/maintenance/maintenance_create.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:simpanin/models/maintenance.dart';
+import 'package:simpanin/pages/staff/maintenance/maintenance_mailbox_list.dart';
 import 'package:simpanin/providers/user_provider.dart';
 
 
@@ -84,6 +85,7 @@ class _StaffMaintenanceListScreenState
                                           final maintenance =
                                               MaintenanceModel.fromFuture(
                                                   doc, mailbox.data!);
+                                          
                                           return ListTile(
                                             leading: Container(
                                               height: 70,
@@ -103,20 +105,25 @@ class _StaffMaintenanceListScreenState
                                                 size: 32,
                                               ),
                                             ),
-                                            isThreeLine: true,
+                                            
                                             title: Text(maintenance.mailbox.code,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .titleLarge),
-                                            subtitle: Text(maintenance.note,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyLarge),
-                                            trailing: Text(
+                                            subtitle: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(maintenance.note,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyLarge),
+                                                Text(
                                                 "${maintenance.formattedStartDate} ~ ${maintenance.formattedEndDate}",
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .bodyLarge),
+                                              ],
+                                            ),
                                           );
                                         });
                                   }).toList(),
@@ -133,7 +140,12 @@ class _StaffMaintenanceListScreenState
       ),
       // FloatingActionButton dengan label "Tambah"
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MaintenanceMailboxListScreen()),
+          );
+        },
         tooltip: 'Tambah',
         label: const Text("Tambah", style: TextStyle(color: Colors.white)),
         icon: const Icon(Icons.add, color: Colors.white),
