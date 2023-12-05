@@ -4,6 +4,7 @@ import 'package:simpanin/models/mailbox.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:simpanin/pages/staff/mailbox/mailbox_create.dart';
+import 'package:simpanin/pages/staff/mailbox/mailbox_detail.dart';
 import 'package:simpanin/pages/user/mailbox/mailbox_detail.dart';
 
 class StaffMailboxListScreen extends StatefulWidget {
@@ -68,12 +69,14 @@ class _StaffMailboxListScreenState extends State<StaffMailboxListScreen> {
                               return Column(
                                 children: [
                                   ListTile(
+                                    onLongPress: () { 
+                                    },
                                     onTap: () {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                UserMailboxDetailScreen(
+                                                StaffMailboxDetailScreen(
                                                     mailbox: mailbox)),
                                       );
                                     },
@@ -81,7 +84,7 @@ class _StaffMailboxListScreenState extends State<StaffMailboxListScreen> {
                                       height: 60,
                                       width: 60,
                                       decoration: BoxDecoration(
-                                        color: Theme.of(context)
+                                        color: mailbox.availability ? Colors.green  : Theme.of(context)
                                             .colorScheme
                                             .tertiary,
                                         shape: BoxShape.circle,
@@ -93,7 +96,7 @@ class _StaffMailboxListScreenState extends State<StaffMailboxListScreen> {
                                                 .textTheme
                                                 .displayMedium
                                                 ?.copyWith(
-                                                    color: Theme.of(context)
+                                                    color: mailbox.availability ? Colors.white  : Theme.of(context)
                                                         .colorScheme
                                                         .primary)),
                                       ),
