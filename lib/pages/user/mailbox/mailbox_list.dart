@@ -58,7 +58,8 @@ class _UserMailboxListScreenState extends State<UserMailboxListScreen> {
                   child: snapshot.hasData
                       ? ListView(
                           children: snapshot.data!.docs.map((doc) {
-                            MailboxModel mailbox = MailboxModel.fromFirestore(doc);
+                            MailboxModel mailbox =
+                                MailboxModel.fromFirestore(doc);
                             return Column(
                               children: [
                                 ListTile(
@@ -87,42 +88,19 @@ class _UserMailboxListScreenState extends State<UserMailboxListScreen> {
                                               .textTheme
                                               .displayMedium
                                               ?.copyWith(
-                                                  color: Theme.of(context).colorScheme.primary)),
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary)),
                                     ),
                                   ),
-                                  title: Container(
-                                      padding: const EdgeInsets.all(10.0),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(
-                                            10.0), // Radius sudut border kotak
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(mailbox.formattedPrice,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyMedium
-                                                        ?.copyWith(
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .colorScheme
-                                                                .secondary)),
-                                                const SizedBox(height: 4),
-                                                Text("Ukuran : ${mailbox.size}",
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodySmall)
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      )),
+                                  title: Text(mailbox.formattedPrice,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge),
+                                  subtitle: Text("Ukuran ${mailbox.size}",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge!.copyWith(color: Colors.grey)),
                                   trailing: Icon(
                                     Iconsax.arrow_right,
                                     color:

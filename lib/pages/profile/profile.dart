@@ -47,7 +47,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: const Color(0xFFeFeFeF),
+      backgroundColor: Theme.of(context).colorScheme.tertiary,
       appBar: AppBar(
         toolbarHeight: 0,
         backgroundColor: Colors.transparent,

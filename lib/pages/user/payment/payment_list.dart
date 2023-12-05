@@ -145,7 +145,7 @@ class _UserPaymentListScreenState extends State<UserPaymentListScreen> {
                                               payment.formattedDate,
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .bodyLarge),
+                                                  .bodyLarge!.copyWith(color: Colors.grey)),
                                         );
                                       });
                                 }).toList(),
