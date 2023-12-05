@@ -11,7 +11,6 @@ import 'package:simpanin/models/maintenance.dart';
 import 'package:simpanin/pages/staff/maintenance/maintenance_mailbox_list.dart';
 import 'package:simpanin/providers/user_provider.dart';
 
-
 class StaffMaintenanceListScreen extends StatefulWidget {
   const StaffMaintenanceListScreen({super.key});
 
@@ -29,6 +28,39 @@ class _StaffMaintenanceListScreenState
   @override
   void initState() {
     super.initState();
+  }
+
+  void _clickBottomSheet() {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext c) {
+          return Container(
+            height: 200,
+            padding: const EdgeInsets.all(20),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25.0),
+                topRight: Radius.circular(25.0),
+              ),
+            ),
+            child: Column(children: [
+              ListTile(
+                contentPadding: EdgeInsets.all(10),
+                leading: const Icon(Iconsax.edit),
+                title:
+                    Text("Ubah", style: Theme.of(context).textTheme.titleLarge),
+              ),
+              Divider(height: 2),
+              ListTile(
+                contentPadding: EdgeInsets.all(10),
+                leading: const Icon(Iconsax.trash),
+                title:
+                    Text("Hapus", style: Theme.of(context).textTheme.titleLarge),
+              ),
+            ]),
+          );
+        });
   }
 
   @override
@@ -53,8 +85,8 @@ class _StaffMaintenanceListScreenState
             ),
             const SizedBox(height: 35),
             Container(
-              constraints:
-                  BoxConstraints(minHeight: MediaQuery.of(context).size.height - 255),
+              constraints: BoxConstraints(
+                  minHeight: MediaQuery.of(context).size.height - 255),
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.all(20.0),
               decoration: BoxDecoration(
