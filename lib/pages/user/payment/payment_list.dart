@@ -48,8 +48,6 @@ class _UserPaymentListScreenState extends State<UserPaymentListScreen> {
     }
   }
 
-  List<MailboxModel> mailboxItems = [];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
