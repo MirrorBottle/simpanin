@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:simpanin/models/mailbox.dart';
+import 'package:simpanin/models/user.dart';
 
 class AgreementModel {
   String id;
@@ -11,6 +12,7 @@ class AgreementModel {
   String status;
   int monthlyCost;
   MailboxModel mailbox;
+  UserModel? user;
 
   AgreementModel({
     required this.id,
@@ -21,11 +23,13 @@ class AgreementModel {
     required this.status,
     required this.monthlyCost,
     required this.mailbox,
+    this.user,
   });
 
   static Future<AgreementModel> fromFirestore(DocumentSnapshot doc) async {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     DocumentSnapshot mailbox = await data['mailbox'].get();
+    DocumentSnapshot user = await data['user'].get();
     return AgreementModel(
       id: doc.id,
       accessCode: data['access_code'],
@@ -34,7 +38,8 @@ class AgreementModel {
       note: data['note'],
       status: data['status'],
       monthlyCost: data['monthly_cost'],
-      mailbox: MailboxModel.fromFirestore(mailbox)
+      mailbox: MailboxModel.fromFirestore(mailbox),
+      user: UserModel.fromFirestore(user)
     );
   }
 

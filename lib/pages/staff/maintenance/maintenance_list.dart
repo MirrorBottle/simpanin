@@ -10,7 +10,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:simpanin/models/maintenance.dart';
 import 'package:simpanin/providers/user_provider.dart';
 
-
 class StaffMaintenanceListScreen extends StatefulWidget {
   const StaffMaintenanceListScreen({super.key});
 
@@ -28,6 +27,39 @@ class _StaffMaintenanceListScreenState
   @override
   void initState() {
     super.initState();
+  }
+
+  void _clickBottomSheet() {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext c) {
+          return Container(
+            height: 200,
+            padding: const EdgeInsets.all(20),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25.0),
+                topRight: Radius.circular(25.0),
+              ),
+            ),
+            child: Column(children: [
+              ListTile(
+                contentPadding: EdgeInsets.all(10),
+                leading: const Icon(Iconsax.edit),
+                title:
+                    Text("Ubah", style: Theme.of(context).textTheme.titleLarge),
+              ),
+              Divider(height: 2),
+              ListTile(
+                contentPadding: EdgeInsets.all(10),
+                leading: const Icon(Iconsax.trash),
+                title:
+                    Text("Hapus", style: Theme.of(context).textTheme.titleLarge),
+              ),
+            ]),
+          );
+        });
   }
 
   @override
@@ -52,8 +84,8 @@ class _StaffMaintenanceListScreenState
             ),
             const SizedBox(height: 35),
             Container(
-              constraints:
-                  BoxConstraints(minHeight: MediaQuery.of(context).size.height - 255),
+              constraints: BoxConstraints(
+                  minHeight: MediaQuery.of(context).size.height - 255),
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.all(20.0),
               decoration: BoxDecoration(
@@ -63,70 +95,71 @@ class _StaffMaintenanceListScreenState
                 color: Theme.of(context).colorScheme.background,
               ),
               child: StreamBuilder<QuerySnapshot>(
-                      stream: db
-                          .collection('maintenances')
-                          .orderBy("end_date")
-                          .snapshots(),
-                      builder: (context, snapshot) {
-                        return snapshot.hasData
-                            ? SizedBox(height: 100,
-                              child: ListView(
-                                  children: snapshot.data!.docs.map((doc) {
-                                    return FutureBuilder(
-                                        future: doc['mailbox'].get(),
-                                        builder: (BuildContext context,
-                                            AsyncSnapshot<DocumentSnapshot>
-                                                mailbox) {
-                                          if (mailbox.connectionState ==
-                                              ConnectionState.waiting) {
-                                            return const Text('');
-                                          }
-                                          final maintenance =
-                                              MaintenanceModel.fromFuture(
-                                                  doc, mailbox.data!);
-                                          return ListTile(
-                                            leading: Container(
-                                              height: 70,
-                                              width: 70,
-                                              decoration: BoxDecoration(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .tertiary,
-                                                shape: BoxShape.circle,
-                                              ),
-                                              alignment: Alignment.center,
-                                              child: Icon(
-                                                maintenance.isDone
-                                                    ? Iconsax.like_1
-                                                    : Iconsax.clock,
-                                                color: const Color(0xFFF16807),
-                                                size: 32,
-                                              ),
-                                            ),
-                                            isThreeLine: true,
-                                            title: Text(maintenance.mailbox.code,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleLarge),
-                                            subtitle: Text(maintenance.note,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyLarge),
-                                            trailing: Text(
-                                                "${maintenance.formattedStartDate} ~ ${maintenance.formattedEndDate}",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyLarge),
-                                          );
-                                        });
-                                  }).toList(),
-                                ),
-                            )
-                            : (const Center(
-                                child: CircularProgressIndicator(),
-                              ));
-                      },
-                    ),
+                stream: db
+                    .collection('maintenances')
+                    .orderBy("end_date")
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  return snapshot.hasData
+                      ? SizedBox(
+                          height: 100,
+                          child: ListView(
+                            children: snapshot.data!.docs.map((doc) {
+                              return FutureBuilder(
+                                  future: doc['mailbox'].get(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<DocumentSnapshot> mailbox) {
+                                    if (mailbox.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return const Text('');
+                                    }
+                                    final maintenance =
+                                        MaintenanceModel.fromFuture(
+                                            doc, mailbox.data!);
+                                    return ListTile(
+                                      onTap: _clickBottomSheet,
+                                      leading: Container(
+                                        height: 70,
+                                        width: 70,
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .tertiary,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        alignment: Alignment.center,
+                                        child: Icon(
+                                          maintenance.isDone
+                                              ? Iconsax.like_1
+                                              : Iconsax.clock,
+                                          color: const Color(0xFFF16807),
+                                          size: 32,
+                                        ),
+                                      ),
+                                      isThreeLine: true,
+                                      title: Text(maintenance.mailbox.code,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleLarge),
+                                      subtitle: Text(maintenance.note,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge),
+                                      trailing: Text(
+                                          "${maintenance.formattedStartDate} ~ ${maintenance.formattedEndDate}",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge),
+                                    );
+                                  });
+                            }).toList(),
+                          ),
+                        )
+                      : (const Center(
+                          child: CircularProgressIndicator(),
+                        ));
+                },
+              ),
             ),
           ],
         ),
