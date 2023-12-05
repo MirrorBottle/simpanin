@@ -1,7 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:simpanin/components/button_component.dart';
 import 'package:simpanin/models/user.dart';
 import 'package:simpanin/pages/profile/profile.dart';
+import 'package:simpanin/providers/user_provider.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class ProfileEditScreen extends StatefulWidget {
   const ProfileEditScreen({super.key});
@@ -12,6 +17,11 @@ class ProfileEditScreen extends StatefulWidget {
 
 class _ProfileEditScreenState extends State<ProfileEditScreen> {
   bool loading = false;
+  static final db = FirebaseFirestore.instance;
+
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
 
   @override
   void initState() {
@@ -19,19 +29,43 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     init();
   }
 
-  void init() async {}
+  void init() async {
+    UserModel user = Provider.of<UserProvider>(context, listen: false).user;
+    _nameController.text = user.name;
+    _phoneController.text = user.phone;
+    _addressController.text = user.address;
+  }
 
   void _handleSubmit() async {
     setState(() {
       loading = true;
     });
+
     try {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const ProfileScreen()),
-      );
+      UserModel user = Provider.of<UserProvider>(context, listen: false).user;
+      db.collection("users").doc(user.id).update({
+        'name': _nameController.text,
+        'phone': _phoneController.text,
+        'address': _addressController.text,
+      }).then((userRef) async {
+        showTopSnackBar(
+          Overlay.of(context),
+          const CustomSnackBar.success(
+            message: "Mailbox Berhasil Diubah!",
+          ),
+        );
+        setState(() {
+          loading = false;
+        });
+      });
     } catch (e) {
       print(e);
+      showTopSnackBar(
+        Overlay.of(context),
+        const CustomSnackBar.error(
+          message: "Terjadi Kesalahan!",
+        ),
+      );
     }
   }
 
@@ -39,7 +73,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Color(0xFFeFeFeF),
+      backgroundColor: Theme.of(context).colorScheme.tertiary,
       appBar: AppBar(
         toolbarHeight: 0,
         backgroundColor: Colors.transparent,
@@ -68,6 +102,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
               ),
             ),
             ListTile(
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
               title: Text(
                 'Edit Profile',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -76,17 +112,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       fontSize: 30,
                     ),
               ),
-              subtitle: Text(
-                'Edit Your Profile Here',
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      color: Color.fromARGB(255, 0, 0, 0),
-                    ),
-              ),
             ),
-            
             Container(
               constraints: BoxConstraints(
-                  minHeight: MediaQuery.of(context).size.height - 347),
+                  minHeight: MediaQuery.of(context).size.height - 147),
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.all(20.0),
               decoration: const BoxDecoration(
@@ -100,7 +129,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                 children: [
                   const SizedBox(height: 10),
                   Text(
-                    "Full Name",
+                    "Nama",
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).colorScheme.primary,
@@ -108,24 +137,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   ),
                   const SizedBox(height: 10),
                   TextField(
+                    controller: _nameController,
                     keyboardType: TextInputType.name,
                     decoration: const InputDecoration(
                       hintText: "Boleh kasih tahu namamu?",
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Text(
-                    "Email",
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                  ),
-                  const SizedBox(height: 10),
-                  TextField(
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(
-                      hintText: "Masukkan emailmu...",
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -138,14 +153,15 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   ),
                   const SizedBox(height: 10),
                   TextField(
-                    keyboardType: TextInputType.emailAddress,
+                    controller: _phoneController,
+                    keyboardType: TextInputType.phone,
                     decoration: const InputDecoration(
                       hintText: "Masukkan emailmu...",
                     ),
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    "passs",
+                    "Alamat",
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).colorScheme.primary,
@@ -153,12 +169,13 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   ),
                   const SizedBox(height: 10),
                   TextField(
-                    keyboardType: TextInputType.emailAddress,
+                    controller: _addressController,
+                    keyboardType: TextInputType.streetAddress,
                     decoration: const InputDecoration(
-                      hintText: "Masukkan emailmu...",
+                      hintText: "Masukkan alamatmu...",
                     ),
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 60),
                   ButtonComponent(
                     loading: loading,
                     buttontext: "Ubah Profil",
