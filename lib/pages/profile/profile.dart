@@ -3,12 +3,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:math';
 
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:simpanin/pages/auth/log_in.dart';
 import 'package:simpanin/pages/profile/profile_edit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-
+import 'package:simpanin/providers/theme_mode_provider.dart';
 
 import 'profile_faq.dart';
 
@@ -132,8 +132,14 @@ class _ProfileScreenState extends State<ProfileScreen>
                       color: Color.fromARGB(96, 72, 72, 72),
                     ),
                     SwitchListTile(
-                      value: false,
-                      onChanged: (val) {},
+                      value:
+                          Provider.of<ThemeModeProvider>(context).isDarkModeActive,
+                      onChanged: (bool value) {
+                        Provider.of<ThemeModeProvider>(context, listen: false)
+                            .changeTheme(
+                          value ? ThemeMode.dark : ThemeMode.light,
+                        );
+                      },
                       secondary: const Icon(
                         Iconsax.moon,
                         color: Color(0xFFF16807),

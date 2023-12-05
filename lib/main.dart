@@ -19,66 +19,147 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (BuildContext context) => ThemeModeProvider()),
-          ChangeNotifierProvider(
-            create: (BuildContext context) => MailboxBookProvider()),
-          ChangeNotifierProvider(
-            create: (BuildContext context) => UserProvider()),
-          ChangeNotifierProvider(
-            create: (BuildContext context) => MaintenanceCreateProvider()),
-        ],
-        child: MaterialApp(
+      providers: [
+        ChangeNotifierProvider(
+          create: (BuildContext context) => ThemeModeProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (BuildContext context) => MailboxBookProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (BuildContext context) => UserProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (BuildContext context) => MaintenanceCreateProvider(),
+        ),
+      ],
+      child: Consumer<ThemeModeProvider>(
+        builder: (context, themeModeProvider, child) {
+          return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Simpanin',
-            theme: ThemeData(
-                colorScheme: ColorScheme.fromSeed(
-                  seedColor: Colors.blueGrey,
-                  background: Colors.white,
-                  brightness: Brightness.light,
-                  primary: const Color(0xFFF16807),
-                  secondary: const Color(0xFF1A1A1A),
-                  tertiary: const Color(0xFFfef0e6),
-                  error: Colors.white,
-                  onBackground: Colors.white,
-                  onPrimary: Colors.white,
-                  onSecondary: Colors.white,
-                ),
-                useMaterial3: true,
-                textTheme: GoogleFonts.poppinsTextTheme(
-                  Theme.of(context).textTheme.copyWith(
-                      displayLarge: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 38,
-                          fontWeight: FontWeight.bold),
-                      displaySmall:
-                          const TextStyle(color: Colors.white, fontSize: 16),
-                      displayMedium: const TextStyle(
-                          color: Color(0xFF333333),
-                          fontSize: 24,
-                          fontWeight: FontWeight.w600),
-                      bodyMedium: TextStyle(
-                          color: Theme.of(context).colorScheme.secondary,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                      titleMedium: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.normal),
-                      bodySmall: const TextStyle(
-                        color: Colors.grey,
-                        fontSize: 16,
-                      )),
-                ),
-                inputDecorationTheme: InputDecorationTheme(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30)))),
+            theme: _buildLightTheme(context),
+            darkTheme: _buildDarkTheme(context),
+            themeMode: themeModeProvider.isDarkModeActive
+                ? ThemeMode.dark
+                : ThemeMode.light,
             home: const SplashScreen(),
-            builder: EasyLoading.init()));
+            builder: EasyLoading.init(),
+          );
+        },
+      ),
+    );
+  }
+
+  ThemeData _buildLightTheme(BuildContext context) {
+    return ThemeData(
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: Colors.blueGrey,
+        background: Colors.white,
+        brightness: Brightness.light,
+        primary: const Color(0xFFF16807),
+        secondary: const Color(0xFF1A1A1A),
+        tertiary: const Color(0xFFfef0e6),
+        error: Colors.white,
+        onBackground: Colors.white,
+        onPrimary: Colors.white,
+        onSecondary: Colors.white,
+      ),
+      useMaterial3: true,
+      textTheme: GoogleFonts.poppinsTextTheme(
+        Theme.of(context).textTheme.copyWith(
+              displayLarge: const TextStyle(
+                color: Colors.white,
+                fontSize: 38,
+                fontWeight: FontWeight.bold,
+              ),
+              displaySmall: const TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+              ),
+              displayMedium: const TextStyle(
+                color: Color(0xFF333333),
+                fontSize: 24,
+                fontWeight: FontWeight.w600,
+              ),
+              bodyMedium: TextStyle(
+                color: Theme.of(context).colorScheme.secondary,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+              titleMedium: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.normal,
+              ),
+              bodySmall: const TextStyle(
+                color: Colors.grey,
+                fontSize: 16,
+              ),
+            ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+      ),
+    );
+  }
+
+  ThemeData _buildDarkTheme(BuildContext context) {
+    return ThemeData.dark().copyWith(
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: Colors.blueGrey,
+        background: const Color(0xFF121212),
+        brightness: Brightness.dark,
+        primary: const Color(0xFFF16807),
+        secondary: const Color(0xFF1A1A1A),
+        tertiary: const Color(0xFF2D2D2D),
+        error: const Color(0xFFB00020),
+        onBackground: Colors.white,
+        onPrimary: Colors.white,
+        onSecondary: Colors.white,
+      ),
+      textTheme: GoogleFonts.poppinsTextTheme(
+        Theme.of(context).textTheme.copyWith(
+              displayLarge: const TextStyle(
+                color: Colors.white,
+                fontSize: 38,
+                fontWeight: FontWeight.bold,
+              ),
+              displaySmall: const TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+              ),
+              displayMedium: const TextStyle(
+                color: Color(0xFFB0B0B0), // Updated to a dark color
+                fontSize: 24,
+                fontWeight: FontWeight.w600,
+              ),
+              bodyMedium: TextStyle(
+                color: Color(0xFFB0B0B0), // Updated to a dark color
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+              titleMedium: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.normal,
+              ),
+              bodySmall: const TextStyle(
+                color: Colors.grey,
+                fontSize: 16,
+              ),
+            ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+      ),
+    );
   }
 }
