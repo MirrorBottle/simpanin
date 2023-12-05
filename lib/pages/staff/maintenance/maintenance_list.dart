@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:simpanin/models/user.dart';
 import 'package:simpanin/pages/profile/profile.dart';
 import 'package:simpanin/pages/staff/maintenance/maintenance_create.dart';
-import 'package:simpanin/pages/staff/maintenance/maintenance_detail.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:simpanin/models/maintenance.dart';
 import 'package:simpanin/providers/user_provider.dart';

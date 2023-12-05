@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:simpanin/components/button_component.dart';
-import 'package:simpanin/pages/staff/maintenance/maintenance_detail.dart';
 import 'package:simpanin/pages/staff/maintenance/maintenance_list.dart';
 
 class StaffMaintenanceCreateScreen extends StatefulWidget {
@@ -51,31 +50,7 @@ class _StaffMaintenanceCreateScreenState
   }
 
   void _handleSubmit() async {
-    setState(() {
-      loading = true;
-    });
 
-    try {
-      Task task = Task(
-        nama: _namaPelangganController.text,
-        deadline: _tanggalSelesai,
-        prioritas: 1,
-        tanggalMulai: _tanggalMulai,
-        tanggalSelesai: _tanggalSelesai,
-        nomorHP: _nomorHPController.text,
-        catatan: _catatanController.text,
-      );
-
-      // Pindah ke halaman detail dan kirim objek Task
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => StaffMaintenanceDetailScreen(task: task),
-        ),
-      );
-    } catch (e) {
-      print(e);
-    }
   }
 
   @override
@@ -256,18 +231,7 @@ class _StaffMaintenanceCreateScreenState
                           ),
                         );
                       } else {
-                        // Semua input terisi, lanjutkan menyimpan data dan kembali ke layar sebelumnya
-                        Task task = Task(
-                          nama: _namaPelangganController.text,
-                          deadline: _tanggalSelesai,
-                          prioritas: 1,
-                          tanggalMulai: _tanggalMulai,
-                          tanggalSelesai: _tanggalSelesai,
-                          nomorHP: _nomorHPController.text,
-                          catatan: _catatanController.text,
-                        );
-
-                        Navigator.pop(context, task);
+                        
                       }
                     },
                   ),

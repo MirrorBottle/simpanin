@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:simpanin/components/button_component.dart';
-import 'package:simpanin/pages/staff/maintenance/maintenance_detail.dart';
+
 import 'package:simpanin/pages/staff/maintenance/maintenance_list.dart';
 
 class StaffMaintenanceEditScreen extends StatefulWidget {
-  final Task task;
-
-  const StaffMaintenanceEditScreen({Key? key, required this.task}) : super(key: key);
 
   @override
   State<StaffMaintenanceEditScreen> createState() => _StaffMaintenanceEditScreenState();
@@ -25,19 +22,8 @@ class _StaffMaintenanceEditScreenState extends State<StaffMaintenanceEditScreen>
   TextEditingController _catatanController = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-    init();
-  }
 
-  void init() {
-    _tanggalMulai = widget.task.tanggalMulai ?? DateTime.now();
-    _tanggalSelesai = widget.task.tanggalSelesai ?? DateTime.now();
-    _namaController.text = widget.task.nama ?? '';
-    _nomorHPController.text = widget.task.nomorHP ?? '';
-    _catatanController.text = widget.task.catatan ?? '';
-  }
-
+  
   void _handleUbah() async {
   setState(() {
     loading = true;
