@@ -64,7 +64,7 @@ class _StaffMailboxListScreenState extends State<StaffMailboxListScreen> {
         context: context,
         builder: (BuildContext c) {
           return Container(
-            height: 200,
+            height: mailbox.isActive ? 200 : 120,
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.only(
@@ -96,7 +96,7 @@ class _StaffMailboxListScreenState extends State<StaffMailboxListScreen> {
                 ),
               ListTile(
                 contentPadding: const EdgeInsets.all(10),
-                leading: const Icon(Iconsax.trash),
+                leading: const Icon(Iconsax.status),
                 title: mailbox.isActive ? (Text("Nonaktif", style: Theme.of(context).textTheme.titleLarge)) : (Text("Aktif", style: Theme.of(context).textTheme.titleLarge)),
                 onTap: () {
                   Navigator.pop(context);
