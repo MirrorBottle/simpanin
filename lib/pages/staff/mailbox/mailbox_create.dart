@@ -32,7 +32,7 @@ class _StaffMailboxCreateScreenState extends State<StaffMailboxCreateScreen> {
     try {
       db.collection("mailboxes").add({
         'code': _kodeController.text,
-        'price': _hargaController.text,
+        'price': int.parse(_hargaController.text),
         'size': _selectedUkuran,
         'availability': true,
       }).then((mailboxRef) async {
