@@ -14,14 +14,17 @@ class EmptyComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).colorScheme.tertiary,
+      height: 200,
+      width: MediaQuery.of(context).size.width,
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(icon),
-          Text(title, style: Theme.of(context).textTheme.displayMedium),
-          Text(subtitle, style: Theme.of(context).textTheme.titleMedium)
+          Icon(icon, size: 50, color: Theme.of(context).colorScheme.primary,),
+          const SizedBox(height: 10,),
+          Text(title, textAlign: TextAlign.center, style: Theme.of(context).textTheme.displayMedium),
+          Text(subtitle, textAlign: TextAlign.center, style: Theme.of(context).textTheme.titleMedium)
         ],
       ),
     );
