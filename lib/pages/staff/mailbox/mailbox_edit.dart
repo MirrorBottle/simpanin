@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:simpanin/components/button_component.dart';
 import 'package:simpanin/models/mailbox.dart';
 import 'package:simpanin/pages/staff/mailbox/mailbox_list.dart';
+import 'package:simpanin/pages/staff/staff_main.dart';
+import 'package:simpanin/providers/page_provider.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -49,10 +52,10 @@ class _StaffMailboxEditScreenState extends State<StaffMailboxEditScreen> {
             message: "Mailbox Berhasil Diubah!",
           ),
         );
+        Provider.of<PageProvider>(context, listen: false).changePage(1);
         Navigator.push(
           context,
-          MaterialPageRoute(
-              builder: (context) => const StaffMailboxListScreen()),
+          MaterialPageRoute(builder: (context) => const StaffMainScreen()),
         );
       });
     } catch (e) {
@@ -82,14 +85,22 @@ class _StaffMailboxEditScreenState extends State<StaffMailboxEditScreen> {
           scrolledUnderElevation: 0,
           leading: BackButton(
             color: Theme.of(context).colorScheme.primary,
+            onPressed: () {
+              Provider.of<PageProvider>(context, listen: false).changePage(1);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const StaffMainScreen()),
+              );
+            },
           )),
       backgroundColor: Theme.of(context).colorScheme.tertiary,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            padding: const EdgeInsets.only(
-                left: 30.0, right: 30.0, bottom: 40.0),
+            padding:
+                const EdgeInsets.only(left: 30.0, right: 30.0, bottom: 40.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
