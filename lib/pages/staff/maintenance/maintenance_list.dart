@@ -142,7 +142,6 @@ class _StaffMaintenanceListScreenState
                                     final maintenance =
                                         MaintenanceModel.fromFuture(
                                             doc, mailbox.data!);
-
                                     return ListTile(
                                       onTap: () {
                                         _clickBottomSheet(maintenance);
@@ -198,13 +197,12 @@ class _StaffMaintenanceListScreenState
           ],
         ),
       ),
-      // FloatingActionButton dengan label "Tambah"
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => MaintenanceMailboxListScreen()),
+                builder: (context) => const MaintenanceMailboxListScreen()),
           );
         },
         tooltip: 'Tambah',
