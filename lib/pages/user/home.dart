@@ -8,6 +8,7 @@ import 'package:simpanin/models/maintenance.dart';
 import 'package:simpanin/models/user.dart';
 import 'package:simpanin/pages/user/agreement/agreement_detail.dart';
 import 'package:simpanin/pages/user/maintenance/maintenance_list.dart';
+import 'package:simpanin/providers/theme_mode_provider.dart';
 import 'package:simpanin/providers/user_provider.dart';
 
 class MailboxTile extends StatelessWidget {
@@ -201,14 +202,14 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserProvider>(builder: (context, userData, child) {
+    return Consumer2<UserProvider, ThemeModeProvider>(builder: (context, userData, themeData, child) {
       return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: Colors.transparent,
           scrolledUnderElevation: 0,
-          title: Image.asset('assets/img/logo_full.png', height: 60),
+          title: Image.asset(themeData.isDarkModeActive ? 'assets/img/logo_full_putih.png' : 'assets/img/logo_full.png', height: 60),
           actions: [
             Chip(
               padding: const EdgeInsets.all(5),
