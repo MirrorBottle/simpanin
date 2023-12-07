@@ -39,37 +39,53 @@ class _StaffMaintenanceListScreenState
     super.initState();
   }
 
-  void _clickBottomSheet(MaintenanceModel maintenance) {
+  void _clickBottomSheet(MaintenanceModel maintenance) async {
     showModalBottomSheet(
-        context: context,
-        builder: (BuildContext c) {
-          return Container(
-            height: 200,
-            padding: const EdgeInsets.all(20),
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(25.0),
-                topRight: Radius.circular(25.0),
-              ),
+      context: context,
+      builder: (BuildContext c) {
+        return Container(
+          height: 120,
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.only(
+              topRight: Radius.circular(32),
+              topLeft: Radius.circular(32),
             ),
-            child: Column(children: [
-              ListTile(
-                contentPadding: EdgeInsets.all(10),
-                leading: const Icon(Iconsax.edit),
-                title:
-                    Text("Ubah", style: Theme.of(context).textTheme.titleLarge),
-              ),
-              Divider(height: 2),
+            color: Theme.of(context).colorScheme.background,
+          ),
+          child: Column(
+            children: [
               ListTile(
                 contentPadding: EdgeInsets.all(10),
                 leading: const Icon(Iconsax.trash),
-                title:
-                    Text("Hapus", style: Theme.of(context).textTheme.titleLarge),
+                title: Text(
+                  "Hapus",
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                onTap: () async {
+                  // Panggil metode untuk menghapus data
+                  await _deleteMaintenance(maintenance.id);
+                  _refreshController.add(null);
+                  Navigator.pop(
+                      context); // Tutup bottom sheet setelah penghapusan
+                },
               ),
-            ]),
-          );
-        });
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+// Metode untuk menghapus data dari Firebase
+  Future<void> _deleteMaintenance(String maintenanceId) async {
+    try {
+      await db.collection('maintenance').doc(maintenanceId).delete();
+      // Jika Anda memerlukan aksi lebih lanjut setelah penghapusan, Anda dapat menambahkannya di sini.
+    } catch (e) {
+      print("Error deleting maintenance: $e");
+      // Handle error jika diperlukan
+    }
   }
 
   @override
@@ -97,7 +113,7 @@ class _StaffMaintenanceListScreenState
               constraints: BoxConstraints(
                   minHeight: MediaQuery.of(context).size.height - 255),
               width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.only(left: 5, right: 5, bottom: 5, top: 5),
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(32),
@@ -105,77 +121,79 @@ class _StaffMaintenanceListScreenState
                 color: Theme.of(context).colorScheme.background,
               ),
               child: StreamBuilder<QuerySnapshot>(
-                      stream: db
-                          .collection('maintenances')
-                          .orderBy("end_date")
-                          .snapshots(),
-                      builder: (context, snapshot) {
-                        return snapshot.hasData
-                            ? SizedBox(height: 100,
-                              child: ListView(
-                                  children: snapshot.data!.docs.map((doc) {
-                                    return FutureBuilder(
-                                        future: doc['mailbox'].get(),
-                                        builder: (BuildContext context,
-                                            AsyncSnapshot<DocumentSnapshot>
-                                                mailbox) {
-                                          if (mailbox.connectionState ==
-                                              ConnectionState.waiting) {
-                                            return const Text('');
-                                          }
-                                          final maintenance =
-                                              MaintenanceModel.fromFuture(
-                                                  doc, mailbox.data!);
-                                          
-                                          return ListTile(
-                                            onTap: (){ _clickBottomSheet(maintenance);},
-                                            leading: Container(
-                                              height: 70,
-                                              width: 70,
-                                              decoration: BoxDecoration(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .tertiary,
-                                                shape: BoxShape.circle,
-                                              ),
-                                              alignment: Alignment.center,
-                                              child: Icon(
-                                                maintenance.isDone
-                                                    ? Iconsax.like_1
-                                                    : Iconsax.clock,
-                                                color: const Color(0xFFF16807),
-                                                size: 32,
-                                              ),
-                                            ),
-                                            
-                                            title: Text(maintenance.mailbox.code,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleLarge),
-                                            subtitle: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Text(maintenance.note,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyLarge),
-                                                Text(
-                                                "${maintenance.formattedStartDate} ~ ${maintenance.formattedEndDate}",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyLarge),
-                                              ],
-                                            ),
-                                          );
-                                        });
-                                  }).toList(),
-                                ),
-                            )
-                            : (const Center(
-                                child: CircularProgressIndicator(),
-                              ));
-                      },
-                    ),
+                stream: db
+                    .collection('maintenance')
+                    .orderBy("end_date")
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  return snapshot.hasData
+                      ? SizedBox(
+                          height: 100,
+                          child: ListView(
+                            children: snapshot.data!.docs.map((doc) {
+                              return FutureBuilder(
+                                  future: doc['mailbox'].get(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<DocumentSnapshot> mailbox) {
+                                    if (mailbox.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return const Text('');
+                                    }
+                                    final maintenance =
+                                        MaintenanceModel.fromFuture(
+                                            doc, mailbox.data!);
+
+                                    return ListTile(
+                                      onTap: () {
+                                        _clickBottomSheet(maintenance);
+                                      },
+                                      leading: Container(
+                                        height: 70,
+                                        width: 70,
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .tertiary,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        alignment: Alignment.center,
+                                        child: Icon(
+                                          maintenance.isDone
+                                              ? Iconsax.like_1
+                                              : Iconsax.clock,
+                                          color: const Color(0xFFF16807),
+                                          size: 32,
+                                        ),
+                                      ),
+                                      title: Text(maintenance.mailbox.code,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleLarge),
+                                      subtitle: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(maintenance.note,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge),
+                                          Text(
+                                              "${maintenance.formattedStartDate} ~ ${maintenance.formattedEndDate}",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge),
+                                        ],
+                                      ),
+                                    );
+                                  });
+                            }).toList(),
+                          ),
+                        )
+                      : (const Center(
+                          child: CircularProgressIndicator(),
+                        ));
+                },
+              ),
             ),
           ],
         ),
@@ -184,8 +202,9 @@ class _StaffMaintenanceListScreenState
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => MaintenanceMailboxListScreen()),
+            context,
+            MaterialPageRoute(
+                builder: (context) => MaintenanceMailboxListScreen()),
           );
         },
         tooltip: 'Tambah',
