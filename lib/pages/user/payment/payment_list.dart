@@ -46,7 +46,7 @@ class _UserPaymentListScreenState extends State<UserPaymentListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.tertiary,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -63,7 +63,7 @@ class _UserPaymentListScreenState extends State<UserPaymentListScreen> {
                   'Pembayaran',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.primary,
+                        color: Theme.of(context).colorScheme.onSecondary,
                         fontSize: 30,
                       ),
                 ),
