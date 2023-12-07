@@ -66,7 +66,7 @@ class _StaffPaymentListScreenState extends State<StaffPaymentListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Theme.of(context).colorScheme.tertiary,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       body: SingleChildScrollView(
         controller: _scrollController,
         reverse: true,
@@ -80,7 +80,7 @@ class _StaffPaymentListScreenState extends State<StaffPaymentListScreen> {
                   style: Theme.of(context)
                       .textTheme
                       .displayLarge!
-                      .copyWith(color: Theme.of(context).colorScheme.primary)),
+                      .copyWith(color: Theme.of(context).colorScheme.onSecondary)),
             ),
             const SizedBox(height: 35),
             Container(
