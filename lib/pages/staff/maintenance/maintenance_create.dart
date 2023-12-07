@@ -6,7 +6,9 @@ import 'package:simpanin/components/button_component.dart';
 import 'package:simpanin/models/mailbox.dart';
 import 'package:simpanin/pages/staff/mailbox/mailbox_list.dart';
 import 'package:simpanin/pages/staff/maintenance/maintenance_list.dart';
+import 'package:simpanin/pages/staff/staff_main.dart';
 import 'package:simpanin/providers/maintenance_create_provider.dart';
+import 'package:simpanin/providers/page_provider.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -81,10 +83,10 @@ class _StaffMaintenanceCreateScreenState
             message: "Maintenance ${mailbox.code} Berhasil Ditambah!",
           ),
         );
-        Navigator.pushReplacement(
+        Provider.of<PageProvider>(context, listen: false).changePage(2);
+        Navigator.push(
           context,
-          MaterialPageRoute(
-              builder: (context) => const StaffMaintenanceListScreen()),
+          MaterialPageRoute(builder: (context) => const StaffMainScreen()),
         );
       });
     } catch (e) {
@@ -120,16 +122,17 @@ class _StaffMaintenanceCreateScreenState
           children: [
             Align(
               alignment: Alignment.centerLeft,
-              child: BackButton(
-                color: Theme.of(context).colorScheme.primary,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => StaffMaintenanceListScreen()),
-                  );
-                },
-              ),
+              child:BackButton(
+            color: Theme.of(context).colorScheme.primary,
+            onPressed: () {
+              Provider.of<PageProvider>(context, listen: false).changePage(2);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const StaffMainScreen()),
+              );
+            },
+          )
             ),
             ListTile(
               title: Text(

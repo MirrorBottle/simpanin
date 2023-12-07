@@ -1,7 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:simpanin/components/button_component.dart';
+import 'package:simpanin/models/user.dart';
 import 'package:simpanin/pages/staff/mailbox/mailbox_list.dart';
+import 'package:simpanin/pages/staff/staff_main.dart';
+import 'package:simpanin/pages/user/user_main.dart';
+import 'package:simpanin/providers/page_provider.dart';
+import 'package:simpanin/providers/user_provider.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -43,10 +49,10 @@ class _StaffMailboxCreateScreenState extends State<StaffMailboxCreateScreen> {
             message: "Mailbox ${_kodeController.text} Berhasil Ditambah!",
           ),
         );
+        Provider.of<PageProvider>(context, listen: false).changePage(1);
         Navigator.push(
           context,
-          MaterialPageRoute(
-              builder: (context) => const StaffMailboxListScreen()),
+          MaterialPageRoute(builder: (context) => const StaffMainScreen()),
         );
       });
     } catch (e) {
@@ -71,6 +77,14 @@ class _StaffMailboxCreateScreenState extends State<StaffMailboxCreateScreen> {
           scrolledUnderElevation: 0,
           leading: BackButton(
             color: Theme.of(context).colorScheme.primary,
+            onPressed: () {
+              Provider.of<PageProvider>(context, listen: false).changePage(1);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const StaffMainScreen()),
+              );
+            },
           )),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
