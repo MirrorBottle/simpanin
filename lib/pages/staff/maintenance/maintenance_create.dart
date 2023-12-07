@@ -165,8 +165,8 @@ class _StaffMaintenanceCreateScreenState
                     leading: Text(
                       'Tanggal Mulai    :',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: Color.fromARGB(255, 0, 0, 0),
-                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                     ),
                     title: ElevatedButton(
@@ -183,8 +183,8 @@ class _StaffMaintenanceCreateScreenState
                     leading: Text(
                       'Tanggal Selesai :',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: Color.fromARGB(255, 0, 0, 0),
-                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                     ),
                     title: ElevatedButton(
