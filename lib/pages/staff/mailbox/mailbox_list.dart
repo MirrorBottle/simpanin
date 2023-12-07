@@ -1,5 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simpanin/models/mailbox.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,6 +12,8 @@ import 'package:simpanin/pages/staff/mailbox/mailbox_create.dart';
 import 'package:simpanin/pages/staff/mailbox/mailbox_detail.dart';
 import 'package:simpanin/pages/staff/mailbox/mailbox_edit.dart';
 import 'package:simpanin/pages/user/mailbox/mailbox_detail.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class StaffMailboxListScreen extends StatefulWidget {
   const StaffMailboxListScreen({super.key});
@@ -18,7 +25,42 @@ class StaffMailboxListScreen extends StatefulWidget {
 class _StaffMailboxListScreenState extends State<StaffMailboxListScreen> {
   final db = FirebaseFirestore.instance;
 
+  final StreamController<void> _refreshController = StreamController<void>();
+
   final _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _refreshController.close();
+    super.dispose();
+  }
+
+  void _handleActive(MailboxModel mailbox) {
+    QuickAlert.show(
+        context: context,
+        type: QuickAlertType.confirm,
+        text: 'Ingin Ubah Status Mailbox?',
+        title: 'Yakin?',
+        confirmBtnText: 'Ya',
+        cancelBtnText: 'Nggak',
+        confirmBtnColor: Theme.of(context).colorScheme.primary,
+        onConfirmBtnTap: () async {
+
+          db.collection("mailboxes").doc(mailbox.id).update({
+            'is_active': !mailbox.isActive,
+          }).then((mailboxesRef) async {
+            showTopSnackBar(
+              Overlay.of(context),
+              const CustomSnackBar.success(
+                message: "Status Mailbox Berhasil Diubah!",
+              ),
+            );
+            _refreshController.add(null);
+          });
+
+          Navigator.pop(context);
+        });
+  }
 
   void _clickBottomSheet(MailboxModel mailbox) {
     showModalBottomSheet(
@@ -35,26 +77,34 @@ class _StaffMailboxListScreenState extends State<StaffMailboxListScreen> {
               ),
             ),
             child: Column(children: [
+              if (mailbox.isActive)
+                Column(
+                  children: [
+                    ListTile(
+                      contentPadding: const EdgeInsets.all(10),
+                      leading: const Icon(Iconsax.edit),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  StaffMailboxEditScreen(mailbox: mailbox)),
+                        );
+                      },
+                      title:
+                          Text("Ubah", style: Theme.of(context).textTheme.titleLarge),
+                    ),
+                    const Divider(height: 2),
+                  ],
+                ),
               ListTile(
-                contentPadding: EdgeInsets.all(10),
-                leading: const Icon(Iconsax.edit),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            StaffMailboxEditScreen(mailbox: mailbox)),
-                  );
-                },
-                title:
-                    Text("Ubah", style: Theme.of(context).textTheme.titleLarge),
-              ),
-              Divider(height: 2),
-              ListTile(
-                contentPadding: EdgeInsets.all(10),
+                contentPadding: const EdgeInsets.all(10),
                 leading: const Icon(Iconsax.trash),
-                title: Text("Hapus",
-                    style: Theme.of(context).textTheme.titleLarge),
+                title: mailbox.isActive ? (Text("Nonaktif", style: Theme.of(context).textTheme.titleLarge)) : (Text("Aktif", style: Theme.of(context).textTheme.titleLarge)),
+                onTap: () {
+                  Navigator.pop(context);
+                  _handleActive(mailbox);
+                },
               ),
             ]),
           );
@@ -123,11 +173,13 @@ class _StaffMailboxListScreenState extends State<StaffMailboxListScreen> {
                                         height: 60,
                                         width: 60,
                                         decoration: BoxDecoration(
-                                          color: mailbox.availability
-                                              ? Colors.green
-                                              : Theme.of(context)
-                                                  .colorScheme
-                                                  .tertiary,
+                                          color: mailbox.isActive
+                                              ? (mailbox.availability
+                                                  ? Colors.green
+                                                  : Theme.of(context)
+                                                      .colorScheme
+                                                      .tertiary)
+                                              : Colors.red,
                                           shape: BoxShape.circle,
                                         ),
                                         alignment: Alignment.center,
