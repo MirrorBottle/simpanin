@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:simpanin/components/button_component.dart';
 import 'package:simpanin/models/agreement.dart';
-import 'package:simpanin/models/payment.dart';
 import 'package:simpanin/models/user.dart';
+import 'package:simpanin/pages/staff/agreement/agreement_book.dart';
 
 class StaffHomeScreen extends StatefulWidget {
   const StaffHomeScreen({super.key});
@@ -54,19 +52,17 @@ class _StaffHomeScreenState extends State<StaffHomeScreen> {
             ),
             StreamBuilder<QuerySnapshot>(
               stream: db
-                  .collection('payments')
-                  .where("is_booking", isEqualTo: true)
-                  .orderBy("date", descending: true)
+                  .collection("agreements")
+                  .where("status", isEqualTo: "pending")
                   .snapshots(),
               builder: (context, snapshot) {
                 return snapshot.hasData
                     ? SizedBox(
-                        height: 100,
+                        height: MediaQuery.of(context).size.height,
                         child: ListView(
                           children: snapshot.data!.docs.map((doc) {
                             return FutureBuilder(
                                 future: Future.wait<dynamic>([
-                                  doc['agreement'].get(),
                                   doc['mailbox'].get(),
                                 ]),
                                 builder: (BuildContext context,
@@ -75,11 +71,11 @@ class _StaffHomeScreenState extends State<StaffHomeScreen> {
                                       ConnectionState.waiting) {
                                     return const Text('');
                                   }
-                                  final payment = PaymentModel.fromFuture(doc,
-                                      snapshot.data![0], snapshot.data![1]);
+                                  final agreement = AgreementModel.fromFuture(
+                                      doc, snapshot.data![0]);
                                   return FutureBuilder(
                                       future: Future.wait<dynamic>([
-                                        snapshot.data![0]['user'].get(),
+                                        doc['user'].get(),
                                       ]),
                                       builder: (BuildContext ctx,
                                           AsyncSnapshot<List<dynamic>>
@@ -88,9 +84,19 @@ class _StaffHomeScreenState extends State<StaffHomeScreen> {
                                             ConnectionState.waiting) {
                                           return const Text('');
                                         }
-                                        final user = UserModel.fromFirestore(
+                                        agreement.user = UserModel.fromFirestore(
                                             snapshot.data![0]);
+                                        
                                         return ListTile(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      StaffAgreementBookScreen(
+                                                          agreement: agreement)),
+                                            );
+                                          },
                                           leading: Container(
                                             height: 70,
                                             width: 70,
@@ -102,7 +108,8 @@ class _StaffHomeScreenState extends State<StaffHomeScreen> {
                                             ),
                                             alignment: Alignment.center,
                                             child: Center(
-                                              child: Text(payment.mailbox.code,
+                                              child: Text(
+                                                  agreement.mailbox.code,
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .displayMedium
@@ -113,17 +120,20 @@ class _StaffHomeScreenState extends State<StaffHomeScreen> {
                                                                   .primary)),
                                             ),
                                           ),
-                                          title: Text(user.name,
+                                          title: Text(agreement.user!.name,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .titleLarge),
-                                          subtitle: Text(payment.formattedDate,
+                                          subtitle: Text(
+                                              agreement.formattedStartDate,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .bodyLarge),
                                           trailing: Icon(
                                             Iconsax.arrow_right,
-                                            color: Theme.of(context).colorScheme.secondary,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .secondary,
                                             size: 22,
                                           ),
                                         );
