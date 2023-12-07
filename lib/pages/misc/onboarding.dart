@@ -64,7 +64,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 60),
                   child: SvgPicture.asset('assets/svg/onboarding_1.svg',
-                      height: 340),
+                      height: 280),
                 ),
               )),
           Container(
@@ -76,7 +76,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 60),
                   child: SvgPicture.asset('assets/svg/onboarding_2.svg',
-                      height: 340),
+                      height: 280),
                 ),
               )),
           Container(
@@ -88,7 +88,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 60),
                   child: SvgPicture.asset('assets/svg/onboarding_3.svg',
-                      height: 340),
+                      height: 280),
                 ),
               )),
         ],
@@ -102,7 +102,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const SizedBox(
-                  height: 480,
+                  height: 370,
                 ),
                 Text('Hey, Kawan Simpanin!', style: Theme.of(context).textTheme.displayLarge!.copyWith(color: Theme.of(context).colorScheme.primary)),
                 const SizedBox(height: 10,),
@@ -115,7 +115,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: Column(
               children: <Widget>[
                 const SizedBox(
-                  height: 430,
+                  height: 370,
                 ),
                 Text('Tempat Penuh? Kenalin Mailbox', style: Theme.of(context).textTheme.displayLarge!.copyWith(color: Theme.of(context).colorScheme.primary)),
                 const SizedBox(height: 10,),
@@ -128,7 +128,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: Column(
               children: <Widget>[
                 const SizedBox(
-                  height: 430,
+                  height: 370,
                 ),
                 Text('Aman, gak? Jelas, dong!', style: Theme.of(context).textTheme.displayLarge!.copyWith(color: Theme.of(context).colorScheme.primary)),
                 const SizedBox(height: 10,),
