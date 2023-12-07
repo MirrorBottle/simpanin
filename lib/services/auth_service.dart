@@ -15,7 +15,7 @@ class AuthService {
 
   static get user => null;
 
-  static Future<void> signUp(UserModel data) async {
+  static Future<String> signUp(UserModel data) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: data.email, password: data.password!);
@@ -24,7 +24,10 @@ class AuthService {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('auth', auth);
       await UserService.updateUser(data);
-    } catch (e) {}
+      return data.id;
+    } catch (e) {
+      return '';
+    }
   }
 
   static Future<bool> signIn(String email, String password) async {

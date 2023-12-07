@@ -122,9 +122,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                             style: Theme.of(context).textTheme.titleMedium),
                         subtitle: Text("Perbarui informasi tentang anda",
                             style: Theme.of(context).textTheme.bodyLarge),
-                        trailing: const Icon(
+                        trailing: Icon(
                           Iconsax.arrow_right,
-                          color: Color.fromARGB(255, 32, 23, 23),
+                          color: Theme.of(context).colorScheme.secondary,
                           size: 22,
                         ),
                       ),
@@ -171,9 +171,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                             style: Theme.of(context).textTheme.titleMedium),
                         subtitle: Text("Temukan bantuan & dukungan",
                             style: Theme.of(context).textTheme.bodyLarge),
-                        trailing: const Icon(
+                        trailing: Icon(
                           Iconsax.arrow_right,
-                          color: Color.fromARGB(255, 32, 23, 23),
+                          color: Theme.of(context).colorScheme.secondary,
                           size: 22,
                         ),
                         onTap: () {
@@ -201,9 +201,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                             style: Theme.of(context).textTheme.titleMedium),
                         subtitle: Text("Cari tahu tentang kami",
                             style: Theme.of(context).textTheme.bodyLarge),
-                        trailing: const Icon(
+                        trailing: Icon(
                           Iconsax.arrow_right,
-                          color: Color.fromARGB(255, 32, 23, 23),
+                          color: Theme.of(context).colorScheme.secondary,
                           size: 22,
                         ),
                         onTap: () {
@@ -267,9 +267,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                             style: Theme.of(context).textTheme.titleMedium),
                         subtitle: Text("Sampai jumpa di lain waktu...",
                             style: Theme.of(context).textTheme.bodyLarge),
-                        trailing: const Icon(
+                        trailing: Icon(
                           Iconsax.arrow_right,
-                          color: Color.fromARGB(255, 32, 23, 23),
+                          color: Theme.of(context).colorScheme.secondary,
                           size: 22,
                         ),
                       ),
