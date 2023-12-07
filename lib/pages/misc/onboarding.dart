@@ -102,9 +102,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const SizedBox(
-                  height: 370,
+                  height: 400,
                 ),
-                Text('Hey, Kawan Simpanin!', style: Theme.of(context).textTheme.displayLarge!.copyWith(color: Theme.of(context).colorScheme.primary, fontSize: 24)),
+                Text('Hey, Kawan Simpanin!', style: Theme.of(context).textTheme.displayLarge!.copyWith(color: Theme.of(context).colorScheme.primary, fontSize: 38)),
                 const SizedBox(height: 10,),
                 Text('Simpan barang berhargamu aman tanpa makan tempat, yuk!', style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 20)),
               ],
@@ -115,11 +115,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: Column(
               children: <Widget>[
                 const SizedBox(
-                  height: 370,
+                  height: 400,
                 ),
-                Text('Tempat Penuh? Kenalin Mailbox', style: Theme.of(context).textTheme.displayLarge!.copyWith(color: Theme.of(context).colorScheme.primary, fontSize: 24)),
+                Text('Tempat Penuh? Kenalin Mailbox', style: Theme.of(context).textTheme.displayLarge!.copyWith(color: Theme.of(context).colorScheme.primary, fontSize: 38)),
                 const SizedBox(height: 10,),
-                Text('Mailbox Simpanin jadi solusi jaga barang kamu mulai dari yang kecil hingga besar, santai...', style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 16)),
+                Text('Mailbox Simpanin jadi solusi jaga barang kamu mulai dari yang kecil hingga besar, santai...', style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 20)),
               ],
             ),
           ),
@@ -128,9 +128,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: Column(
               children: <Widget>[
                 const SizedBox(
-                  height: 370,
+                  height: 400,
                 ),
-                Text('Aman, gak? Jelas, dong!', style: Theme.of(context).textTheme.displayLarge!.copyWith(color: Theme.of(context).colorScheme.primary)),
+                Text('Aman, gak? Jelas, dong!', style: Theme.of(context).textTheme.displayLarge!.copyWith(color: Theme.of(context).colorScheme.primary, fontSize: 38)),
                 const SizedBox(height: 10,),
                 Text('Staff kami profesional dan pengamanan PIN elektrik di setiap mailbox-mu!', style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 20)),
               ],
