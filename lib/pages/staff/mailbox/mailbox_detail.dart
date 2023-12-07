@@ -160,11 +160,6 @@ class _StaffMailboxDetailScreenState extends State<StaffMailboxDetailScreen> {
               ),
             ),
           ),
-          ButtonComponent(
-            loading: loading,
-            buttontext: "Ubah Data",
-            onPressed: _handleUbah,
-          ),
         ],
       ),
     );
