@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:simpanin/components/button_component.dart';
 import 'package:simpanin/models/agreement.dart';
 import 'package:simpanin/models/user.dart';
 import 'package:simpanin/pages/profile/profile.dart';
@@ -12,7 +13,11 @@ import 'package:simpanin/pages/staff/maintenance/maintenance_create.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:simpanin/models/maintenance.dart';
 import 'package:simpanin/pages/staff/maintenance/maintenance_mailbox_list.dart';
+import 'package:simpanin/pages/staff/staff_main.dart';
+import 'package:simpanin/providers/page_provider.dart';
 import 'package:simpanin/providers/user_provider.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class StaffPaymentCreateScreen extends StatefulWidget {
   const StaffPaymentCreateScreen({super.key});
@@ -23,9 +28,9 @@ class StaffPaymentCreateScreen extends StatefulWidget {
 }
 
 // class task
-class _StaffPaymentCreateScreenState
-    extends State<StaffPaymentCreateScreen> {
+class _StaffPaymentCreateScreenState extends State<StaffPaymentCreateScreen> {
   final _scrollController = ScrollController();
+  bool _loading = false;
   final db = FirebaseFirestore.instance;
   final StreamController<void> _refreshController = StreamController<void>();
 
@@ -40,12 +45,14 @@ class _StaffPaymentCreateScreenState
     super.initState();
   }
 
-  void _clickBottomSheet(MaintenanceModel maintenance) async {
+  void _clickBottomSheet(AgreementModel agreement) async {
+    DateTime newEndDate = agreement.endDate.toDate().add(Duration(days: 30));
+
     showModalBottomSheet(
       context: context,
       builder: (BuildContext c) {
         return Container(
-          height: 120,
+          height: 600,
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.only(
@@ -57,20 +64,139 @@ class _StaffPaymentCreateScreenState
           child: Column(
             children: [
               ListTile(
-                contentPadding: EdgeInsets.all(10),
-                leading: const Icon(Iconsax.trash),
                 title: Text(
-                  "Hapus",
-                  style: Theme.of(context).textTheme.titleLarge,
+                  "Buat Pembayaran",
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(fontSize: 24),
                 ),
-                onTap: () async {
-                  // Panggil metode untuk menghapus data
-                  await _deleteMaintenance(maintenance.id);
-                  _refreshController.add(null);
-                  Navigator.pop(
-                      context); // Tutup bottom sheet setelah penghapusan
-                },
               ),
+              ListTile(
+                dense: true,
+                title: Text(
+                  "Kode Mailbox",
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(fontSize: 16),
+                ),
+                trailing: Text(
+                  agreement.mailbox.code,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(fontSize: 16),
+                ),
+              ),
+              ListTile(
+                dense: true,
+                title: Text(
+                  "Nama Pengguna",
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(fontSize: 16),
+                ),
+                trailing: Text(
+                  agreement.user!.name,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(fontSize: 16),
+                ),
+              ),
+              ListTile(
+                dense: true,
+                title: Text(
+                  "Batas Pembayaran",
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(fontSize: 16),
+                ),
+                trailing: Text(
+                  agreement.formattedEndDate,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(fontSize: 16),
+                ),
+              ),
+              ListTile(
+                dense: true,
+                title: Text(
+                  "Pembayaran Baru",
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(fontSize: 16),
+                ),
+                trailing: Text(
+                  DateFormat('d MMM').format(newEndDate),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(fontSize: 16),
+                ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                dense: true,
+                title: Text(
+                  "Total Pembayaran",
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                trailing: Text(
+                  agreement.formattedMonthlyCost,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              ButtonComponent(
+                  buttontext: "Lanjut Pembayaran",
+                  loading: _loading,
+                  onPressed: () async {
+                    DocumentReference agreementRef =
+                        db.collection('agreements').doc(agreement.id);
+                    DocumentReference mailboxRef =
+                        db.collection('mailboxes').doc(agreement.mailbox.id);
+                    await db.collection("payments").add({
+                      'amount': agreement.monthlyCost,
+                      'agreement': agreementRef,
+                      'mailbox': mailboxRef,
+                      'is_booking': false,
+                      'date': DateTime.now()
+                    });
+                    await db.collection("agreements").doc(agreement.id).update({
+                      'end_date': newEndDate,
+                    });
+                    showTopSnackBar(
+                      Overlay.of(context),
+                      CustomSnackBar.success(
+                        message:
+                            "Langgan ${agreement.mailbox.code} Berhasil Diaktifkan!",
+                      ),
+                    );
+                    Provider.of<PageProvider>(context, listen: false)
+                        .changePage(3);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const StaffMainScreen()),
+                    );
+                    Navigator.pop(context);
+                  })
             ],
           ),
         );
@@ -164,9 +290,13 @@ class _StaffPaymentCreateScreenState
                                               ConnectionState.waiting) {
                                             return const Text('');
                                           }
-                                          final user = UserModel.fromFirestore(
-                                              snapshot.data![0]);
+                                          agreement.user =
+                                              UserModel.fromFirestore(
+                                                  snapshot.data![0]);
                                           return ListTile(
+                                            onTap: () {
+                                              _clickBottomSheet(agreement);
+                                            },
                                             leading: Container(
                                               height: 70,
                                               width: 70,
@@ -190,12 +320,12 @@ class _StaffPaymentCreateScreenState
                                                                 .primary)),
                                               ),
                                             ),
-                                            title: Text(user.name,
+                                            title: Text(agreement.user!.name,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .titleLarge),
                                             subtitle: Text(
-                                                agreement.formattedStartDate,
+                                                agreement.formattedMonthlyCost,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .bodyLarge),
