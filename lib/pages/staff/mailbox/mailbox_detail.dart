@@ -57,7 +57,7 @@ class _StaffMailboxDetailScreenState extends State<StaffMailboxDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Theme.of(context).colorScheme.tertiary,
       appBar: AppBar(
         toolbarHeight: 70,
         backgroundColor: Colors.transparent,
@@ -66,7 +66,7 @@ class _StaffMailboxDetailScreenState extends State<StaffMailboxDetailScreen> {
         iconTheme: const IconThemeData(color: Colors.white),
         scrolledUnderElevation: 0,
         leading: BackButton(
-          color: Theme.of(context).colorScheme.onSecondary,
+          color: Theme.of(context).colorScheme.primary,
         ),
       ),
       body: Column(
@@ -83,7 +83,7 @@ class _StaffMailboxDetailScreenState extends State<StaffMailboxDetailScreen> {
                 ),
                 Text(
                   widget.mailbox.code,
-                  style: Theme.of(context).textTheme.displayLarge!.copyWith(color: Theme.of(context).colorScheme.onSecondary),
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(color: Theme.of(context).colorScheme.primary),
                 ),
                 const SizedBox(
                   height: 10.0,

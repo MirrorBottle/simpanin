@@ -112,7 +112,7 @@ class _StaffMailboxListScreenState extends State<StaffMailboxListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Theme.of(context).colorScheme.tertiary,
       body: StreamBuilder<QuerySnapshot>(
           stream: db.collection('mailboxes').orderBy("code").snapshots(),
           builder: (context, snapshot) {
@@ -130,7 +130,7 @@ class _StaffMailboxListScreenState extends State<StaffMailboxListScreen> {
                             .textTheme
                             .displayLarge!
                             .copyWith(
-                                color: Theme.of(context).colorScheme.onSecondary)),
+                                color: Theme.of(context).colorScheme.primary)),
                   ),
                   const SizedBox(height: 35),
                   Container(

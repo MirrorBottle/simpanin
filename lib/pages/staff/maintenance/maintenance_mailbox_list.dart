@@ -27,14 +27,14 @@ class _MaintenanceMailboxListScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Theme.of(context).colorScheme.tertiary,
       appBar: AppBar(
           toolbarHeight: 70,
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           scrolledUnderElevation: 0,
           leading: BackButton(
-            color: Theme.of(context).colorScheme.onSecondary,
+            color: Theme.of(context).colorScheme.primary,
           )),
       resizeToAvoidBottomInset: false,
       body: StreamBuilder<QuerySnapshot>(
@@ -54,7 +54,7 @@ class _MaintenanceMailboxListScreenState
                             .textTheme
                             .displayLarge!
                             .copyWith(
-                                color: Theme.of(context).colorScheme.onSecondary)),
+                                color: Theme.of(context).colorScheme.primary)),
                   ),
                   const SizedBox(height: 35),
                   Container(
