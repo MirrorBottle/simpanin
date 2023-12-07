@@ -88,7 +88,9 @@ class MailboxTile extends StatelessWidget {
                               style: Theme.of(context)
                                   .textTheme
                                   .bodySmall!
-                                  .copyWith(color: Colors.black),
+                                  .copyWith(color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary),
                             ),
                           ],
                         ),
@@ -111,7 +113,9 @@ class MailboxTile extends StatelessWidget {
                               style: Theme.of(context)
                                   .textTheme
                                   .bodySmall!
-                                  .copyWith(color: Colors.black),
+                                  .copyWith(color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary),
                             ),
                           ],
                         )

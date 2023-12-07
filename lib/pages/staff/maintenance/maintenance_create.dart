@@ -104,14 +104,14 @@ class _StaffMaintenanceCreateScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Theme.of(context).colorScheme.tertiary,
       appBar: AppBar(
         toolbarHeight: 50,
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           scrolledUnderElevation: 0,
           leading: BackButton(
-            color: Theme.of(context).colorScheme.onSecondary,
+            color: Theme.of(context).colorScheme.primary,
           )),
       body: SingleChildScrollView(
         controller: _scrollController,
@@ -139,7 +139,7 @@ class _StaffMaintenanceCreateScreenState
                 "Tambah\nMaintenance",
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.onSecondary,
+                      color: Theme.of(context).colorScheme.primary,
                       fontSize: 30,
                     ),
               ),

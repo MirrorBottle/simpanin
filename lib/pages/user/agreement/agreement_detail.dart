@@ -117,16 +117,16 @@ class _UserAgreementDetailScreenState extends State<UserAgreementDetailScreen> {
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 30),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.background,
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(32),
                   topRight: Radius.circular(32),
                 ),
               ),
               child: ListView(
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(
