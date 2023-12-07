@@ -99,65 +99,74 @@ class _UserPaymentListScreenState extends State<UserPaymentListScreen> {
                               .snapshots(),
                           builder: (context, snapshot) {
                             return snapshot.hasData
-                                ? ListView(
-                                    children: snapshot.data!.docs.map((doc) {
-                                      return FutureBuilder(
-                                          future: Future.wait<dynamic>([
-                                            doc['agreement'].get(),
-                                            doc['mailbox'].get()
-                                          ]),
-                                          builder: (BuildContext context,
-                                              AsyncSnapshot<List<dynamic>>
-                                                  snapshot) {
-                                            if (snapshot.connectionState ==
-                                                ConnectionState.waiting) {
-                                              return const Text('');
-                                            }
-                                            final payment =
-                                                PaymentModel.fromFuture(
-                                                    doc,
-                                                    snapshot.data![0],
-                                                    snapshot.data![1]);
-                                            return ListTile(
-                                              leading: Container(
-                                                height: 60,
-                                                width: 60,
-                                                decoration: BoxDecoration(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .tertiary,
-                                                  shape: BoxShape.circle,
-                                                ),
-                                                alignment: Alignment.center,
-                                                child: Center(
-                                                  child: Text(
-                                                      payment.mailbox.code,
+                                ? snapshot.data!.docs.isEmpty
+                                    ? const EmptyComponent(
+                                        icon: Iconsax.box,
+                                        title: "Kosong, ya...",
+                                        subtitle:
+                                            "Jangan lupa untuk selalu bayar mailboxmu")
+                                    : ListView(
+                                        children:
+                                            snapshot.data!.docs.map((doc) {
+                                          return FutureBuilder(
+                                              future: Future.wait<dynamic>([
+                                                doc['agreement'].get(),
+                                                doc['mailbox'].get()
+                                              ]),
+                                              builder: (BuildContext context,
+                                                  AsyncSnapshot<List<dynamic>>
+                                                      snapshot) {
+                                                if (snapshot.connectionState ==
+                                                    ConnectionState.waiting) {
+                                                  return const Text('');
+                                                }
+                                                final payment =
+                                                    PaymentModel.fromFuture(
+                                                        doc,
+                                                        snapshot.data![0],
+                                                        snapshot.data![1]);
+                                                return ListTile(
+                                                  leading: Container(
+                                                    height: 60,
+                                                    width: 60,
+                                                    decoration: BoxDecoration(
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .tertiary,
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                    alignment: Alignment.center,
+                                                    child: Center(
+                                                      child: Text(
+                                                          payment.mailbox.code,
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .displayMedium
+                                                              ?.copyWith(
+                                                                  color: Theme.of(
+                                                                          context)
+                                                                      .colorScheme
+                                                                      .primary)),
+                                                    ),
+                                                  ),
+                                                  title: Text(
+                                                      payment.formattedAmount,
                                                       style: Theme.of(context)
                                                           .textTheme
-                                                          .displayMedium
-                                                          ?.copyWith(
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .colorScheme
-                                                                  .primary)),
-                                                ),
-                                              ),
-                                              title: Text(
-                                                  payment.formattedAmount,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .titleLarge),
-                                              subtitle: Text(
-                                                  payment.formattedDate,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyLarge!
-                                                      .copyWith(
-                                                          color: Colors.grey)),
-                                            );
-                                          });
-                                    }).toList(),
-                                  )
+                                                          .titleLarge),
+                                                  subtitle: Text(
+                                                      payment.formattedDate,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyLarge!
+                                                          .copyWith(
+                                                              color:
+                                                                  Colors.grey)),
+                                                );
+                                              });
+                                        }).toList(),
+                                      )
                                 : (const Center(
                                     child: CircularProgressIndicator(),
                                   ));
