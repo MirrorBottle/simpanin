@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:simpanin/pages/misc/splash.dart';
 import 'package:simpanin/firebase_options.dart';
 import 'package:simpanin/providers/maintenance_create_provider.dart';
+import 'package:simpanin/providers/page_provider.dart';
 import 'package:simpanin/providers/user_provider.dart';
 import 'package:simpanin/providers/mailbox_book_provider.dart';
 import 'package:simpanin/providers/theme_mode_provider.dart';
@@ -36,6 +37,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (BuildContext context) => MaintenanceCreateProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (BuildContext context) => PageProvider(),
         ),
       ],
       child: Consumer<ThemeModeProvider>(

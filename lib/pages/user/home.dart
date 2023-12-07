@@ -16,7 +16,7 @@ class MailboxTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 260,
-      height: 160,
+      height: 190,
       margin: const EdgeInsets.only(right: 20),
       child: Card(
           color: Theme.of(context).colorScheme.tertiary,
@@ -30,7 +30,7 @@ class MailboxTile extends StatelessWidget {
             onTap: () {},
             child: SizedBox(
               width: 260,
-              height: 160,
+              height: 190,
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(
@@ -196,10 +196,10 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
   Widget build(BuildContext context) {
     return Consumer<UserProvider>(builder: (context, userData, child) {
       return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.transparent,
           scrolledUnderElevation: 0,
           title: Image.asset('assets/img/logo_full.png', height: 60),
           actions: [
@@ -242,7 +242,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                       height: 10,
                     ),
                     Container(
-                      height: 160,
+                      height: 190,
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: _agreements.isNotEmpty
                           ? ListView(
@@ -255,7 +255,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                             )
                           : (Container(
                               width: 260,
-                              height: 160,
+                              height: 190,
                               margin: const EdgeInsets.only(right: 20),
                               child: Card(
                                   color: Theme.of(context).colorScheme.tertiary,
@@ -266,7 +266,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                   clipBehavior: Clip.hardEdge,
                                   child: SizedBox(
                                     width: 260,
-                                    height: 160,
+                                    height: 190,
                                     child: Padding(
                                       padding: const EdgeInsets.all(20),
                                       child: Column(
