@@ -53,7 +53,10 @@ class _StaffAgreementBookScreenState extends State<StaffAgreementBookScreen> {
               'is_booking': true,
               'date': DateTime.now()
             }).then((mailboxRef) async {
-              await db.collection("agreements").doc(widget.agreement.id).update({
+              await db
+                  .collection("agreements")
+                  .doc(widget.agreement.id)
+                  .update({
                 'status': 'active',
               });
               showTopSnackBar(
@@ -94,33 +97,33 @@ class _StaffAgreementBookScreenState extends State<StaffAgreementBookScreen> {
           leading: BackButton(
             color: Theme.of(context).colorScheme.primary,
           )),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            padding:
-                const EdgeInsets.only(left: 30.0, right: 30.0, bottom: 40.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const SizedBox(
-                  height: 10.0,
-                ),
-                Text(
-                  "Booking - ${widget.agreement.mailbox.code}",
-                  style: Theme.of(context)
-                      .textTheme
-                      .displayLarge!
-                      .copyWith(color: Theme.of(context).colorScheme.primary),
-                ),
-                const SizedBox(
-                  height: 10.0,
-                ),
-              ],
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              padding:
+                  const EdgeInsets.only(left: 30.0, right: 30.0, bottom: 40.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  Text(
+                    "Booking - ${widget.agreement.mailbox.code}",
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayLarge!
+                        .copyWith(color: Theme.of(context).colorScheme.primary),
+                  ),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: Container(
+            Container(
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 30),
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -245,19 +248,17 @@ class _StaffAgreementBookScreenState extends State<StaffAgreementBookScreen> {
                             .titleMedium!
                             .copyWith(fontWeight: FontWeight.bold)),
                   ),
+                  const SizedBox(height: 40),
+                  ButtonComponent(
+                    loading: loading,
+                    buttontext: "Terima Pembayaran",
+                    onPressed: _handleSubmit,
+                  ),
                 ],
               ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: ButtonComponent(
-              loading: loading,
-              buttontext: "Terima Pembayaran",
-              onPressed: _handleSubmit,
-            ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }
