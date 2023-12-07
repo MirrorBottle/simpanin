@@ -34,7 +34,25 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         ),
         onFinish: _handleFinish,
         skipTextButton: const Text('Lewati'),
-        trailing: const Text('Masuk'),
+        trailing: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const LogInScreen()),
+            );
+          },
+          child: const Padding(
+            padding: EdgeInsets.all(0.0),
+            child: Text(
+              'Masuk',
+              style: TextStyle(
+                color: Color(0xFFF16807),
+                fontSize: 16,
+                
+              ),
+            ),
+          ),
+        ),
         controllerColor: Theme.of(context).colorScheme.primary,
         background: [
           Container(
@@ -44,7 +62,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               child: Align(
                 alignment: Alignment.topCenter,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 80),
+                  padding: const EdgeInsets.only(top: 60),
                   child: SvgPicture.asset('assets/svg/onboarding_1.svg',
                       height: 340),
                 ),
@@ -56,7 +74,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               child: Align(
                 alignment: Alignment.topCenter,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 80),
+                  padding: const EdgeInsets.only(top: 60),
                   child: SvgPicture.asset('assets/svg/onboarding_2.svg',
                       height: 340),
                 ),
@@ -68,7 +86,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               child: Align(
                 alignment: Alignment.topCenter,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 80),
+                  padding: const EdgeInsets.only(top: 60),
                   child: SvgPicture.asset('assets/svg/onboarding_3.svg',
                       height: 340),
                 ),
@@ -97,7 +115,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: Column(
               children: <Widget>[
                 const SizedBox(
-                  height: 480,
+                  height: 430,
                 ),
                 Text('Tempat Penuh? Kenalin Mailbox', style: Theme.of(context).textTheme.displayLarge!.copyWith(color: Theme.of(context).colorScheme.primary)),
                 const SizedBox(height: 10,),
@@ -110,7 +128,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: Column(
               children: <Widget>[
                 const SizedBox(
-                  height: 480,
+                  height: 430,
                 ),
                 Text('Aman, gak? Jelas, dong!', style: Theme.of(context).textTheme.displayLarge!.copyWith(color: Theme.of(context).colorScheme.primary)),
                 const SizedBox(height: 10,),
