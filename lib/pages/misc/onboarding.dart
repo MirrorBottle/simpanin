@@ -117,9 +117,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 const SizedBox(
                   height: 370,
                 ),
-                Text('Tempat Penuh? Kenalin Mailbox', style: Theme.of(context).textTheme.displayLarge!.copyWith(color: Theme.of(context).colorScheme.primary)),
+                Text('Tempat Penuh? Kenalin Mailbox', style: Theme.of(context).textTheme.displayLarge!.copyWith(color: Theme.of(context).colorScheme.primary, fontSize: 24)),
                 const SizedBox(height: 10,),
-                Text('Mailbox Simpanin jadi solusi jaga barang kamu mulai dari yang kecil hingga besar, santai...', style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 20)),
+                Text('Mailbox Simpanin jadi solusi jaga barang kamu mulai dari yang kecil hingga besar, santai...', style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 16)),
               ],
             ),
           ),
