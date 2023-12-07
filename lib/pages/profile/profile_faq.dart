@@ -19,7 +19,7 @@ class _ProfileFaqScreenState extends State<ProfileFaqScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF16807),
+      backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
           toolbarHeight: 70,
           backgroundColor: Colors.transparent,
@@ -57,8 +57,8 @@ class _ProfileFaqScreenState extends State<ProfileFaqScreen> {
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 5, vertical: 30),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.background,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(32),
                       topRight: Radius.circular(32),

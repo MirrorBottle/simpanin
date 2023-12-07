@@ -108,7 +108,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                 'Edit Profile',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFFF16807),
+                      color: Theme.of(context).colorScheme.primary,
                       fontSize: 30,
                     ),
               ),

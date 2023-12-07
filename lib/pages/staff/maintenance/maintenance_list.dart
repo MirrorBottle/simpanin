@@ -133,7 +133,7 @@ class _StaffMaintenanceListScreenState
                                                 maintenance.isDone
                                                     ? Iconsax.like_1
                                                     : Iconsax.clock,
-                                                color: const Color(0xFFF16807),
+                                                color: Theme.of(context).colorScheme.primary,
                                                 size: 32,
                                               ),
                                             ),
