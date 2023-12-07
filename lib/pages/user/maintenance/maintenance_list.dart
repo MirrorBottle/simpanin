@@ -51,14 +51,14 @@ class _UserMaintenanceListScreenState extends State<UserMaintenanceListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Theme.of(context).colorScheme.tertiary,
       appBar: AppBar(
           toolbarHeight: 70,
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           scrolledUnderElevation: 0,
-          leading: const BackButton(
-            color: Colors.white,
+          leading: BackButton(
+            color: Theme.of(context).colorScheme.primary,
           )),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +74,11 @@ class _UserMaintenanceListScreenState extends State<UserMaintenanceListScreen> {
                 ),
                 Text(
                   'Maintenance',
-                  style: Theme.of(context).textTheme.displayLarge,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary,
+                        fontSize: 30,
+                      ),
                 ),
               ],
             ),
@@ -129,11 +133,12 @@ class _UserMaintenanceListScreenState extends State<UserMaintenanceListScreen> {
                                               maintenance.isDone
                                                   ? Iconsax.like_1
                                                   : Iconsax.clock,
-                                              color: Theme.of(context).colorScheme.primary,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
                                               size: 32,
                                             ),
                                           ),
-                                          
                                           title: Text(maintenance.mailbox.code,
                                               style: Theme.of(context)
                                                   .textTheme

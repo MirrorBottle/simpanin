@@ -20,10 +20,10 @@ class _StaffHomeScreenState extends State<StaffHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.tertiary,
         scrolledUnderElevation: 0,
         title: Image.asset('assets/img/logo_full.png', height: 60),
       ),

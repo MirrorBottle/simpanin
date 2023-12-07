@@ -199,7 +199,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
         backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.transparent,
+          backgroundColor: Theme.of(context).colorScheme.tertiary,
           scrolledUnderElevation: 0,
           title: Image.asset('assets/img/logo_full.png', height: 60),
           actions: [

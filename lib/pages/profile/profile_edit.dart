@@ -121,11 +121,11 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   minHeight: MediaQuery.of(context).size.height - 147),
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.all(20.0),
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    topRight: Radius.circular(30.0)),
-                color: Color.fromARGB(255, 255, 255, 255),
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(32),
+                    topLeft: Radius.circular(32)),
+                color: Theme.of(context).colorScheme.background,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
