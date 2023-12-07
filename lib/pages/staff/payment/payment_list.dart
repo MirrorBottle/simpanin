@@ -99,7 +99,6 @@ class _StaffPaymentListScreenState extends State<StaffPaymentListScreen> {
               child: StreamBuilder<QuerySnapshot>(
                 stream: db
                     .collection('payments')
-                    .where("is_booking", isEqualTo: false)
                     .orderBy("date", descending: true)
                     .snapshots(),
                 builder: (context, snapshot) {
