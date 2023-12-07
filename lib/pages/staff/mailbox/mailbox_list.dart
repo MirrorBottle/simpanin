@@ -69,12 +69,12 @@ class _StaffMailboxListScreenState extends State<StaffMailboxListScreen> {
           return Container(
             height: 200,
             padding: const EdgeInsets.all(20),
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(25.0),
                 topRight: Radius.circular(25.0),
               ),
+              color: Theme.of(context).colorScheme.background
             ),
             child: Column(children: [
               if (mailbox.isActive)
