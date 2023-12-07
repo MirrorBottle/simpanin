@@ -14,7 +14,8 @@ class MaintenanceCreateProvider extends ChangeNotifier {
       code: '',
       id: '',
       price: 0,
-      size: ''
+      size: '',
+      isActive: false
     ),
   );
 
