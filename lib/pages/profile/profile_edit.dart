@@ -159,7 +159,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                     controller: _phoneController,
                     keyboardType: TextInputType.phone,
                     decoration: const InputDecoration(
-                      hintText: "Masukkan emailmu...",
+                      hintText: "Masukkan No HP mu...",
                     ),
                   ),
                   const SizedBox(height: 20),
