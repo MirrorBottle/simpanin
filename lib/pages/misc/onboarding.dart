@@ -104,7 +104,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 const SizedBox(
                   height: 370,
                 ),
-                Text('Hey, Kawan Simpanin!', style: Theme.of(context).textTheme.displayLarge!.copyWith(color: Theme.of(context).colorScheme.primary)),
+                Text('Hey, Kawan Simpanin!', style: Theme.of(context).textTheme.displayLarge!.copyWith(color: Theme.of(context).colorScheme.primary, fontSize: 24)),
                 const SizedBox(height: 10,),
                 Text('Simpan barang berhargamu aman tanpa makan tempat, yuk!', style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 20)),
               ],
