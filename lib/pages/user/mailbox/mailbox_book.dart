@@ -126,13 +126,12 @@ class _UserMailboxBookScreenState extends State<UserMailboxBookScreen> {
               child: Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 5, vertical: 30),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(32),
+                decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(32),
-                  ),
-                ),
+                    topLeft: Radius.circular(32)),
+                color: Theme.of(context).colorScheme.background,
+              ),
                 child: Column(
                   children: [
                     Padding(

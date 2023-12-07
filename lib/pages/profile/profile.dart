@@ -50,7 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen>
     return Consumer<UserProvider>(builder: (context, userData, child) {
       return Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Theme.of(context).colorScheme.tertiary,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         appBar: AppBar(
           toolbarHeight: 0,
           backgroundColor: Colors.transparent,
@@ -78,7 +78,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                   userData.user.name,
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.primary,
+                        color: Theme.of(context).colorScheme.tertiary,
                       ),
                 ),
                 subtitle: Text(userData.user.email,
