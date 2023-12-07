@@ -1,9 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:simpanin/components/empty_component.dart';
-import 'package:simpanin/models/payment.dart';
+import 'package:simpanin/models/agreement.dart';
 import 'package:simpanin/models/user.dart';
 import 'package:simpanin/pages/profile/profile.dart';
 import 'package:simpanin/pages/staff/maintenance/maintenance_create.dart';
@@ -11,57 +12,81 @@ import 'package:simpanin/pages/staff/maintenance/maintenance_create.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:simpanin/models/maintenance.dart';
 import 'package:simpanin/pages/staff/maintenance/maintenance_mailbox_list.dart';
-import 'package:simpanin/pages/staff/payment/payment_create.dart';
 import 'package:simpanin/providers/user_provider.dart';
 
-class StaffPaymentListScreen extends StatefulWidget {
-  const StaffPaymentListScreen({super.key});
+class StaffPaymentCreateScreen extends StatefulWidget {
+  const StaffPaymentCreateScreen({super.key});
 
   @override
-  State<StaffPaymentListScreen> createState() => _StaffPaymentListScreenState();
+  State<StaffPaymentCreateScreen> createState() =>
+      _StaffPaymentCreateScreenState();
 }
 
 // class task
-class _StaffPaymentListScreenState extends State<StaffPaymentListScreen> {
+class _StaffPaymentCreateScreenState
+    extends State<StaffPaymentCreateScreen> {
   final _scrollController = ScrollController();
   final db = FirebaseFirestore.instance;
+  final StreamController<void> _refreshController = StreamController<void>();
+
+  @override
+  void dispose() {
+    _refreshController.close();
+    super.dispose();
+  }
 
   @override
   void initState() {
     super.initState();
   }
 
-  void _clickBottomSheet() {
+  void _clickBottomSheet(MaintenanceModel maintenance) async {
     showModalBottomSheet(
-        context: context,
-        builder: (BuildContext c) {
-          return Container(
-            height: 200,
-            padding: const EdgeInsets.all(20),
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(25.0),
-                topRight: Radius.circular(25.0),
-              ),
+      context: context,
+      builder: (BuildContext c) {
+        return Container(
+          height: 120,
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.only(
+              topRight: Radius.circular(32),
+              topLeft: Radius.circular(32),
             ),
-            child: Column(children: [
-              ListTile(
-                contentPadding: EdgeInsets.all(10),
-                leading: const Icon(Iconsax.edit),
-                title:
-                    Text("Ubah", style: Theme.of(context).textTheme.titleLarge),
-              ),
-              Divider(height: 2),
+            color: Theme.of(context).colorScheme.background,
+          ),
+          child: Column(
+            children: [
               ListTile(
                 contentPadding: EdgeInsets.all(10),
                 leading: const Icon(Iconsax.trash),
-                title: Text("Hapus",
-                    style: Theme.of(context).textTheme.titleLarge),
+                title: Text(
+                  "Hapus",
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                onTap: () async {
+                  // Panggil metode untuk menghapus data
+                  await _deleteMaintenance(maintenance.id);
+                  _refreshController.add(null);
+                  Navigator.pop(
+                      context); // Tutup bottom sheet setelah penghapusan
+                },
               ),
-            ]),
-          );
-        });
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+// Metode untuk menghapus data dari Firebase
+  Future<void> _deleteMaintenance(String maintenanceId) async {
+    try {
+      await db.collection('maintenance').doc(maintenanceId).delete();
+      // Jika Anda memerlukan aksi lebih lanjut setelah penghapusan, Anda dapat menambahkannya di sini.
+    } catch (e) {
+      print("Error deleting maintenance: $e");
+      // Handle error jika diperlukan
+    }
   }
 
   @override
@@ -69,6 +94,14 @@ class _StaffPaymentListScreenState extends State<StaffPaymentListScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).colorScheme.tertiary,
+      appBar: AppBar(
+          toolbarHeight: 70,
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          scrolledUnderElevation: 0,
+          leading: BackButton(
+            color: Theme.of(context).colorScheme.primary,
+          )),
       body: SingleChildScrollView(
         controller: _scrollController,
         reverse: true,
@@ -77,8 +110,8 @@ class _StaffPaymentListScreenState extends State<StaffPaymentListScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 20, top: 100),
-              child: Text("Pembayaran",
+              padding: const EdgeInsets.only(left: 20, top: 30),
+              child: Text("Tambah\nPembayaran",
                   style: Theme.of(context)
                       .textTheme
                       .displayLarge!
@@ -89,7 +122,8 @@ class _StaffPaymentListScreenState extends State<StaffPaymentListScreen> {
               constraints: BoxConstraints(
                   minHeight: MediaQuery.of(context).size.height - 255),
               width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.all(20.0),
+              padding:
+                  const EdgeInsets.only(left: 5, right: 5, bottom: 5, top: 5),
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(32),
@@ -98,25 +132,18 @@ class _StaffPaymentListScreenState extends State<StaffPaymentListScreen> {
               ),
               child: StreamBuilder<QuerySnapshot>(
                 stream: db
-                    .collection('payments')
-                    .where("is_booking", isEqualTo: false)
-                    .orderBy("date", descending: true)
+                    .collection("agreements")
+                    .where("status", isEqualTo: "active")
                     .snapshots(),
                 builder: (context, snapshot) {
                   return snapshot.hasData
-                      ? snapshot.data!.docs.isEmpty
-                                    ? const EmptyComponent(
-                                        icon: Iconsax.box,
-                                        title: "Kosong, ya...",
-                                        subtitle:
-                                            "Jangan lupa untuk selalu bayar mailboxmu") : SizedBox(
+                      ? SizedBox(
                           height: 100,
                           child: ListView(
                             children: snapshot.data!.docs.map((doc) {
                               return FutureBuilder(
                                   future: Future.wait<dynamic>([
-                                    doc['agreement'].get(),
-                                    doc['mailbox'].get()
+                                    doc['mailbox'].get(),
                                   ]),
                                   builder: (BuildContext context,
                                       AsyncSnapshot<List<dynamic>> snapshot) {
@@ -124,11 +151,11 @@ class _StaffPaymentListScreenState extends State<StaffPaymentListScreen> {
                                         ConnectionState.waiting) {
                                       return const Text('');
                                     }
-                                    final payment = PaymentModel.fromFuture(doc,
-                                        snapshot.data![0], snapshot.data![1]);
+                                    final agreement = AgreementModel.fromFuture(
+                                        doc, snapshot.data![0]);
                                     return FutureBuilder(
                                         future: Future.wait<dynamic>([
-                                          snapshot.data![0]['user'].get(),
+                                          doc['user'].get(),
                                         ]),
                                         builder: (BuildContext ctx,
                                             AsyncSnapshot<List<dynamic>>
@@ -141,8 +168,8 @@ class _StaffPaymentListScreenState extends State<StaffPaymentListScreen> {
                                               snapshot.data![0]);
                                           return ListTile(
                                             leading: Container(
-                                              height: 60,
-                                              width: 60,
+                                              height: 70,
+                                              width: 70,
                                               decoration: BoxDecoration(
                                                 color: Theme.of(context)
                                                     .colorScheme
@@ -152,7 +179,7 @@ class _StaffPaymentListScreenState extends State<StaffPaymentListScreen> {
                                               alignment: Alignment.center,
                                               child: Center(
                                                 child: Text(
-                                                    payment.mailbox.code,
+                                                    agreement.mailbox.code,
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .displayMedium
@@ -168,12 +195,17 @@ class _StaffPaymentListScreenState extends State<StaffPaymentListScreen> {
                                                     .textTheme
                                                     .titleLarge),
                                             subtitle: Text(
-                                                payment.formattedDate,
+                                                agreement.formattedStartDate,
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .bodyLarge!
-                                                    .copyWith(
-                                                        color: Colors.grey)),
+                                                    .bodyLarge),
+                                            trailing: Icon(
+                                              Iconsax.arrow_right,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary,
+                                              size: 22,
+                                            ),
                                           );
                                         });
                                   });
@@ -188,20 +220,6 @@ class _StaffPaymentListScreenState extends State<StaffPaymentListScreen> {
             ),
           ],
         ),
-      ),
-      // FloatingActionButton dengan label "Tambah"
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const StaffPaymentCreateScreen()),
-          );
-        },
-        tooltip: 'Tambah',
-        label: const Text("Tambah", style: TextStyle(color: Colors.white)),
-        icon: const Icon(Icons.add, color: Colors.white),
-        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
     );
   }

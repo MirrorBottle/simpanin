@@ -11,6 +11,8 @@ class AgreementModel {
   String note;
   String status;
   int monthlyCost;
+  int initialCost;
+  int initialMonth;
   MailboxModel mailbox;
   UserModel? user;
 
@@ -22,6 +24,8 @@ class AgreementModel {
     required this.note,
     required this.status,
     required this.monthlyCost,
+    required this.initialCost,
+    required this.initialMonth,
     required this.mailbox,
     this.user,
   });
@@ -38,6 +42,8 @@ class AgreementModel {
       note: data['note'],
       status: data['status'],
       monthlyCost: data['monthly_cost'],
+      initialCost: data['initial_cost'],
+      initialMonth: data['initial_month'],
       mailbox: MailboxModel.fromFirestore(mailbox),
       user: UserModel.fromFirestore(user)
     );
@@ -53,6 +59,8 @@ class AgreementModel {
       note: data['note'],
       status: data['status'],
       monthlyCost: data['monthly_cost'],
+      initialCost: data['initial_cost'],
+      initialMonth: data['initial_month'],
       mailbox: MailboxModel.fromFirestore(mailbox)
     );
   }
