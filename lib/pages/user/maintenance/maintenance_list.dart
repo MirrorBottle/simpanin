@@ -48,14 +48,14 @@ class _UserMaintenanceListScreenState extends State<UserMaintenanceListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Theme.of(context).colorScheme.tertiary,
       appBar: AppBar(
           toolbarHeight: 70,
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           scrolledUnderElevation: 0,
-          leading: const BackButton(
-            color: Colors.white,
+          leading: BackButton(
+            color: Theme.of(context).colorScheme.primary,
           )),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,7 +71,11 @@ class _UserMaintenanceListScreenState extends State<UserMaintenanceListScreen> {
                 ),
                 Text(
                   'Maintenance',
-                  style: Theme.of(context).textTheme.displayLarge,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary,
+                        fontSize: 30,
+                      ),
                 ),
               ],
             ),
@@ -79,12 +83,11 @@ class _UserMaintenanceListScreenState extends State<UserMaintenanceListScreen> {
           Expanded(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 30),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(32),
-                  topRight: Radius.circular(32),
-                ),
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(32),
+                    topLeft: Radius.circular(32)),
+                color: Theme.of(context).colorScheme.background,
               ),
               child: _loading
                   ? const Center(
@@ -127,11 +130,12 @@ class _UserMaintenanceListScreenState extends State<UserMaintenanceListScreen> {
                                               maintenance.isDone
                                                   ? Iconsax.like_1
                                                   : Iconsax.clock,
-                                              color: Theme.of(context).colorScheme.primary,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
                                               size: 32,
                                             ),
                                           ),
-                                          isThreeLine: true,
                                           title: Text(maintenance.mailbox.code,
                                               style: Theme.of(context)
                                                   .textTheme

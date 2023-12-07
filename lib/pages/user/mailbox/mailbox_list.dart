@@ -17,7 +17,7 @@ class _UserMailboxListScreenState extends State<UserMailboxListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Theme.of(context).colorScheme.tertiary,
       body: StreamBuilder<QuerySnapshot>(
         stream: db
             .collection('mailboxes')
@@ -39,7 +39,11 @@ class _UserMailboxListScreenState extends State<UserMailboxListScreen> {
                     ),
                     Text(
                       'Mailbox',
-                      style: Theme.of(context).textTheme.displayLarge,
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.primary,
+                      fontSize: 30,
+                    ),
                     ),
                   ],
                 ),
@@ -48,12 +52,11 @@ class _UserMailboxListScreenState extends State<UserMailboxListScreen> {
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 5, vertical: 30),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(32),
-                      topRight: Radius.circular(32),
-                    ),
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
+                        topRight: Radius.circular(32),
+                        topLeft: Radius.circular(32)),
+                    color: Theme.of(context).colorScheme.background,
                   ),
                   child: snapshot.hasData
                       ? ListView(
@@ -100,7 +103,8 @@ class _UserMailboxListScreenState extends State<UserMailboxListScreen> {
                                   subtitle: Text("Ukuran ${mailbox.size}",
                                       style: Theme.of(context)
                                           .textTheme
-                                          .bodyLarge!.copyWith(color: Colors.grey)),
+                                          .bodyLarge!
+                                          .copyWith(color: Colors.grey)),
                                   trailing: Icon(
                                     Iconsax.arrow_right,
                                     color:

@@ -4,14 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simpanin/models/mailbox.dart';
-import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:simpanin/pages/staff/mailbox/mailbox_create.dart';
 import 'package:simpanin/pages/staff/mailbox/mailbox_detail.dart';
 import 'package:simpanin/pages/staff/mailbox/mailbox_edit.dart';
-import 'package:simpanin/pages/user/mailbox/mailbox_detail.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -67,7 +64,7 @@ class _StaffMailboxListScreenState extends State<StaffMailboxListScreen> {
         context: context,
         builder: (BuildContext c) {
           return Container(
-            height: 200,
+            height: mailbox.isActive && mailbox.availability ? 200 : 120,
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.only(
@@ -77,7 +74,7 @@ class _StaffMailboxListScreenState extends State<StaffMailboxListScreen> {
               color: Theme.of(context).colorScheme.background
             ),
             child: Column(children: [
-              if (mailbox.isActive)
+              if (mailbox.isActive && mailbox.availability)
                 Column(
                   children: [
                     ListTile(
@@ -99,7 +96,7 @@ class _StaffMailboxListScreenState extends State<StaffMailboxListScreen> {
                 ),
               ListTile(
                 contentPadding: const EdgeInsets.all(10),
-                leading: const Icon(Iconsax.trash),
+                leading: const Icon(Iconsax.status),
                 title: mailbox.isActive ? (Text("Nonaktif", style: Theme.of(context).textTheme.titleLarge)) : (Text("Aktif", style: Theme.of(context).textTheme.titleLarge)),
                 onTap: () {
                   Navigator.pop(context);

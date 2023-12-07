@@ -19,14 +19,14 @@ class _ProfileFaqScreenState extends State<ProfileFaqScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Theme.of(context).colorScheme.tertiary,
       appBar: AppBar(
           toolbarHeight: 70,
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           scrolledUnderElevation: 0,
-          leading: const BackButton(
-            color: Colors.white,
+          leading: BackButton(
+            color: Theme.of(context).colorScheme.primary,
           )),
       body: StreamBuilder<QuerySnapshot>(
         stream: db.collection('faqs').snapshots(),
@@ -45,7 +45,11 @@ class _ProfileFaqScreenState extends State<ProfileFaqScreen> {
                     ),
                     Text(
                       'FAQs',
-                      style: Theme.of(context).textTheme.displayLarge,
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.primary,
+                            fontSize: 30,
+                          ),
                     ),
                     const SizedBox(
                       height: 10.0,
@@ -75,7 +79,9 @@ class _ProfileFaqScreenState extends State<ProfileFaqScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            ProfileFaqDetailScreen(title: doc['title'], content: doc['content'])),
+                                            ProfileFaqDetailScreen(
+                                                title: doc['title'],
+                                                content: doc['content'])),
                                   );
                                 },
                                 title: Text(doc['title'],

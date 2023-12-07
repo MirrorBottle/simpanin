@@ -46,7 +46,7 @@ class _UserPaymentListScreenState extends State<UserPaymentListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Theme.of(context).colorScheme.tertiary,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -61,7 +61,11 @@ class _UserPaymentListScreenState extends State<UserPaymentListScreen> {
                 ),
                 Text(
                   'Pembayaran',
-                  style: Theme.of(context).textTheme.displayLarge,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary,
+                        fontSize: 30,
+                      ),
                 ),
               ],
             ),
@@ -69,12 +73,11 @@ class _UserPaymentListScreenState extends State<UserPaymentListScreen> {
           Expanded(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 30),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(32),
-                  topRight: Radius.circular(32),
-                ),
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(32),
+                    topLeft: Radius.circular(32)),
+                color: Theme.of(context).colorScheme.background,
               ),
               child: _loading
                   ? const Center(
@@ -102,11 +105,10 @@ class _UserPaymentListScreenState extends State<UserPaymentListScreen> {
                                             ConnectionState.waiting) {
                                           return const Text('');
                                         }
-                                        final payment =
-                                            PaymentModel.fromFuture(
-                                                doc,
-                                                snapshot.data![0],
-                                                snapshot.data![1]);
+                                        final payment = PaymentModel.fromFuture(
+                                            doc,
+                                            snapshot.data![0],
+                                            snapshot.data![1]);
                                         return ListTile(
                                           leading: Container(
                                             height: 60,
@@ -134,11 +136,12 @@ class _UserPaymentListScreenState extends State<UserPaymentListScreen> {
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .titleLarge),
-                                          subtitle: Text(
-                                              payment.formattedDate,
+                                          subtitle: Text(payment.formattedDate,
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .bodyLarge!.copyWith(color: Colors.grey)),
+                                                  .bodyLarge!
+                                                  .copyWith(
+                                                      color: Colors.grey)),
                                         );
                                       });
                                 }).toList(),

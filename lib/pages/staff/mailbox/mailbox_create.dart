@@ -84,10 +84,9 @@ class _StaffMailboxCreateScreenState extends State<StaffMailboxCreateScreen> {
                 const SizedBox(
                   height: 10.0,
                 ),
-                Text(
-                  'Tambah Mailbox',
-                  style: Theme.of(context).textTheme.displayLarge,
-                ),
+                Text('Tambah Mailbox',
+                    style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.primary)),
                 const SizedBox(
                   height: 10.0,
                 ),
