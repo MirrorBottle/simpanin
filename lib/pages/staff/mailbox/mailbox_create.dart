@@ -69,14 +69,14 @@ class _StaffMailboxCreateScreenState extends State<StaffMailboxCreateScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.tertiary,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
           toolbarHeight: 70,
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           scrolledUnderElevation: 0,
           leading: BackButton(
-            color: Theme.of(context).colorScheme.primary,
+            color: Theme.of(context).colorScheme.onSecondary,
             onPressed: () {
               Provider.of<PageProvider>(context, listen: false).changePage(1);
               Navigator.push(
@@ -100,7 +100,7 @@ class _StaffMailboxCreateScreenState extends State<StaffMailboxCreateScreen> {
                 ),
                 Text('Tambah Mailbox',
                     style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                        color: Theme.of(context).colorScheme.primary)),
+                        color: Theme.of(context).colorScheme.onSecondary)),
                 const SizedBox(
                   height: 10.0,
                 ),

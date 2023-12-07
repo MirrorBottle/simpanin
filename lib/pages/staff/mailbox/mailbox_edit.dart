@@ -84,7 +84,7 @@ class _StaffMailboxEditScreenState extends State<StaffMailboxEditScreen> {
           elevation: 0.0,
           scrolledUnderElevation: 0,
           leading: BackButton(
-            color: Theme.of(context).colorScheme.primary,
+            color: Theme.of(context).colorScheme.onSecondary,
             onPressed: () {
               Provider.of<PageProvider>(context, listen: false).changePage(1);
               Navigator.push(
@@ -94,7 +94,7 @@ class _StaffMailboxEditScreenState extends State<StaffMailboxEditScreen> {
               );
             },
           )),
-      backgroundColor: Theme.of(context).colorScheme.tertiary,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -112,7 +112,7 @@ class _StaffMailboxEditScreenState extends State<StaffMailboxEditScreen> {
                   style: Theme.of(context)
                       .textTheme
                       .displayLarge!
-                      .copyWith(color: Theme.of(context).colorScheme.primary),
+                      .copyWith(color: Theme.of(context).colorScheme.onSecondary),
                 ),
                 const SizedBox(
                   height: 10.0,
