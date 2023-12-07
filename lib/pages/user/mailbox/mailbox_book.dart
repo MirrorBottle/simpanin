@@ -66,9 +66,10 @@ class _UserMailboxBookScreenState extends State<UserMailboxBookScreen> {
               "user": userRef,
               "mailbox": mailboxRef
             }).then((agreementRef) async {
-              await db.collection("mailboxes").doc(mailbox.id).update({
-                "availability": false
-              });
+              await db
+                  .collection("mailboxes")
+                  .doc(mailbox.id)
+                  .update({"availability": false});
               showTopSnackBar(
                 Overlay.of(context),
                 const CustomSnackBar.success(
@@ -106,32 +107,32 @@ class _UserMailboxBookScreenState extends State<UserMailboxBookScreen> {
             leading: const BackButton(
               color: Colors.white,
             )),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              padding:
-                  const EdgeInsets.only(left: 30.0, right: 30.0, bottom: 40.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Booking\nMailbox-mu",
-                    style: Theme.of(context).textTheme.displayLarge,
-                  ),
-                ],
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                padding: const EdgeInsets.only(
+                    left: 30.0, right: 30.0, bottom: 40.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Booking\nMailbox-mu",
+                      style: Theme.of(context).textTheme.displayLarge,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Expanded(
-              child: Container(
+              Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 5, vertical: 30),
                 decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(32),
-                    topLeft: Radius.circular(32)),
-                color: Theme.of(context).colorScheme.background,
-              ),
+                  borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(32),
+                      topLeft: Radius.circular(32)),
+                  color: Theme.of(context).colorScheme.background,
+                ),
                 child: Column(
                   children: [
                     Padding(
@@ -284,13 +285,13 @@ class _UserMailboxBookScreenState extends State<UserMailboxBookScreen> {
                   ],
                 ),
               ),
-            ),
-            ButtonComponent(
-              loading: loading,
-              buttontext: "Konfirmasi",
-              onPressed: _handleSubmit,
-            ),
-          ],
+              ButtonComponent(
+                loading: loading,
+                buttontext: "Konfirmasi",
+                onPressed: _handleSubmit,
+              ),
+            ],
+          ),
         ),
       );
     });
