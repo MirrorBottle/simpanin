@@ -344,9 +344,9 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                               shape: BoxShape.circle,
                             ),
                             alignment: Alignment.center,
-                            child: const Icon(
+                            child: Icon(
                               Iconsax.like_1,
-                              color: Color(0xFFF16807),
+                              color: Theme.of(context).colorScheme.primary,
                               size: 32,
                             ),
                           ),

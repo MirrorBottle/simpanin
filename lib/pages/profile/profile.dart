@@ -82,7 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                       ),
                 ),
                 subtitle: Text(userData.user.email,
-                    style: Theme.of(context).textTheme.titleSmall),
+                    style: Theme.of(context).textTheme.titleMedium),
               ),
               const SizedBox(
                 height: 10,
@@ -113,15 +113,15 @@ class _ProfileScreenState extends State<ProfileScreen>
                                     const ProfileEditScreen()),
                           );
                         },
-                        leading: const Icon(
+                        leading: Icon(
                           Iconsax.edit,
-                          color: Color(0xFFF16807),
+                          color: Theme.of(context).colorScheme.primary,
                           size: 32,
                         ),
                         title: Text("Edit Profil",
-                            style: Theme.of(context).textTheme.labelLarge),
+                            style: Theme.of(context).textTheme.titleMedium),
                         subtitle: Text("Perbarui informasi tentang anda",
-                            style: Theme.of(context).textTheme.labelSmall),
+                            style: Theme.of(context).textTheme.bodyLarge),
                         trailing: const Icon(
                           Iconsax.arrow_right,
                           color: Color.fromARGB(255, 32, 23, 23),
@@ -144,15 +144,15 @@ class _ProfileScreenState extends State<ProfileScreen>
                             value ? ThemeMode.dark : ThemeMode.light,
                           );
                         },
-                        secondary: const Icon(
+                        secondary: Icon(
                           Iconsax.moon,
-                          color: Color(0xFFF16807),
+                          color: Theme.of(context).colorScheme.primary,
                           size: 32,
                         ),
                         title: Text("Tema Gelap",
-                            style: Theme.of(context).textTheme.labelLarge),
+                            style: Theme.of(context).textTheme.titleMedium),
                         subtitle: Text("Ubah tema sesuai selera anda",
-                            style: Theme.of(context).textTheme.labelSmall),
+                            style: Theme.of(context).textTheme.bodyLarge),
                       ),
                       const Divider(
                         height: 10,
@@ -162,15 +162,15 @@ class _ProfileScreenState extends State<ProfileScreen>
                         color: Color.fromARGB(96, 72, 72, 72),
                       ),
                       ListTile(
-                        leading: const Icon(
+                        leading: Icon(
                           Iconsax.info_circle,
-                          color: Color(0xFFF16807),
+                          color: Theme.of(context).colorScheme.primary,
                           size: 32,
                         ),
                         title: Text("FAQs",
-                            style: Theme.of(context).textTheme.labelLarge),
+                            style: Theme.of(context).textTheme.titleMedium),
                         subtitle: Text("Temukan bantuan & dukungan",
-                            style: Theme.of(context).textTheme.labelSmall),
+                            style: Theme.of(context).textTheme.bodyLarge),
                         trailing: const Icon(
                           Iconsax.arrow_right,
                           color: Color.fromARGB(255, 32, 23, 23),
@@ -192,15 +192,15 @@ class _ProfileScreenState extends State<ProfileScreen>
                         color: Color.fromARGB(96, 72, 72, 72),
                       ),
                       ListTile(
-                        leading: const Icon(
+                        leading: Icon(
                           Iconsax.message_question,
-                          color: Color(0xFFF16807),
+                          color: Theme.of(context).colorScheme.primary,
                           size: 32,
                         ),
                         title: Text("Tentang",
-                            style: Theme.of(context).textTheme.labelLarge),
+                            style: Theme.of(context).textTheme.titleMedium),
                         subtitle: Text("Cari tahu tentang kami",
-                            style: Theme.of(context).textTheme.labelSmall),
+                            style: Theme.of(context).textTheme.bodyLarge),
                         trailing: const Icon(
                           Iconsax.arrow_right,
                           color: Color.fromARGB(255, 32, 23, 23),
@@ -258,15 +258,15 @@ class _ProfileScreenState extends State<ProfileScreen>
                       ),
                       ListTile(
                         onTap: _handleLogout,
-                        leading: const Icon(
+                        leading: Icon(
                           Iconsax.logout_1,
-                          color: Color(0xFFF16807),
+                          color: Theme.of(context).colorScheme.primary,
                           size: 32,
                         ),
                         title: Text("Keluar",
-                            style: Theme.of(context).textTheme.labelLarge),
+                            style: Theme.of(context).textTheme.titleMedium),
                         subtitle: Text("Sampai jumpa di lain waktu...",
-                            style: Theme.of(context).textTheme.labelSmall),
+                            style: Theme.of(context).textTheme.bodyLarge),
                         trailing: const Icon(
                           Iconsax.arrow_right,
                           color: Color.fromARGB(255, 32, 23, 23),

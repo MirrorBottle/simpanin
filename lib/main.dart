@@ -114,10 +114,10 @@ class MyApp extends StatelessWidget {
     return ThemeData.dark().copyWith(
       colorScheme: ColorScheme.fromSeed(
         seedColor: Colors.blueGrey,
-        background: const Color(0xFF121212),
+        background: const Color(0xFF222222),
         brightness: Brightness.dark,
-        primary: const Color(0xFFF16807),
-        secondary: const Color(0xFF1A1A1A),
+        primary: const Color(0xFFf48639),
+        secondary: Colors.white,
         tertiary: const Color(0xFF2D2D2D),
         error: const Color(0xFFB00020),
         onBackground: Colors.white,
@@ -140,17 +140,25 @@ class MyApp extends StatelessWidget {
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
               ),
-              bodyMedium: TextStyle(
+              titleLarge: Theme.of(context)
+                  .textTheme
+                  .titleLarge!
+                  .copyWith(color: Colors.white),
+              bodyLarge: Theme.of(context)
+                  .textTheme
+                  .bodyLarge!
+                  .copyWith(color: Colors.white),
+              bodyMedium: const TextStyle(
                 color: Color(0xFFB0B0B0), // Updated to a dark color
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
               titleMedium: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.normal,
-              ),
+                  fontSize: 16,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.white70),
               bodySmall: const TextStyle(
-                color: Colors.grey,
+                color: Colors.white,
                 fontSize: 16,
               ),
             ),
