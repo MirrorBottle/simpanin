@@ -4,14 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simpanin/models/mailbox.dart';
-import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:simpanin/pages/staff/mailbox/mailbox_create.dart';
 import 'package:simpanin/pages/staff/mailbox/mailbox_detail.dart';
 import 'package:simpanin/pages/staff/mailbox/mailbox_edit.dart';
-import 'package:simpanin/pages/user/mailbox/mailbox_detail.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
