@@ -7,6 +7,7 @@ class MailboxModel {
   int price;
   String size;
   bool availability;
+  bool isActive;
 
   MailboxModel({
     required this.id,
@@ -14,6 +15,7 @@ class MailboxModel {
     required this.price,
     required this.size,
     required this.availability,
+    required this.isActive,
   });
 
   factory MailboxModel.fromJson(Map<String, dynamic> _json) {
@@ -23,6 +25,8 @@ class MailboxModel {
       price: _json['price'],
       size: _json['size'],
       availability: _json['availability'],
+      isActive: _json['is_active'],
+
     );
   }
 
@@ -32,7 +36,7 @@ class MailboxModel {
       'code': code,
       'price': price,
       'size': size,
-      'availability': availability,
+      'is_active': isActive,
     };
   }
 
@@ -44,6 +48,7 @@ class MailboxModel {
       price: data['price'],
       size: data['size'],
       availability: data['availability'] ?? false,
+      isActive: data['is_active'] ?? false,
     );
   }
 
