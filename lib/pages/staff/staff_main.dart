@@ -6,6 +6,7 @@ import 'package:simpanin/pages/profile/profile.dart';
 import 'package:simpanin/pages/staff/home.dart';
 import 'package:simpanin/pages/staff/mailbox/mailbox_list.dart';
 import 'package:simpanin/pages/staff/maintenance/maintenance_list.dart';
+import 'package:simpanin/pages/staff/master/master.dart';
 import 'package:simpanin/pages/staff/payment/payment_list.dart';
 import 'package:simpanin/providers/page_provider.dart';
 import 'package:simpanin/providers/theme_mode_provider.dart';
@@ -23,7 +24,7 @@ class _StaffMainScreenState extends State<StaffMainScreen> {
     const StaffMailboxListScreen(),
     const StaffMaintenanceListScreen(),
     const StaffPaymentListScreen(),
-    const ProfileScreen(),
+    const MasterScreen(),
   ];
 
   @override
@@ -74,8 +75,8 @@ class _StaffMainScreenState extends State<StaffMainScreen> {
 
               /// Profile
               SalomonBottomBarItem(
-                icon: const Icon(Iconsax.user),
-                title: const Text("Profile"),
+                icon: const Icon(Iconsax.more),
+                title: const Text("More"),
                 selectedColor: Theme.of(context).colorScheme.primary,
               ),
             ],

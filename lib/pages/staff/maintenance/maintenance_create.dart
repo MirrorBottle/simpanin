@@ -104,16 +104,15 @@ class _StaffMaintenanceCreateScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Theme.of(context).colorScheme.tertiary,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
-        toolbarHeight: 0,
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        titleSpacing: 0.0,
-        iconTheme: const IconThemeData(color: Colors.white),
-        automaticallyImplyLeading: false,
-        scrolledUnderElevation: 0,
-      ),
+        toolbarHeight: 50,
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          scrolledUnderElevation: 0,
+          leading: BackButton(
+            color: Theme.of(context).colorScheme.onSecondary,
+          )),
       body: SingleChildScrollView(
         controller: _scrollController,
         reverse: true,
@@ -134,12 +133,13 @@ class _StaffMaintenanceCreateScreenState
             },
           )
             ),
+            
             ListTile(
               title: Text(
                 "Tambah\nMaintenance",
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(context).colorScheme.onSecondary,
                       fontSize: 30,
                     ),
               ),
@@ -149,7 +149,7 @@ class _StaffMaintenanceCreateScreenState
             ),
             Container(
               constraints: BoxConstraints(
-                minHeight: MediaQuery.of(context).size.height - 185,
+                minHeight: MediaQuery.of(context).size.height - 210,
               ),
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.all(20.0),
