@@ -40,7 +40,7 @@ class _StaffMailboxEditScreenState extends State<StaffMailboxEditScreen> {
     try {
       db.collection("mailboxes").doc(widget.mailbox.id).update({
         'code': _kodeController.text,
-        'price': _hargaController.text,
+        'price': int.parse(_hargaController.text),
         'size': _selectedUkuran,
       }).then((mailboxesRef) async {
         showTopSnackBar(
