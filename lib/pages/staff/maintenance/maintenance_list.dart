@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
@@ -24,13 +26,20 @@ class _StaffMaintenanceListScreenState
     extends State<StaffMaintenanceListScreen> {
   final _scrollController = ScrollController();
   final db = FirebaseFirestore.instance;
+  final StreamController<void> _refreshController = StreamController<void>();
+
+  @override
+  void dispose() {
+    _refreshController.close();
+    super.dispose();
+  }
 
   @override
   void initState() {
     super.initState();
   }
 
-  void _clickBottomSheet() {
+  void _clickBottomSheet(MaintenanceModel maintenance) {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext c) {
@@ -119,6 +128,7 @@ class _StaffMaintenanceListScreenState
                                                   doc, mailbox.data!);
                                           
                                           return ListTile(
+                                            onTap: (){ _clickBottomSheet(maintenance);},
                                             leading: Container(
                                               height: 70,
                                               width: 70,
