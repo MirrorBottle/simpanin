@@ -7,7 +7,8 @@ class MailboxBookProvider extends ChangeNotifier {
     code: '',
     id: '',
     price: 0,
-    size: ''
+    size: '',
+    isActive: false,
   );
 
   MailboxModel get mailbox {
