@@ -88,9 +88,9 @@ class _ProfileFaqScreenState extends State<ProfileFaqScreen> {
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleMedium),
-                                trailing: const Icon(
+                                trailing: Icon(
                                   Iconsax.arrow_right,
-                                  color: Color.fromARGB(255, 32, 23, 23),
+                                  color: Theme.of(context).colorScheme.secondary,
                                   size: 22,
                                 ),
                               ),

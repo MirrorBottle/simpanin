@@ -1,13 +1,16 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:simpanin/components/button_component.dart';
 import 'package:simpanin/components/input_password_component.dart';
 import 'package:simpanin/models/user.dart';
 // import 'package:simpanin/pages/auth/sign_in/sign_in_first.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simpanin/pages/user/user_main.dart';
+import 'package:simpanin/providers/user_provider.dart';
 import 'package:simpanin/services/auth_service.dart';
+import 'package:simpanin/services/user_service.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -45,12 +48,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
           password: _passwordController.text,
           phone: '',
           role: 'user');
-      await AuthService.signUp(user);
+      String id = await AuthService.signUp(user);
+      UserModel userData = await UserService.getUser(id);
+      Provider.of<UserProvider>(context, listen: false).setAuth(user);
       setState(() {
         loading = false;
       });
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setBool('isLogin', true);
+
       showTopSnackBar(
         Overlay.of(context),
         const CustomSnackBar.success(

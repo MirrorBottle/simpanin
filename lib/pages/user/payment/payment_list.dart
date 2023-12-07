@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
-import 'package:simpanin/models/mailbox.dart';
-import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:simpanin/models/payment.dart';
 import 'package:simpanin/models/user.dart';
-import 'package:simpanin/pages/staff/mailbox/mailbox_create.dart';
-import 'package:simpanin/pages/user/mailbox/mailbox_detail.dart';
 import 'package:simpanin/providers/user_provider.dart';
 
 class UserPaymentListScreen extends StatefulWidget {

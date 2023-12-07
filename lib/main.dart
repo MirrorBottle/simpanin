@@ -128,6 +128,7 @@ class MyApp extends StatelessWidget {
         onPrimary: Colors.white,
         onSecondary: Colors.white,
       ),
+      useMaterial3: true,
       textTheme: GoogleFonts.poppinsTextTheme(
         Theme.of(context).textTheme.copyWith(
               displayLarge: const TextStyle(

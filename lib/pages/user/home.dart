@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
+import 'package:simpanin/components/empty_component.dart';
 import 'package:simpanin/models/agreement.dart';
 import 'package:simpanin/models/maintenance.dart';
 import 'package:simpanin/models/user.dart';
@@ -309,24 +310,27 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                 style:
                                     Theme.of(context).textTheme.displayMedium,
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const UserMaintenanceListScreen()),
-                                  );
-                                },
-                                child: Text(
-                                  "Lihat Semua",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium!
-                                      .copyWith(
-                                          decoration: TextDecoration.underline),
-                                ),
-                              )
+                              if (_agreements.isNotEmpty) ...[
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const UserMaintenanceListScreen()),
+                                    );
+                                  },
+                                  child: Text(
+                                    "Lihat Semua",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .copyWith(
+                                            decoration:
+                                                TextDecoration.underline),
+                                  ),
+                                )
+                              ]
                             ],
                           ),
                         ],
@@ -335,30 +339,37 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     const SizedBox(
                       height: 10,
                     ),
-                    ..._maintenances.map((maintenance) => ListTile(
-                          leading: Container(
-                            height: 70,
-                            width: 70,
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.tertiary,
-                              shape: BoxShape.circle,
+                    if (_agreements.isNotEmpty && _maintenances.isNotEmpty) ...[
+                      ..._maintenances.map((maintenance) => ListTile(
+                            leading: Container(
+                              height: 70,
+                              width: 70,
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.tertiary,
+                                shape: BoxShape.circle,
+                              ),
+                              alignment: Alignment.center,
+                              child: Icon(
+                                Iconsax.like_1,
+                                color: Theme.of(context).colorScheme.primary,
+                                size: 32,
+                              ),
                             ),
-                            alignment: Alignment.center,
-                            child: Icon(
-                              Iconsax.like_1,
-                              color: Theme.of(context).colorScheme.primary,
-                              size: 32,
-                            ),
-                          ),
-                          isThreeLine: true,
-                          title: Text(maintenance.mailbox.code,
-                              style: Theme.of(context).textTheme.titleLarge),
-                          subtitle: Text(maintenance.note,
-                              style: Theme.of(context).textTheme.bodyLarge),
-                          trailing: Text(
-                              "${maintenance.formattedStartDate} ~ ${maintenance.formattedEndDate}",
-                              style: Theme.of(context).textTheme.bodyLarge),
-                        ))
+                            isThreeLine: true,
+                            title: Text(maintenance.mailbox.code,
+                                style: Theme.of(context).textTheme.titleLarge),
+                            subtitle: Text(maintenance.note,
+                                style: Theme.of(context).textTheme.bodyLarge),
+                            trailing: Text(
+                                "${maintenance.formattedStartDate} ~ ${maintenance.formattedEndDate}",
+                                style: Theme.of(context).textTheme.bodyLarge),
+                          ))
+                    ] else ...[
+                      EmptyComponent(
+                          icon: Iconsax.smileys,
+                          title: "Lapor! Semua aman!",
+                          subtitle: "Tidak ada maintenance untuk mailbox mu")
+                    ]
                   ],
                 ),
         ),

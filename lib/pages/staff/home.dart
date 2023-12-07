@@ -23,7 +23,7 @@ class _StaffHomeScreenState extends State<StaffHomeScreen> {
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Theme.of(context).colorScheme.tertiary,
+        backgroundColor: Theme.of(context).colorScheme.background,
         scrolledUnderElevation: 0,
         title: Image.asset('assets/img/logo_full.png', height: 60),
       ),
@@ -88,7 +88,8 @@ class _StaffHomeScreenState extends State<StaffHomeScreen> {
                                             ConnectionState.waiting) {
                                           return const Text('');
                                         }
-                                        final user = UserModel.fromFirestore(snapshot.data![0]);
+                                        final user = UserModel.fromFirestore(
+                                            snapshot.data![0]);
                                         return ListTile(
                                           leading: Container(
                                             height: 70,
@@ -112,8 +113,7 @@ class _StaffHomeScreenState extends State<StaffHomeScreen> {
                                                                   .primary)),
                                             ),
                                           ),
-                                          title: Text(
-                                              user.name,
+                                          title: Text(user.name,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .titleLarge),
@@ -121,10 +121,9 @@ class _StaffHomeScreenState extends State<StaffHomeScreen> {
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .bodyLarge),
-                                          trailing: const Icon(
+                                          trailing: Icon(
                                             Iconsax.arrow_right,
-                                            color:
-                                                Color.fromARGB(255, 32, 23, 23),
+                                            color: Theme.of(context).colorScheme.secondary,
                                             size: 22,
                                           ),
                                         );
