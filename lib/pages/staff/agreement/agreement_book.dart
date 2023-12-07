@@ -61,7 +61,7 @@ class _StaffAgreementBookScreenState extends State<StaffAgreementBookScreen> {
                   .doc(widget.agreement.id)
                   .update({
                 'status': 'active',
-                'accessCode': accessCode,
+                'access_code': accessCode,
               });
               showTopSnackBar(
                 Overlay.of(context),
