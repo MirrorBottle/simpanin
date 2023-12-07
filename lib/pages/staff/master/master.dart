@@ -51,7 +51,7 @@ class _MasterScreenState extends State<MasterScreen>
     return Consumer<UserProvider>(builder: (context, userData, child) {
       return Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: Theme.of(context).colorScheme.tertiary,
         appBar: AppBar(
           toolbarHeight: 0,
           backgroundColor: Colors.transparent,
@@ -69,10 +69,10 @@ class _MasterScreenState extends State<MasterScreen>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 20, top: 100),
+                padding: const EdgeInsets.only(left: 20, top: 80),
                 child: Text("More",
                     style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                        color: Theme.of(context).colorScheme.onSecondary)),
+                        color: Theme.of(context).colorScheme.primary)),
               ),
               const SizedBox(height: 35),
               Container(

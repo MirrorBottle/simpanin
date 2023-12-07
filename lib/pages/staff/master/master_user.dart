@@ -17,29 +17,27 @@ class MasterUserListScreen extends StatefulWidget {
   const MasterUserListScreen({super.key});
 
   @override
-  State<MasterUserListScreen> createState() =>
-      _MasterUserListScreenState();
+  State<MasterUserListScreen> createState() => _MasterUserListScreenState();
 }
 
 // class task
-class _MasterUserListScreenState
-    extends State<MasterUserListScreen> {
+class _MasterUserListScreenState extends State<MasterUserListScreen> {
   final _scrollController = ScrollController();
   final db = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Theme.of(context).colorScheme.tertiary,
       appBar: AppBar(
         toolbarHeight: 70,
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         titleSpacing: 0.0,
-        iconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: IconThemeData(color: Theme.of(context).colorScheme.primary),
         scrolledUnderElevation: 0,
         leading: BackButton(
-          color: Theme.of(context).colorScheme.onSecondary,
+          color: Theme.of(context).colorScheme.primary,
         ),
       ),
       body: SingleChildScrollView(
@@ -50,19 +48,18 @@ class _MasterUserListScreenState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 20, top: 100),
-              child: Text("Users List",
-                  style: Theme.of(context)
-                      .textTheme
-                      .displayLarge!
-                      .copyWith(color: Theme.of(context).colorScheme.onSecondary)),
+              padding: const EdgeInsets.only(left: 20, top: 10),
+              child: Text("Daftar\nPengguna",
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                      color: Theme.of(context).colorScheme.primary)),
             ),
             const SizedBox(height: 35),
             Container(
               constraints: BoxConstraints(
                   minHeight: MediaQuery.of(context).size.height - 185),
               width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.only(left: 5, right: 5, bottom: 5, top: 5),
+              padding:
+                  const EdgeInsets.only(left: 5, right: 5, bottom: 5, top: 5),
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(32),
@@ -72,7 +69,8 @@ class _MasterUserListScreenState
               child: StreamBuilder<QuerySnapshot>(
                 stream: db
                     .collection('users')
-                    .orderBy("name")
+                    .orderBy("name", descending: true)
+                    .where("role", isEqualTo: "user")
                     .snapshots(),
                 builder: (context, snapshot) {
                   return snapshot.hasData
@@ -80,52 +78,36 @@ class _MasterUserListScreenState
                           height: 100,
                           child: ListView(
                             children: snapshot.data!.docs.map((doc) {
-                              return FutureBuilder(
-                                  future: doc['users'].get(),
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot<DocumentSnapshot> mailbox) {
-                                    if (mailbox.connectionState ==
-                                        ConnectionState.waiting) {
-                                      return const Text('');
-                                    }
-                                    final maintenance =
-                                        MaintenanceModel.fromFuture(
-                                            doc, mailbox.data!);
-                                    return ListTile(
-                                      onTap: () {
-                                        
-                                      },
-                                      leading: Container(
-                                        height: 70,
-                                        width: 70,
-                                        decoration: BoxDecoration(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .tertiary,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        alignment: Alignment.center,
-                                        child: Icon(Iconsax.user_octagon,
-                                          color: const Color(0xFFF16807),
-                                          size: 32,
-                                        ),
-                                      ),
-                                      title: Text(maintenance.mailbox.code,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleLarge),
-                                      subtitle: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(maintenance.note,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyLarge)
-                                        ],
-                                      ),
-                                    );
-                                  });
+                              UserModel user = UserModel.fromFirestore(doc);
+                              return ListTile(
+                                leading: Container(
+                                  height: 70,
+                                  width: 70,
+                                  decoration: BoxDecoration(
+                                    color:
+                                        Theme.of(context).colorScheme.tertiary,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Icon(
+                                    Iconsax.user_octagon,
+                                    color: Theme.of(context).colorScheme.primary,
+                                    size: 32,
+                                  ),
+                                ),
+                                title: Text(user.name,
+                                    style:
+                                        Theme.of(context).textTheme.titleLarge),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(user.email,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge)
+                                  ],
+                                ),
+                              );
                             }).toList(),
                           ),
                         )
