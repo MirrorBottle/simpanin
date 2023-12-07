@@ -48,7 +48,7 @@ class _UserMaintenanceListScreenState extends State<UserMaintenanceListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.tertiary,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
           toolbarHeight: 70,
           backgroundColor: Colors.transparent,
@@ -73,7 +73,7 @@ class _UserMaintenanceListScreenState extends State<UserMaintenanceListScreen> {
                   'Maintenance',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.primary,
+                        color: Theme.of(context).colorScheme.onSecondary,
                         fontSize: 30,
                       ),
                 ),

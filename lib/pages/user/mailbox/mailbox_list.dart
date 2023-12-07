@@ -17,7 +17,7 @@ class _UserMailboxListScreenState extends State<UserMailboxListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.tertiary,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       body: StreamBuilder<QuerySnapshot>(
         stream: db
             .collection('mailboxes')
@@ -41,7 +41,7 @@ class _UserMailboxListScreenState extends State<UserMailboxListScreen> {
                       'Mailbox',
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(context).colorScheme.onSecondary,
                       fontSize: 30,
                     ),
                     ),
