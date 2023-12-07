@@ -88,14 +88,29 @@ class _UserAgreementDetailScreenState extends State<UserAgreementDetailScreen> {
                       color: Theme.of(context).colorScheme.tertiary,
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    padding: const EdgeInsets.all(20),
-                    child: Text(
-                      "Lakukan pembayaran awal terlebih dahulu ke lokasi simpanin baru kamu bisa akses mailboxmu",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyLarge!
-                          .copyWith(fontSize: 18),
-                    ),
+                    padding: EdgeInsets.all(20),
+                    child: widget.agreement.status == 'active'
+                        ? Column(
+                            children: [
+                              Text("Kode PIN",
+                                  style: Theme.of(context).textTheme.bodyLarge),
+                              Text(widget.agreement.accessCode,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .displayLarge!
+                                      .copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondary))
+                            ],
+                          )
+                        : Text(
+                            "Lakukan pembayaran awal terlebih dahulu ke lokasi simpanin baru kamu bisa akses mailboxmu",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
+                                .copyWith(fontSize: 18),
+                          ),
                   ),
                 ],
               ),

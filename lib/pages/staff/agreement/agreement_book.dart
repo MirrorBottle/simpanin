@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -53,11 +55,13 @@ class _StaffAgreementBookScreenState extends State<StaffAgreementBookScreen> {
               'is_booking': true,
               'date': DateTime.now()
             }).then((mailboxRef) async {
+              String accessCode = (1000 + Random().nextInt(9000)).toString();
               await db
                   .collection("agreements")
                   .doc(widget.agreement.id)
                   .update({
                 'status': 'active',
+                'accessCode': accessCode,
               });
               showTopSnackBar(
                 Overlay.of(context),

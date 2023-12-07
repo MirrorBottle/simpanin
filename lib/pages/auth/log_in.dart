@@ -12,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simpanin/pages/staff/staff_main.dart';
 import 'package:simpanin/pages/user/user_main.dart';
 import 'package:simpanin/providers/page_provider.dart';
+import 'package:simpanin/providers/user_provider.dart';
 import 'package:simpanin/services/auth_service.dart';
 import 'package:simpanin/services/user_service.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -40,10 +41,13 @@ class _LogInScreenState extends State<LogInScreen> {
     });
     try {
       bool isSignin = await AuthService.signIn(_emailController.text, _passwordController.text);
+      
       if(isSignin) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setBool('isLogin', true);
         UserModel user = await AuthService.auth();
+        String id = await AuthService.signUp(user);
+        Provider.of<UserProvider>(context, listen: false).setAuth(user);
         showTopSnackBar(
           Overlay.of(context),
           const CustomSnackBar.success(

@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 import 'package:simpanin/models/agreement.dart';
 import 'package:simpanin/models/user.dart';
 import 'package:simpanin/pages/staff/agreement/agreement_book.dart';
+import 'package:simpanin/providers/theme_mode_provider.dart';
 
 class StaffHomeScreen extends StatefulWidget {
   const StaffHomeScreen({super.key});
@@ -17,13 +19,14 @@ class _StaffHomeScreenState extends State<StaffHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Consumer<ThemeModeProvider>(builder: (context, themeData, child) {
+      return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).colorScheme.background,
         scrolledUnderElevation: 0,
-        title: Image.asset('assets/img/logo_full.png', height: 60),
+        title: Image.asset(themeData.isDarkModeActive ? 'assets/img/logo_full_putih.png' : 'assets/img/logo_full.png', height: 60),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -151,5 +154,6 @@ class _StaffHomeScreenState extends State<StaffHomeScreen> {
         ),
       ),
     );
+    });
   }
 }
