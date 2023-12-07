@@ -60,4 +60,8 @@ class AgreementModel {
   String get formattedEndDate {
     return DateFormat('d MMM').format(endDate.toDate());
   }
+
+  String get formattedStartDate {
+    return DateFormat('d MMM').format(startDate.toDate());
+  }
 }

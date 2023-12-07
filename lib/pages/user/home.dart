@@ -6,6 +6,7 @@ import 'package:simpanin/components/empty_component.dart';
 import 'package:simpanin/models/agreement.dart';
 import 'package:simpanin/models/maintenance.dart';
 import 'package:simpanin/models/user.dart';
+import 'package:simpanin/pages/user/agreement/agreement_detail.dart';
 import 'package:simpanin/pages/user/maintenance/maintenance_list.dart';
 import 'package:simpanin/providers/user_provider.dart';
 
@@ -28,7 +29,12 @@ class MailboxTile extends StatelessWidget {
           clipBehavior: Clip.hardEdge,
           child: InkWell(
             splashColor: Theme.of(context).colorScheme.background,
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => UserAgreementDetailScreen(agreement: agreement,)),
+              );
+            },
             child: SizedBox(
               width: 260,
               height: 190,
