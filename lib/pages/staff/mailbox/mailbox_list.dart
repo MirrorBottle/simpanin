@@ -64,7 +64,7 @@ class _StaffMailboxListScreenState extends State<StaffMailboxListScreen> {
         context: context,
         builder: (BuildContext c) {
           return Container(
-            height: mailbox.isActive ? 200 : 120,
+            height: mailbox.isActive && mailbox.availability ? 200 : 120,
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.only(
@@ -74,7 +74,7 @@ class _StaffMailboxListScreenState extends State<StaffMailboxListScreen> {
               color: Theme.of(context).colorScheme.background
             ),
             child: Column(children: [
-              if (mailbox.isActive)
+              if (mailbox.isActive && mailbox.availability)
                 Column(
                   children: [
                     ListTile(
