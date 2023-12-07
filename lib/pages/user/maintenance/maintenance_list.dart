@@ -54,8 +54,8 @@ class _UserMaintenanceListScreenState extends State<UserMaintenanceListScreen> {
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           scrolledUnderElevation: 0,
-          leading: BackButton(
-            color: Theme.of(context).colorScheme.primary,
+          leading: const BackButton(
+            color: Colors.white
           )),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,7 +95,7 @@ class _UserMaintenanceListScreenState extends State<UserMaintenanceListScreen> {
                     )
                   : StreamBuilder<QuerySnapshot>(
                       stream: db
-                          .collection('maintenances')
+                          .collection('maintenance')
                           .where("mailbox", whereIn: _mailboxes)
                           .orderBy("end_date")
                           .snapshots(),

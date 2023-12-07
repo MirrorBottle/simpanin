@@ -183,7 +183,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
       DocumentReference<Map<String, dynamic>> userRef =
           db.collection('users').doc(user.id);
       QuerySnapshot maintenanceQuery = await db
-          .collection('maintenances')
+          .collection('maintenance')
           .where('mailbox', whereIn: _mailboxes)
           .limit(6)
           .get();

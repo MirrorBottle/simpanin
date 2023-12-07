@@ -22,6 +22,7 @@ class _UserMailboxListScreenState extends State<UserMailboxListScreen> {
         stream: db
             .collection('mailboxes')
             .where("availability", isEqualTo: true)
+            .where("is_active", isEqualTo: true)
             .orderBy("code")
             .snapshots(),
         builder: (context, snapshot) {
