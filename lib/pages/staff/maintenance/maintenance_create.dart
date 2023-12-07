@@ -1,7 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:simpanin/components/button_component.dart';
+import 'package:simpanin/models/mailbox.dart';
+import 'package:simpanin/pages/staff/mailbox/mailbox_list.dart';
 import 'package:simpanin/pages/staff/maintenance/maintenance_list.dart';
+import 'package:simpanin/providers/maintenance_create_provider.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class StaffMaintenanceCreateScreen extends StatefulWidget {
   @override
@@ -14,9 +21,11 @@ class _StaffMaintenanceCreateScreenState
   final _scrollController = ScrollController();
   DateTime _tanggalMulai = DateTime.now();
   DateTime _tanggalSelesai = DateTime.now();
-  TextEditingController _namaPelangganController = TextEditingController();
-  TextEditingController _nomorHPController = TextEditingController();
-  TextEditingController _catatanController = TextEditingController();
+  TextEditingController _noteController = TextEditingController();
+  
+
+
+    static final db = FirebaseFirestore.instance;
 
   Future<void> _pilihTanggal(BuildContext context, bool isTanggalMulai) async {
     DateTime? tanggalTerpilih = await showDatePicker(
@@ -50,7 +59,43 @@ class _StaffMaintenanceCreateScreenState
   }
 
   void _handleSubmit() async {
+    setState(() {
+      loading = true;
+    });
+    MailboxModel mailbox =
+                Provider.of<MaintenanceCreateProvider>(context, listen: false)
+                    .maintenance.mailbox;
+    DocumentReference mailboxRef =
+                db.collection('mailboxes').doc(mailbox.id);
 
+    try {
+      db.collection("maintenance").add({
+        'start_date': _tanggalMulai,
+        'end_date': _tanggalSelesai,
+        'note': _noteController.text,
+        'mailbox': mailboxRef,
+      }).then((maintenanceRef) async {
+        showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.success(
+            message: "Maintenance ${mailbox.code} Berhasil Ditambah!",
+          ),
+        );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const StaffMaintenanceListScreen()),
+        );
+      });
+    } catch (e) {
+      print(e);
+      showTopSnackBar(
+        Overlay.of(context),
+        const CustomSnackBar.error(
+          message: "Terjadi Kesalahan!",
+        ),
+      );
+    }
   }
 
   @override
@@ -164,7 +209,7 @@ class _StaffMaintenanceCreateScreenState
                   ListTile(
                     contentPadding: EdgeInsets.zero,
                     title: TextField(
-                      controller: _catatanController,
+                      controller: _noteController,
                       maxLines:
                           3, // Atau berikan nilai lebih dari 1 sesuai kebutuhan
                       decoration: InputDecoration(labelText: 'Catatan'),
@@ -187,7 +232,7 @@ class _StaffMaintenanceCreateScreenState
                     onPressed: () {
                       // Mengecek apakah ada input yang kosong
                       if (
-                          _catatanController.text.isEmpty) {
+                          _noteController.text.isEmpty) {
                         // Menampilkan pesan peringatan jika ada input yang kosong
                         showDialog(
                           context: context,
@@ -225,6 +270,7 @@ class _StaffMaintenanceCreateScreenState
                           ),
                         );
                       } else {
+                        _handleSubmit();
                         
                       }
                     },

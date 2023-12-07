@@ -35,6 +35,7 @@ class _StaffMailboxCreateScreenState extends State<StaffMailboxCreateScreen> {
         'price': int.parse(_hargaController.text),
         'size': _selectedUkuran,
         'availability': true,
+        'is_active': true
       }).then((mailboxRef) async {
         showTopSnackBar(
           Overlay.of(context),
