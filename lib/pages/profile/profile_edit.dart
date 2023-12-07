@@ -4,6 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:simpanin/components/button_component.dart';
 import 'package:simpanin/models/user.dart';
 import 'package:simpanin/pages/profile/profile.dart';
+import 'package:simpanin/pages/staff/staff_main.dart';
+import 'package:simpanin/pages/user/user_main.dart';
+import 'package:simpanin/providers/page_provider.dart';
 import 'package:simpanin/providers/user_provider.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -75,35 +78,35 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).colorScheme.tertiary,
       appBar: AppBar(
-        toolbarHeight: 0,
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        titleSpacing: 0.0,
-        iconTheme: const IconThemeData(color: Colors.white),
-        automaticallyImplyLeading: false,
-        scrolledUnderElevation: 0,
-        leading: Padding(
-          padding: const EdgeInsets.only(top: 18.0, bottom: 18),
-        ),
-      ),
+          toolbarHeight: 70,
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          titleSpacing: 0.0,
+          iconTheme: const IconThemeData(color: Colors.white),
+          automaticallyImplyLeading: false,
+          scrolledUnderElevation: 0,
+          leading: BackButton(
+            color: Theme.of(context).colorScheme.primary,
+            onPressed: () {
+              UserModel user =
+                  Provider.of<UserProvider>(context, listen: false).user;
+              Provider.of<PageProvider>(context, listen: false)
+                  .changePage(user.role == 'user' ? 3 : 4);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => user.role == 'user'
+                        ? const UserMainScreen()
+                        : const StaffMainScreen()),
+              );
+            },
+          )),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: BackButton(
-                color: Theme.of(context).colorScheme.primary,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ProfileScreen()),
-                  );
-                },
-              ),
-            ),
             ListTile(
               contentPadding:
-                  EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
               title: Text(
                 'Edit Profile',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
